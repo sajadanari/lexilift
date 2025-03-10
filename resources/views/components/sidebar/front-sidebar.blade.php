@@ -28,7 +28,7 @@
             Home
         </x-sidebar.sidebar-item>
 
-        <x-sidebar.sidebar-item icon="title" route="mywords">
+        <x-sidebar.sidebar-item icon="title" route="mywords" :active="request()->routeIs('mywords')">
             My Words
         </x-sidebar.sidebar-item>
 
