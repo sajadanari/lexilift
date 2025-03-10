@@ -1,3 +1,3 @@
-<div class="bg-red-300">
+<div class="container">
     Hello from Home page.
 </div>

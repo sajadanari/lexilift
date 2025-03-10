@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
+@import "./basic.css";
+
 /* Import Frontend Styles */
 @import "./front.css";
-@import "./front-sidebar.css";
-@import "./front-nav.css";
+@import "./sidebar.css";
 
 @import "@material-design-icons/font/index.css";
 
