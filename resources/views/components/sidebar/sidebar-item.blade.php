@@ -52,7 +52,7 @@
     <li class="sidebar-item {{ $active ? 'active' : '' }}">
         <a href="{{ $route }}" class="sidebar-link">
             @if ($icon)
-                <i class="material-icons-outlined">{{ $icon }}</i>
+                <i class="material-icons-{{ $active ? 'round' : 'outlined' }}">{{ $icon }}</i>
             @endif
             <span>{{ $slot }}</span>
         </a>
@@ -73,7 +73,8 @@
                     <li class="submenu-item {{ isset($item['active']) && $item['active'] ? 'active' : '' }}">
                         <a href="{{ $item['route'] }}">
                             @if (isset($item['icon']))
-                                <i class="material-icons-outlined">{{ $item['icon'] }}</i>
+                                <i
+                                    class="material-icons-{{ isset($item['active']) && $item['active'] ? 'round' : 'outlined' }}">{{ $item['icon'] }}</i>
                             @endif
                             <span>{{ $item['name'] }}</span>
                         </a>
