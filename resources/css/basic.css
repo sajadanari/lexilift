@@ -1,10 +1,10 @@
 :root {
-    --base-clr: #11121a;
-    --line-clr: #42434a;
-    --hover-clr: #222533;
-    --text-clr: #e6e6ef;
-    --accent-clr: #5e63ff;
-    --seccondary-text-clr: #b0b3c1;
+    --base-clr: #f3eff5;
+    --line-clr: #bdbdbd;
+    --hover-clr: #e0e0e0;
+    --text-clr: #0d0a0b;
+    --accent-clr: #239400;
+    --seccondary-text-clr: #454955;
 }
 
 * {
