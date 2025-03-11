@@ -24,6 +24,12 @@
             </button>
         </li>
 
+        @guest
+            <x-sidebar.sidebar-item icon="login" :active="request()->routeIs('auth.login')" route="{{ route('auth.login') }}">
+                Login
+            </x-sidebar.sidebar-item>
+        @endguest
+
         <x-sidebar.sidebar-item icon="home" :active="request()->routeIs('home')" route="{{ route('home') }}">
             Home
         </x-sidebar.sidebar-item>
