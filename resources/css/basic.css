@@ -1,5 +1,5 @@
 :root {
-    --base-clr: #f3eff5;
+    --base-clr: #fafafa;
     --line-clr: #bdbdbd;
     --hover-clr: #e0e0e0;
     --text-clr: #0d0a0b;
@@ -8,9 +8,13 @@
 }
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
+}
+
+input {
+    -webkit-appearance: none; /* حذف استایل‌های پیش‌فرض در Safari */
+    -moz-appearance: none; /* حذف استایل‌های پیش‌فرض در Firefox */
+    appearance: none; /* حذف استایل‌های پیش‌فرض در سایر مرورگرها */
 }
 
 html {
@@ -24,7 +28,6 @@ body {
     background-color: var(--base-clr);
     color: var(--text-clr);
     display: grid;
-    grid-template-columns: auto 1fr;
 }
 
 main {
