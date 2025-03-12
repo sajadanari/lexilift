@@ -11,10 +11,16 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400" rel="stylesheet" />
 
+    @stack('styles')
+
+    @livewireStyles
+
 </head>
 
 <body>
     {{ $slot }}
+
+    @livewireScripts
 </body>
 
 </html>
