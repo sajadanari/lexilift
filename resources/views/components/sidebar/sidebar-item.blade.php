@@ -72,7 +72,9 @@
             <div>
                 @foreach ($submenuItems as $item)
                     <li class="submenu-item {{ isset($item['active']) && $item['active'] ? 'active' : '' }}">
-                        <a href="{{ $item['route'] }}">
+                        <a href="{{ $item['route'] }}"
+                            onclick="{{ isset($item['onclick']) ? $item['onclick'] : '' }}"
+                            >
                             @if (isset($item['icon']))
                                 <i
                                     class="material-icons-{{ isset($item['active']) && $item['active'] ? 'round' : 'outlined' }}">{{ $item['icon'] }}</i>
