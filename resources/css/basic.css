@@ -12,9 +12,9 @@
 }
 
 input {
-    -webkit-appearance: none; /* حذف استایل‌های پیش‌فرض در Safari */
-    -moz-appearance: none; /* حذف استایل‌های پیش‌فرض در Firefox */
-    appearance: none; /* حذف استایل‌های پیش‌فرض در سایر مرورگرها */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 html {
@@ -27,15 +27,17 @@ body {
     min-height: 100dvh;
     background-color: var(--base-clr);
     color: var(--text-clr);
-    display: grid;
+    display: flex;
 }
 
 main {
+    width: 100%;
     padding: min(30px, 7%);
 }
 
 .container {
     border: 1px solid var(--line-clr);
+    width: 100%;
     border-radius: 1em;
     margin-bottom: 20px;
     padding: min(3em, 15%);
