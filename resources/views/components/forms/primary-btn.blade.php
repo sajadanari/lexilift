@@ -25,7 +25,7 @@
     type="{{ $type ?? 'button' }}" {{-- Button type (defaults to "button" if not specified) --}}
     {{-- Merge additional attributes and apply default styling classes using --accent-clr --}}
     {{ $attributes->merge([
-        'class' => 'bg-[var(--accent-clr)] hover:brightness-90 text-white font-medium py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--accent-clr)]'
+        'class' => 'bg-[var(--accent-clr)] hover:brightness-90 text-white font-medium py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--accent-clr)] cursor-pointer'
     ]) }}
 >
     {{-- Optional icon section --}}
