@@ -8,14 +8,20 @@
 
 <div class="flex h-full w-full">
 
-    <div class="w-[60%] left-side flex items-center justify-center text-white">
-        Left Side
+    {{-- If screen was small, just show right side and hide left side --}}
+    <div class="display-none md:flex md:w-[60%] left-side flex items-center justify-center text-white">
+        
     </div>
 
-    <div class="w-[40%] flex items-center justify-center">
+    <div class="w-full px-4 md:w-[40%] md:px-4 flex items-center justify-center">
 
         <div class="flex items-center justify-center min-h-screen w-full">
             <div class="w-full max-w-md">
+
+                <div class="mb-2">
+                    <x-ui.horizontal-logo />
+                </div>
+
                 <div class="mb-9">
                     <h2 class="text-2xl font-semibold text-start text-gray-900 mb-1">
                         Hello Again!
@@ -27,15 +33,28 @@
 
                 <form wire:submit.prevent="login">
 
-                    <x-form.input-field name="email" icon="email" placeholder="example@email.com" id="email" />
+                    <x-forms.input-field name="email" icon="email" placeholder="example@email.com" id="email" />
 
-                    <x-form.input-field name="password" icon="lock" placeholder="Password" id="password"
+                    <x-forms.input-field name="password" icon="lock" placeholder="Password" id="password"
                         type="password" />
 
-                    <button type="submit"
-                        class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        ورود
-                    </button>
+                        <x-forms.primary-btn
+                        type="submit"
+                        id="login-button"
+                        class="w-full"
+                    >
+                        Login
+                    </x-forms.primary-btn>
+
+                    <div class="text-center mt-4">
+                        Don't have an account?
+                        <x-links.main-link
+                            href="{{ route('auth.register') }}"
+                            class=""
+                        >
+                            Sign up now!
+                        </x-links.main-link>
+                    </div>
                 </form>
             </div>
         </div>
