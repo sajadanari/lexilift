@@ -17,4 +17,5 @@ Route::get('/mywords', MyWords::class)->name('mywords');
 Route::name('auth.')->group(function () {
     Route::get('login', Login::class)->name('login');
     Route::get('register', Register::class)->name('register');
+    Route::post('/logout', [Login::class, 'logout'])->name('logout');
 });

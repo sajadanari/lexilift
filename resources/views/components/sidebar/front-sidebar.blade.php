@@ -30,6 +30,12 @@
             </x-sidebar.sidebar-item>
         @endguest
 
+        @auth
+            <x-sidebar.sidebar-item icon="person" :active="request()->routeIs('dashboard')" route="{{ route('dashboard') }}">
+                {{ Auth::user()->name }}
+            </x-sidebar.sidebar-item>
+        @endauth
+
         <x-sidebar.sidebar-item icon="home" :active="request()->routeIs('home')" route="{{ route('home') }}">
             Home
         </x-sidebar.sidebar-item>
@@ -48,6 +54,18 @@
         <x-sidebar.sidebar-item icon="help" dropdown="true" :submenuItems="[['icon' => 'person', 'route' => '/', 'name' => 'Profile']]">
             Help
         </x-sidebar.sidebar-item>
+
+        @auth
+            <x-sidebar.sidebar-item 
+                icon="logout" 
+                route="{{ route('auth.logout') }}" 
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Logout
+            </x-sidebar.sidebar-item>
+            <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        @endauth
 
     </ul>
 </nav>

@@ -39,7 +39,7 @@ class Login extends Component
             session()->regenerate();
             
             // Redirect to dashboard or intended URL
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('home'));
         }
 
         // Authentication failed
@@ -47,6 +47,15 @@ class Login extends Component
         
         // Clear password field
         $this->password = '';
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        
+        return redirect()->route('home');
     }
 
     public function render()

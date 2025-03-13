@@ -33,10 +33,11 @@
 
                 <form wire:submit.prevent="login">
 
-                    <x-forms.input-field name="email" icon="email" placeholder="example@email.com" id="email" />
+                    <x-forms.input-field name="email" icon="email" placeholder="example@email.com" id="email" wire:model="email"/>
 
                     <x-forms.input-field name="password" icon="lock" placeholder="Password" id="password"
-                        type="password" />
+                        type="password"
+                        wire:model="password" />
 
                         <x-forms.primary-btn
                         type="submit"

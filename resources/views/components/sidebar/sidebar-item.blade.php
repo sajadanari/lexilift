@@ -45,12 +45,13 @@
     'route' => null,
     'dropdown' => false,
     'submenuItems' => [],
+    'onclick' => ''
 ])
 
 @if (!$dropdown)
     {{-- Render a single sidebar item as a link --}}
     <li class="sidebar-item {{ $active ? 'active' : '' }}">
-        <a href="{{ $route }}" class="sidebar-link">
+        <a href="{{ $route }}" class="sidebar-link" onclick="{{ $onclick }}">
             @if ($icon)
                 <i class="material-icons-{{ $active ? 'round' : 'outlined' }}">{{ $icon }}</i>
             @endif
