@@ -13,7 +13,7 @@
     </div>
 
     <div class="w-full px-4 md:w-[40%] md:px-4 flex items-center justify-center">
-        <div class="flex items-center justify-center min-h-screen w-full">
+        <div class="flex items-top md:items-center pt-4 md:p-0 justify-center min-h-screen w-full">
             <div class="w-full max-w-md">
                 <div class="mb-2">
                     <x-ui.horizontal-logo />
