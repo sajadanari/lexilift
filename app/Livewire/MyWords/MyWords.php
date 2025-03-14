@@ -48,7 +48,8 @@ class MyWords extends Component
     ];
 
     protected $listeners = [
-        'edit-word' => 'editWord'
+        'edit-word' => 'editWord',
+        'delete-word' => 'deleteWord',
     ];
 
     public function showCreatePage()
@@ -69,6 +70,17 @@ class MyWords extends Component
         $this->word = Word::findOrFail($wordId);
         $this->wordData = $this->word->toArray();
         $this->page = 'edit';
+    }
+
+    /**
+     * Delete word with the given ID
+     */
+    public function deleteWord($wordId)
+    {
+        $word = Word::findOrFail($wordId);
+        $word->delete();
+        $this->dispatch('refreshDatatable');
+        session()->flash('message', 'Word deleted successfully!');
     }
 
     public function save()
