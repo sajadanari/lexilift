@@ -3,11 +3,8 @@
 namespace App\Tables;
 
 use App\Models\Word;
-use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 
 class WordsTable extends DataTableComponent
 {
@@ -16,11 +13,75 @@ class WordsTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id')
+        
             ->setTableWrapperAttributes([
+                'default' => false,
+                'default-colors' => false,
                 'class' => 'rounded-lg overflow-hidden',
             ])
             ->setTableAttributes([
+                'default' => false,
+                'default-colors' => false,
                 'class' => 'table-auto w-full',
+            ])
+            ->setTheadAttributes([
+                'default' => false,
+                'default-colors' => false,
+                'class' => 'bg-gray-50',
+            ])
+            ->setTbodyAttributes([
+                'default' => false,
+                'default-colors' => false,
+                'class' => 'bg-white',
+            ])
+            ->setThAttributes(function(Column $column) {
+                return [
+                    'default' => false,
+                    'default-colors' => false,
+                    'class' => 'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider',
+                ];
+            })
+            ->setTdAttributes(function(Column $column) {
+                return [
+                    'default' => false,
+                    'default-colors' => false,
+                    'class' => 'px-6 py-4 whitespace-nowrap text-sm text-gray-900',
+                ];
+            })
+            ->setTrAttributes(function($row, $index) {
+                if ($index % 2 === 0) {
+                  return [
+                    'default' => false,
+                    'default-color' => false,
+                    'class' => 'bg-gray-200',
+                  ];
+                }
+           
+                return ['default' => false];
+            })
+
+            ->setSearchFieldAttributes([
+                'default' => false,
+                'default-color' => false,
+                'class' => 'py-4 px-3',
+              ])
+
+            ->setSearchIcon('heroicon-m-magnifying-glass')
+
+            ->setSearchIconAttributes([
+                'default' => false,
+                'default-color' => false,
+                'class' => 'h-4 w-4 mx-3',
+                'style' => 'color: #000000',
+            ])
+
+            ->setColumnSelectDisabled()
+
+            ->setPerPageFieldAttributes([
+                'default' => false,
+                'default-color' => false,
+                'default-styles' => false,
+                'class' => 'rounded-md p-4 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300',
             ]);
     }
 

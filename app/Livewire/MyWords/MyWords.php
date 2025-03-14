@@ -48,7 +48,6 @@ class MyWords extends Component
     ];
 
     protected $listeners = [
-        'test',
         'edit-word' => 'editWord'
     ];
 
