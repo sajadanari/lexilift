@@ -27,7 +27,7 @@ class WordsTable extends DataTableComponent
             ->setTheadAttributes([
                 'default' => false,
                 'default-colors' => false,
-                'class' => 'bg-gray-50',
+                'class' => 'bg-gray-900',
             ])
             ->setTbodyAttributes([
                 'default' => false,
@@ -49,15 +49,11 @@ class WordsTable extends DataTableComponent
                 ];
             })
             ->setTrAttributes(function($row, $index) {
-                if ($index % 2 === 0) {
                   return [
                     'default' => false,
                     'default-color' => false,
-                    'class' => 'bg-gray-200',
+                    'class' => 'hover:bg-gray-100 boder border-b border-gray-200',
                   ];
-                }
-           
-                return ['default' => false];
             })
 
             ->setSearchFieldAttributes([
@@ -69,7 +65,7 @@ class WordsTable extends DataTableComponent
             ->setSearchIcon('heroicon-m-magnifying-glass')
 
             ->setSearchIconAttributes([
-                'default' => false,
+                'default' => true,
                 'default-color' => false,
                 'class' => 'h-4 w-4 mx-3',
                 'style' => 'color: #000000',
