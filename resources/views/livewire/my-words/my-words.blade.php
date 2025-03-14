@@ -1,3 +1,11 @@
-<div class="container">
-    Hello from My Words page.
+<div>
+    @switch($page)
+        @case('index')
+            @include('livewire.my-words.index')
+            @break
+        @case('create')
+        @case('edit')
+            @include('livewire.my-words.create-edit')
+            @break
+    @endswitch
 </div>
