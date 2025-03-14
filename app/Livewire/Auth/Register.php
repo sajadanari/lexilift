@@ -57,7 +57,7 @@ class Register extends Component
         session()->regenerate();
         
         // Redirect to dashboard
-        return redirect()->intended(route('dashboard'));
+        return redirect()->intended(route('home'));
     }
 
     public function render()
