@@ -31,7 +31,7 @@
         {{-- Optional icon section --}}
         @if (isset($icon) && $icon)
             <span class="absolute inset-y-0 left-0 flex items-center pl-6 text-gray-400">
-                <span class="material-symbols-outlined">
+                <span class="material-symbols-outlined text-xl">
                     {{ $icon }}
                 </span>
             </span>
