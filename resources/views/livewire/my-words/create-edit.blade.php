@@ -74,8 +74,18 @@
                 />
             </div>
 
-            {{-- Form Actions --}}
-            @include('livewire.my-words.actions')
+            {{-- Save Button --}}
+            <div class="flex justify-end">
+                <x-forms.primary-btn type="submit">
+                    {{ $page === 'edit' ? 'Update Word' : 'Save Word' }}
+                </x-forms.primary-btn>
+                <x-forms.secondary-btn
+                    wire:click="showIndexPage"
+                    class="ml-2"
+                >
+                    Cancel
+                </x-forms.secondary-btn>
+            </div>
         </form>
     </div>
 </div>

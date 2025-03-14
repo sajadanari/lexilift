@@ -1,3 +1,3 @@
-<button wire:click="$emitTo('my-words.my-words', 'test')" class="hover:bg-gray-200 p-2 rounded cursor-pointer">
-    test {{ $word->id }}
+<button wire:click="$dispatch('edit-word', { wordId: {{ $word->id }} })" class="hover:bg-gray-200 p-2 rounded cursor-pointer">
+    Edit
 </button>

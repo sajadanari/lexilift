@@ -47,16 +47,19 @@ class MyWords extends Component
         'wordData.notes' => 'nullable',
     ];
 
-    protected $listeners = ['test'];
+    protected $listeners = [
+        'test',
+        'edit-word' => 'editWord'
+    ];
 
     public function showCreatePage()
     {
         $this->page = 'create';
     }
 
-    public function test()
+    public function showIndexPage()
     {
-        dd('test');
+        $this->page = 'index';
     }
 
     /**
