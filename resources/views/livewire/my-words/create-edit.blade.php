@@ -36,8 +36,12 @@
                     <x-forms.input-field name="wordData.pronunciation" label="Pronunciation"
                         wire:model="wordData.pronunciation" />
 
-                    <x-forms.input-field name="wordData.difficulty_level" label="Difficulty Level"
-                        wire:model="wordData.difficulty_level" placeholder="e.g., A1, B2, C1" />
+                    <x-forms.select-field name="wordData.difficulty_level" label="Difficulty Level"
+                        wire:model="wordData.difficulty_level" placeholder="Select difficulty level">
+                        @foreach (App\Enums\DifficultyLevel::cases() as $level)
+                            <option value="{{ $level->value }}">{{ $level->label() }}</option>
+                        @endforeach
+                    </x-forms.select-field>
                 </div>
 
                 <x-forms.textarea-field name="wordData.synonyms" label="Synonyms" wire:model="wordData.synonyms" />
