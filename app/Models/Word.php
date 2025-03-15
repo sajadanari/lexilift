@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PartOfSpeech;
 use Illuminate\Database\Eloquent\Model;
 
 class Word extends Model
@@ -25,4 +26,11 @@ class Word extends Model
         'difficulty_level',
         'notes'
     ];
+
+    protected $casts = [
+        'part_of_speech' => PartOfSpeech::class,
+        'countable' => 'boolean',
+    ];
+
+    protected $guarded = ['id'];
 }

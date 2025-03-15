@@ -13,8 +13,12 @@
                     <x-forms.input-field name="wordData.word" label="Word" icon="spellcheck" wire:model="wordData.word"
                         required />
 
-                    <x-forms.input-field name="wordData.part_of_speech" label="Part of Speech" icon="match_word"
-                        wire:model="wordData.part_of_speech" placeholder="e.g., noun, verb, adjective" />
+                    <x-forms.select-field name="wordData.part_of_speech" label="Part of Speech" icon="match_word"
+                        wire:model="wordData.part_of_speech" placeholder="Select part of speech">
+                        @foreach (App\Enums\PartOfSpeech::cases() as $partOfSpeech)
+                            <option value="{{ $partOfSpeech->value }}">{{ $partOfSpeech->label() }}</option>
+                        @endforeach
+                    </x-forms.select-field>
                 </div>
 
                 <x-forms.textarea-field name="wordData.meaning" label="Meaning" wire:model="wordData.meaning"
