@@ -34,7 +34,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <x-forms.input-field name="wordData.pronunciation" label="Pronunciation"
-                        wire:model="wordData.pronunciation" />
+                        wire:model="wordData.pronunciation" class="persian" />
 
                     <x-forms.select-field name="wordData.difficulty_level" label="Difficulty Level"
                         wire:model="wordData.difficulty_level" placeholder="Select difficulty level">
@@ -47,8 +47,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <x-forms.input-field name="wordData.plural" label="Plural Form" wire:model="wordData.plural" />
 
-                    <x-forms.input-field name="wordData.frequency" label="Frequency" wire:model="wordData.frequency"
-                        placeholder="e.g., high, medium, low" />
+                    <x-forms.select-field name="wordData.frequency" label="Frequency" wire:model="wordData.frequency"
+                        placeholder="Select frequency level">
+                        @foreach (App\Enums\FrequencyLevel::cases() as $level)
+                            <option value="{{ $level->value }}">{{ $level->label() }}</option>
+                        @endforeach
+                    </x-forms.select-field>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\PartOfSpeech;
 use App\Enums\DifficultyLevel;
+use App\Enums\FrequencyLevel;
 use Illuminate\Database\Eloquent\Model;
 
 class Word extends Model
@@ -32,6 +33,7 @@ class Word extends Model
         'part_of_speech' => PartOfSpeech::class,
         'countable' => 'boolean',
         'difficulty_level' => DifficultyLevel::class,
+        'frequency' => FrequencyLevel::class,
     ];
 
     protected $guarded = ['id'];

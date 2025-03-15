@@ -38,11 +38,10 @@
         @endif
 
         {{-- Input field --}}
-        <input type="{{ $type ?? 'text' }}" {{-- Input type (default: text) --}} name="{{ $name }}" {{-- Input name (used for error handling) --}}
-            placeholder="{{ $placeholder ?? '' }}" {{-- Optional placeholder text --}}
-            class="focus:outline-none focus:ring-1 focus:border-transparent
-                   {{ isset($icon) && $icon ? 'pl-14' : 'pl-6' }} pr-4 py-4 border border-gray-300 rounded-full w-full"
-            {{ $attributes }} {{-- Merge any additional attributes --}}>
+        <input type="{{ $type ?? 'text' }}" {{-- نوع ورودی (به صورت پیش‌فرض: text) --}} name="{{ $name }}" {{-- نام ورودی (برای مدیریت خطاها) --}}
+            placeholder="{{ $placeholder ?? '' }}" {{-- متن پیش‌نمایش اختیاری --}}
+            {{ $attributes->merge(['class' => 'focus:outline-none focus:ring-1 focus:border-transparent ' . (isset($icon) && $icon ? 'pl-14' : 'pl-6') . ' pr-4 py-4 border border-gray-300 rounded-full w-full']) }}>
+
     </div>
 
     {{-- Display error message for the given input name if it exists --}}
