@@ -11,10 +11,10 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <x-forms.input-field name="wordData.word" label="Word" icon="spellcheck" wire:model="wordData.word"
-                        required />
+                        placeholder="Enter the word..." required />
 
                     <x-forms.select-field name="wordData.part_of_speech" label="Part of Speech" icon="match_word"
-                        wire:model="wordData.part_of_speech" placeholder="Select part of speech">
+                        wire:model="wordData.part_of_speech" placeholder="Select the part of speech">
                         @foreach (App\Enums\PartOfSpeech::cases() as $partOfSpeech)
                             <option value="{{ $partOfSpeech->value }}">{{ $partOfSpeech->label() }}</option>
                         @endforeach
@@ -22,10 +22,10 @@
                 </div>
 
                 <x-forms.textarea-field name="wordData.meaning" label="Meaning" wire:model="wordData.meaning"
-                    class="persian" required />
+                    placeholder="Enter the word's definition and meaning..." class="persian" required />
 
                 <x-forms.textarea-field name="wordData.example" label="Example Usage" wire:model="wordData.example"
-                    placeholder="Enter example sentences..." />
+                    placeholder="Write example sentences using this word..." />
             </div>
 
             {{-- Additional Details --}}
@@ -34,10 +34,10 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <x-forms.input-field name="wordData.pronunciation" label="Pronunciation"
-                        wire:model="wordData.pronunciation" class="persian" />
+                        wire:model="wordData.pronunciation" placeholder="e.g., /həˈləʊ/" class="persian" />
 
                     <x-forms.select-field name="wordData.difficulty_level" label="Difficulty Level"
-                        wire:model="wordData.difficulty_level" placeholder="Select difficulty level">
+                        wire:model="wordData.difficulty_level" placeholder="Select CEFR level">
                         @foreach (App\Enums\DifficultyLevel::cases() as $level)
                             <option value="{{ $level->value }}">{{ $level->label() }}</option>
                         @endforeach
@@ -45,10 +45,11 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <x-forms.input-field name="wordData.plural" label="Plural Form" wire:model="wordData.plural" />
+                    <x-forms.input-field name="wordData.plural" label="Plural Form" wire:model="wordData.plural"
+                        placeholder="Plural form of the word if applicable..." />
 
                     <x-forms.select-field name="wordData.frequency" label="Frequency" wire:model="wordData.frequency"
-                        placeholder="Select frequency level">
+                        placeholder="How commonly is this word used?">
                         @foreach (App\Enums\FrequencyLevel::cases() as $level)
                             <option value="{{ $level->value }}">{{ $level->label() }}</option>
                         @endforeach
@@ -56,25 +57,30 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <x-forms.input-field name="wordData.root" label="Word Root" wire:model="wordData.root" />
+                    <x-forms.input-field name="wordData.root" label="Word Root" wire:model="wordData.root"
+                        placeholder="Original root or base of the word..." />
 
                     <x-forms.toggle-field name="wordData.countable" label="Is Countable?"
                         wire:model="wordData.countable" trueLabel="Countable" falseLabel="Uncountable" />
                 </div>
 
-                <x-forms.textarea-field name="wordData.usage" label="Usage Notes" wire:model="wordData.usage" />
+                <x-forms.textarea-field name="wordData.usage" label="Usage Notes" wire:model="wordData.usage"
+                    placeholder="Special notes about how to use this word correctly..." />
 
-                <x-forms.textarea-field name="wordData.synonyms" label="Synonyms" wire:model="wordData.synonyms" />
+                <x-forms.textarea-field name="wordData.synonyms" label="Synonyms" wire:model="wordData.synonyms"
+                    placeholder="Words with similar meanings, separated by commas..." />
 
-                <x-forms.textarea-field name="wordData.antonyms" label="Antonyms" wire:model="wordData.antonyms" />
+                <x-forms.textarea-field name="wordData.antonyms" label="Antonyms" wire:model="wordData.antonyms"
+                    placeholder="Words with opposite meanings, separated by commas..." />
 
                 <x-forms.textarea-field name="wordData.collocations" label="Collocations"
-                    wire:model="wordData.collocations" placeholder="Common phrases and word combinations..." />
+                    wire:model="wordData.collocations" placeholder="Common word combinations and phrases..." />
 
                 <x-forms.textarea-field name="wordData.etymology" label="Etymology" wire:model="wordData.etymology"
-                    placeholder="Word origin and history..." />
+                    placeholder="Historical origin and development of the word..." />
 
-                <x-forms.textarea-field name="wordData.notes" label="Additional Notes" wire:model="wordData.notes" />
+                <x-forms.textarea-field name="wordData.notes" label="Additional Notes" wire:model="wordData.notes"
+                    placeholder="Any additional information or remarks..." />
             </div>
 
             {{-- Save Button --}}
