@@ -61,7 +61,21 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "Dana";
+    src: url("/resources/fonts/Dana-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: italic;
+}
+
 /* اعمال فونت به کل سایت */
 body {
     font-family: "Poppins", sans-serif;
+}
+
+.persian {
+    font-family: "Dana", sans-serif !important;
+    direction: rtl !important;
+    text-align: right !important;
+    font-weight: 400 !important;
 }

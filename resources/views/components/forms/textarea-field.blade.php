@@ -1,7 +1,7 @@
 {{--
     Component: TextareaField
     Description: A customizable textarea field component with optional label
-    
+
     Usage Example:
         <x-textarea-field
             name="description"
@@ -27,13 +27,11 @@
     @endif
 
     <div class="relative w-full">
-        <textarea
-            name="{{ $name }}"
-            rows="{{ $rows ?? 3 }}"
-            class="focus:outline-none focus:ring-1 focus:border-transparent
-                   p-4 border border-gray-300 rounded-lg w-full resize-y"
-            {{ $attributes }}
-        ></textarea>
+        <textarea name="{{ $name }}" rows="{{ $rows ?? 3 }}"
+            {{ $attributes->merge([
+                'class' => "focus:outline-none focus:ring-1 focus:border-transparent
+                               p-4 border border-gray-300 rounded-lg w-full resize-y",
+            ]) }}></textarea>
     </div>
 
     @if ($errors->has($name))
