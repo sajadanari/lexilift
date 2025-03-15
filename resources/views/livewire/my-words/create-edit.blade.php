@@ -44,9 +44,33 @@
                     </x-forms.select-field>
                 </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <x-forms.input-field name="wordData.plural" label="Plural Form" wire:model="wordData.plural" />
+
+                    <x-forms.input-field name="wordData.frequency" label="Frequency" wire:model="wordData.frequency"
+                        placeholder="e.g., high, medium, low" />
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <x-forms.input-field name="wordData.root" label="Word Root" wire:model="wordData.root" />
+
+                    <x-forms.toggle-field name="wordData.countable" label="Is Countable?"
+                        wire:model="wordData.countable" trueLabel="Countable" falseLabel="Uncountable" />
+                </div>
+
+                <x-forms.textarea-field name="wordData.usage" label="Usage Notes" wire:model="wordData.usage" />
+
                 <x-forms.textarea-field name="wordData.synonyms" label="Synonyms" wire:model="wordData.synonyms" />
 
                 <x-forms.textarea-field name="wordData.antonyms" label="Antonyms" wire:model="wordData.antonyms" />
+
+                <x-forms.textarea-field name="wordData.collocations" label="Collocations"
+                    wire:model="wordData.collocations" placeholder="Common phrases and word combinations..." />
+
+                <x-forms.textarea-field name="wordData.etymology" label="Etymology" wire:model="wordData.etymology"
+                    placeholder="Word origin and history..." />
+
+                <x-forms.textarea-field name="wordData.notes" label="Additional Notes" wire:model="wordData.notes" />
             </div>
 
             {{-- Save Button --}}
