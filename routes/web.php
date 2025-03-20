@@ -7,6 +7,10 @@ use App\Livewire\Home\Home;
 use App\Livewire\MyWords\MyWords;
 use Illuminate\Support\Facades\Route;
 
+if(config('app.env') === 'local') {
+    require_once('test.php');
+}
+
 Route::get('/', Home::class)->name('home');
 
 Route::get('/dashboard', Dashboard::class)->name('dashboard');
