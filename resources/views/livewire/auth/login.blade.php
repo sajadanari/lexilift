@@ -13,10 +13,36 @@
         
     </div>
 
+    {{-- Right Side --}}
     <div class="w-full px-4 md:w-[40%] md:px-4 flex items-top justify-center">
 
         <div class="flex items-top md:items-center pt-4 md:p-0 justify-center min-h-screen w-full">
             <div class="w-full max-w-md">
+
+                {{-- If app.env was local --}}
+                @if(config('app.env') === 'local')                
+                    <div class="grid grid-cols-1 gap-3 mb-3">
+                        <a href="{{ route('templogin', ['role' => 'admin']) }}">
+                            <x-forms.primary-btn
+                                id="login-button"
+                                class="w-full"
+                                :isOutline="true"
+                            >
+                                Login as Admin
+                            </x-forms.primary-btn>
+                        </a>
+
+                        <a href="{{ route('templogin', ['role' => 'user']) }}">
+                            <x-forms.primary-btn
+                                id="login-button"
+                                class="w-full"
+                                :isOutline="true"
+                            >
+                                Login as User
+                            </x-forms.primary-btn>
+                        </a>
+                    </div>
+                @endif
 
                 <div class="mb-2">
                     <x-ui.horizontal-logo />
@@ -39,7 +65,7 @@
                         type="password"
                         wire:model="password" />
 
-                        <x-forms.primary-btn
+                    <x-forms.primary-btn
                         type="submit"
                         id="login-button"
                         class="w-full"
