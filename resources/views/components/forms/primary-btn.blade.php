@@ -8,6 +8,7 @@
         <x-primary-button
             icon="check_circle"
             type="submit"
+            :isOutline="true"
             id="submit-button"
             class="w-full"
         >
@@ -21,11 +22,19 @@
         - Any additional attributes passed will be merged with the default classes on the button element.
 --}}
 
+<?php
+    if (isset($isOutline) && $isOutline) {
+        $classes = 'bg-transparent border border-[var(--accent-clr)] text-[var(--accent-clr)] hover:bg-[var(--accent-clr)] hover:text-white';
+    } else {
+        $classes = 'bg-[var(--accent-clr)] hover:brightness-90 text-white';
+    }
+?>
+
 <button 
     type="{{ $type ?? 'button' }}" {{-- Button type (defaults to "button" if not specified) --}}
     {{-- Merge additional attributes and apply default styling classes using --accent-clr --}}
     {{ $attributes->merge([
-        'class' => 'bg-[var(--accent-clr)] hover:brightness-90 text-white font-medium py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-[var(--accent-clr)] cursor-pointer'
+        'class' => $classes . ' font-medium py-3 px-6 rounded-full cursor-pointer'
     ]) }}
 >
     {{-- Optional icon section --}}
