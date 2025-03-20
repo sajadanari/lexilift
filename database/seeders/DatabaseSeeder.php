@@ -12,6 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([
+            RoleSeeder::class,
+        ]);
+
         if (config('app.env') === 'local') {
             $this->call([
                 LocalSeeder::class,

@@ -34,6 +34,13 @@
             <x-sidebar.sidebar-item icon="person" :active="request()->routeIs('dashboard')" route="{{ route('dashboard') }}">
                 {{ Auth::user()->name }}
             </x-sidebar.sidebar-item>
+
+            {{-- Show Role --}}
+            @if (config('app.env') === 'local')
+                <x-sidebar.sidebar-item route="#">
+                    Role: {{ implode(', ', Auth::user()->roles->pluck('local_name')->toArray()) }}
+                </x-sidebar.sidebar-item>                
+            @endif
         @endauth
 
         <x-sidebar.sidebar-item icon="home" :active="request()->routeIs('home')" route="{{ route('home') }}">

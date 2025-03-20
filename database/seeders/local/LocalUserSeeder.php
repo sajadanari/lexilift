@@ -19,11 +19,15 @@ class LocalUserSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
+        $admin->assignRole('admin');
+
         // Create User
         $user = User::create([
             'name' => 'User',
             'email' => 'user@lxilift.com',
             'password' => 'password',
         ]);
+
+        $user->assignRole('user');
     }
 }
