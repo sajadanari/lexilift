@@ -1,3 +1,11 @@
 <div>
-    hello from users page
+    @switch($page)
+        @case('index')
+            @include('livewire.users.index')
+            @break
+        @case('create')
+        @case('edit')
+            @include('livewire.users.create-edit')
+            @break
+    @endswitch
 </div>
