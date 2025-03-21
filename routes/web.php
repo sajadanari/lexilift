@@ -11,6 +11,8 @@ if(config('app.env') === 'local') {
     require_once('test.php');
 }
 
+require_once('admin.php');
+
 Route::get('/', Home::class)->name('home');
 
 Route::get('/dashboard', Dashboard::class)->name('dashboard');
