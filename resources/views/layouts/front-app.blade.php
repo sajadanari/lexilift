@@ -15,7 +15,7 @@
 
 <body>
 
-    <x-sidebar.front-sidebar />
+    <x-sidebar.sidebar />
 
     <main>
         {{ $slot }}

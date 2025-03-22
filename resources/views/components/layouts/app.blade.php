@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <x-sidebar.admin-sidebar />
+    <x-sidebar.sidebar />
 
     <main>
         {{ $slot }}
