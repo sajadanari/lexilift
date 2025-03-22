@@ -29,5 +29,11 @@ class LocalUserSeeder extends Seeder
         ]);
 
         $user->assignRole('user');
+
+        // Create 50 User and assign user role
+        $users = User::factory()->count(50)->create();
+        $users->each(function ($user) {
+            $user->assignRole('user');
+        });
     }
 }
