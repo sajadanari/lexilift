@@ -10,6 +10,8 @@ abstract class BaseTable extends Component
 {
     use WithPagination;
 
+    protected $listeners = ['user-deleted' => '$refresh'];
+
     public $search = '';
     public $perPage = 12;
 
