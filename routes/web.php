@@ -12,16 +12,15 @@ if(config('app.env') === 'local') {
 }
 
 require_once('admin.php');
+require_once('user.php');
 
 Route::get('/', Home::class)->name('home');
 
-Route::get('/dashboard', Dashboard::class)->name('dashboard');
-
-Route::get('/mywords', MyWords::class)->name('mywords');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+});
 
 // Auth routes
-Route::name('auth.')->group(function () {
-    Route::get('login', Login::class)->name('login');
-    Route::get('register', Register::class)->name('register');
-    Route::post('/logout', [Login::class, 'logout'])->name('logout');
-});
+Route::get('login', Login::class)->name('login');
+Route::get('register', Register::class)->name('register');
+Route::post('/logout', [Login::class, 'logout'])->middleware('auth')->name('logout');

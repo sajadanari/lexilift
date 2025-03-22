@@ -25,7 +25,7 @@
         </li>
 
         @guest
-            <x-sidebar.sidebar-item icon="login" :active="request()->routeIs('auth.login')" route="{{ route('auth.login') }}">
+            <x-sidebar.sidebar-item icon="login" :active="request()->routeIs('login')" route="{{ route('login') }}">
                 Login
             </x-sidebar.sidebar-item>
         @endguest
@@ -69,11 +69,11 @@
         @auth
             <x-sidebar.sidebar-item
                 icon="logout"
-                route="{{ route('auth.logout') }}"
+                route="{{ route('logout') }}"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 Logout
             </x-sidebar.sidebar-item>
-            <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" class="d-none">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
             </form>
         @endauth

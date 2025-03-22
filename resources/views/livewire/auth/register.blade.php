@@ -9,7 +9,7 @@
 <div class="flex h-full w-full">
     {{-- If screen was small, just show right side and hide left side --}}
     <div class="display-none md:flex md:w-[60%] left-side flex items-center justify-center text-white">
-        
+
     </div>
 
     <div class="w-full px-4 md:w-[40%] md:px-4 flex items-center justify-center">
@@ -29,35 +29,35 @@
                 </div>
 
                 <form wire:submit.prevent="register">
-                    <x-forms.input-field 
-                        name="name" 
-                        icon="person" 
-                        placeholder="Full Name" 
+                    <x-forms.input-field
+                        name="name"
+                        icon="person"
+                        placeholder="Full Name"
                         id="name"
                         wire:model="name"
                     />
 
-                    <x-forms.input-field 
-                        name="email" 
-                        icon="email" 
-                        placeholder="example@email.com" 
-                        id="email" 
+                    <x-forms.input-field
+                        name="email"
+                        icon="email"
+                        placeholder="example@email.com"
+                        id="email"
                         wire:model="email"
                     />
 
-                    <x-forms.input-field 
-                        name="password" 
-                        icon="lock" 
-                        placeholder="Password" 
+                    <x-forms.input-field
+                        name="password"
+                        icon="lock"
+                        placeholder="Password"
                         id="password"
                         type="password"
                         wire:model="password"
                     />
 
-                    <x-forms.input-field 
-                        name="password_confirmation" 
-                        icon="lock" 
-                        placeholder="Confirm Password" 
+                    <x-forms.input-field
+                        name="password_confirmation"
+                        icon="lock"
+                        placeholder="Confirm Password"
                         id="password_confirmation"
                         type="password"
                         wire:model="password_confirmation"
@@ -74,7 +74,7 @@
                     <div class="text-center mt-4">
                         Already have an account?
                         <x-links.main-link
-                            href="{{ route('auth.login') }}"
+                            href="{{ route('login') }}"
                             class=""
                         >
                             Sign in

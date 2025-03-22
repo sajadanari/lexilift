@@ -10,7 +10,7 @@
 
     {{-- If screen was small, just show right side and hide left side --}}
     <div class="display-none md:flex md:w-[60%] left-side flex items-center justify-center text-white">
-        
+
     </div>
 
     {{-- Right Side --}}
@@ -20,7 +20,7 @@
             <div class="w-full max-w-md">
 
                 {{-- If app.env was local --}}
-                @if(config('app.env') === 'local')                
+                @if(config('app.env') === 'local')
                     <div class="grid grid-cols-1 gap-3 mb-3">
                         <a href="{{ route('templogin', ['role' => 'admin']) }}">
                             <x-forms.primary-btn
@@ -76,7 +76,7 @@
                     <div class="text-center mt-4">
                         Don't have an account?
                         <x-links.main-link
-                            href="{{ route('auth.register') }}"
+                            href="{{ route('register') }}"
                             class=""
                         >
                             Sign up now!
