@@ -20,7 +20,7 @@
                                 <span>{{ $column['label'] }}</span>
                                 @if(($column['sortable'] ?? false) && $sortField === $key)
                                     <span class="material-symbols-outlined text-sm">
-                                        {{ $sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                                        {{ $sortDirection === 'asc' ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
                                     </span>
                                 @endif
                             </div>
