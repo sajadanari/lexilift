@@ -23,8 +23,16 @@ class WordsTable extends BaseTable
     {
         return [
             'word' => ['label' => 'Word', 'sortable' => true],
-            'part_of_speech' => ['label' => 'Part Of Speech', 'sortable' => true],
-            'dificulty' => ['label' => 'Dificulty', 'sortable' => true],
+            'part_of_speech' => [
+                'label' => 'Part Of Speech',
+                'sortable' => true,
+                'formatter' => fn($item) => $item->part_of_speech?->label()
+            ],
+            'difficulty_level' => [
+                'label' => 'Difficulty',
+                'sortable' => true,
+                'formatter' => fn($item) => $item->difficulty_level?->label()
+            ],
             'actions' => [
                 'label' => 'Actions',
                 'view' => 'livewire.my-words.my-words-actions',
