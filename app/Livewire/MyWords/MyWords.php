@@ -26,6 +26,7 @@ class MyWords extends Component
         'frequency' => '',
         'difficulty_level' => '',
         'notes' => '',
+        'user_id' => null,
     ];
 
     protected $rules = [
@@ -54,6 +55,7 @@ class MyWords extends Component
 
     public function showCreatePage()
     {
+        $this->wordData['user_id'] = auth()->id();
         $this->page = 'create';
     }
 
