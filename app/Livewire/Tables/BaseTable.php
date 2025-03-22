@@ -8,54 +8,45 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Abstract base class for creating reusable data tables with Livewire
+ * Supports searching and sorting on both local and related fields
  *
- * Column Formatting Options:
- * 1. Using formatter callback:
- * ```php
- * 'status' => [
- *     'label' => 'Status',
- *     'sortable' => true,
- *     'formatter' => fn($item) => ucfirst($item->status)
- * ]
- * ```
+ * Features:
+ * - Automatic relation handling for search and sort
+ * - Smart join management to prevent duplicates
+ * - Configurable column formatting
+ * - URL state persistence
+ * - Pagination
  *
- * 2. Using view component:
- * ```php
- * 'status' => [
- *     'label' => 'Status',
- *     'view' => 'components.status-badge',
- *     'params' => ['color' => 'green']
- * ]
- * ```
- *
- * Example implementation:
+ * Usage with relations:
  * ```php
  * class UsersTable extends BaseTable
  * {
+ *     // Define how related fields map to database columns
+ *     protected array $relationMap = [
+ *         'role.name' => ['roles', 'name', 'role_id']
+ *     ];
+ *
  *     protected function baseQuery(): Builder
  *     {
- *         return User::query();
+ *         return User::query()->with(['role']);
  *     }
  *
  *     protected function searchableFields(): array
  *     {
- *         return ['name', 'email'];
+ *         return ['name', 'email', 'role.name'];
  *     }
  *
  *     protected function columns(): array
  *     {
  *         return [
- *             'id' => [
- *                 'label' => '#',
- *                 'sortable' => true
- *             ],
  *             'name' => [
  *                 'label' => 'Name',
  *                 'sortable' => true
  *             ],
- *             'actions' => [
- *                 'label' => 'Actions',
- *                 'view' => 'components.tables.actions'
+ *             'role.name' => [
+ *                 'label' => 'Role',
+ *                 'sortable' => true,
+ *                 'formatter' => fn($item) => $item->role?->name
  *             ]
  *         ];
  *     }
@@ -93,59 +84,137 @@ abstract class BaseTable extends Component
     ];
 
     /**
-     * Get the base query for the table
+     * Map of relation fields to their database structure
+     * Format: [field => [table, column, foreign_key]]
+     * Example: ['user.name' => ['users', 'name', 'user_id']]
      *
-     * Example:
-     * ```php
-     * protected function baseQuery(): Builder
-     * {
-     *     return Post::query()
-     *         ->with(['user', 'category'])
-     *         ->where('status', 'published');
-     * }
-     * ```
-     *
-     * @return Builder Base Eloquent query builder
+     * This map is used to:
+     * 1. Resolve relation fields to actual database columns
+     * 2. Configure proper table joins
+     * 3. Handle sorting and searching on related fields
      */
-    abstract protected function baseQuery(): Builder;
+    protected array $relationMap = [];
 
     /**
-     * Define which fields should be searchable in the table
-     *
-     * Example:
-     * ```php
-     * protected function searchableFields(): array
-     * {
-     *     return [
-     *         'title',
-     *         'description',
-     *         'user.name',  // Search in related table
-     *         'category.name'
-     *     ];
-     * }
-     * ```
-     *
-     * @return array Array of database column names
+     * Get relationships that require joining for search/sort operations
+     * Automatically extracts relation names from dot notation fields
+     * Example: 'user.name' becomes 'user'
      */
-    abstract protected function searchableFields(): array;
+    protected function getRelationships(): array
+    {
+        return array_map(function($field) {
+            return explode('.', $field)[0];
+        }, array_filter($this->searchableFields(), function($field) {
+            return str_contains($field, '.');
+        }));
+    }
 
     /**
-     * Build the complete query with search and sorting
-     * @return Builder Modified query builder with search and sort applied
+     * Resolve a field name to its actual database column
+     * Handles both local and relation fields
+     * Example: 'user.name' becomes 'users.name'
+     */
+    protected function resolveFieldColumn(string $field): string
+    {
+        if (isset($this->relationMap[$field])) {
+            [$table, $column] = $this->relationMap[$field];
+            return "$table.$column";
+        }
+
+        if (str_contains($field, '.')) {
+            [$relation, $column] = explode('.', $field);
+            return "{$relation}s.{$column}";
+        }
+
+        return $field;
+    }
+
+    /**
+     * Add a join clause for a relation if not already present
+     * Prevents duplicate joins and handles foreign key mapping
+     *
+     * @param Builder $query The query builder instance
+     * @param string $relation The relation name (e.g., 'user')
+     * @param array $config The relation configuration [table, column, foreign_key]
+     */
+    protected function addJoinForRelation(Builder $query, string $relation, array $config): void
+    {
+        $table = $config[0] ?? "{$relation}s";
+        $foreignKey = $config[2] ?? "{$relation}_id";
+        $baseTable = $query->getModel()->getTable();
+
+        // Check if join already exists
+        if (!collect($query->getQuery()->joins)->pluck('table')->contains($table)) {
+            $query->leftJoin($table, "$baseTable.$foreignKey", '=', "$table.id");
+        }
+    }
+
+    /**
+     * Build the complete query with intelligent relation handling
+     * Manages joins automatically based on search and sort requirements
+     *
+     * Features:
+     * - Automatic join management
+     * - Smart search across relations
+     * - Proper column name resolution
+     * - Base table field selection to prevent conflicts
+     *
+     * @return Builder The modified query builder with all conditions applied
      */
     protected function query(): Builder
     {
-        return $this->baseQuery()
-            ->when($this->search, function($query) {
-                $query->where(function($query) {
-                    foreach($this->searchableFields() as $field) {
-                        $query->orWhere($field, 'like', "%{$this->search}%");
+        $query = $this->baseQuery();
+        $baseTable = $query->getModel()->getTable();
+        $addedJoins = [];
+
+        // Helper function to add join
+        $addJoin = function($field) use ($query, $baseTable, &$addedJoins) {
+            if (!isset($this->relationMap[$field])) return null;
+
+            [$table, $column, $foreignKey] = $this->relationMap[$field];
+
+            if (!in_array($table, $addedJoins)) {
+                $query->leftJoin($table, "$baseTable.$foreignKey", '=', "$table.id");
+                $addedJoins[] = $table;
+            }
+
+            return "$table.$column";
+        };
+
+        // Handle search
+        if ($this->search) {
+            $query->where(function($query) use ($addJoin) {
+                $first = true;
+                foreach ($this->searchableFields() as $field) {
+                    $method = $first ? 'where' : 'orWhere';
+                    $first = false;
+
+                    if (str_contains($field, '.')) {
+                        if ($columnName = $addJoin($field)) {
+                            $query->$method($columnName, 'like', "%{$this->search}%");
+                        }
+                    } else {
+                        $query->$method("$field", 'like', "%{$this->search}%");
                     }
-                });
-            })
-            ->when($this->sortField, function($query) {
-                $query->orderBy($this->sortField, $this->sortDirection);
+                }
             });
+        }
+
+        // Handle sorting
+        if ($this->sortField) {
+            $columnName = str_contains($this->sortField, '.')
+                ? $addJoin($this->sortField)
+                : $this->sortField;
+
+            if ($columnName) {
+                $query->orderBy($columnName, $this->sortDirection);
+            }
+        }
+
+        // Always select base table fields to avoid column conflicts
+        $query->select("$baseTable.*");
+
+        return $query;
     }
 
     /**
