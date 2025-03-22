@@ -44,7 +44,7 @@ class Users extends Component
     {
         User::findOrFail($userID)->delete();
         session()->flash('message', 'User deleted successfully!');
-        $this->dispatch('user-deleted');
+        $this->dispatch('table-refresh');
     }
 
     public function save()
