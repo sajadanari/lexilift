@@ -50,6 +50,9 @@ class Register extends Component
             'password' => Hash::make($this->password),
         ]);
 
+        // Assign user role
+        $user->assignRole('user');
+
         // Login the user
         Auth::login($user);
 
