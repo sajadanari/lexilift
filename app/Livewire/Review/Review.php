@@ -3,11 +3,18 @@
 namespace App\Livewire\Review;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Review extends Component
 {
+    use WithPagination;
+
     public function render()
     {
-        return view('livewire.review.review')->layout('layouts.front-app');
+        $words = auth()->user()->words()->simplePaginate(1);
+
+        return view('livewire.review.review', [
+            'words' => $words
+        ])->layout('layouts.front-app');
     }
 }
