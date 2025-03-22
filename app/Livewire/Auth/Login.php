@@ -37,14 +37,14 @@ class Login extends Component
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
             // Authentication successful
             session()->regenerate();
-            
+
             // Redirect to dashboard or intended URL
             return redirect()->intended(route('home'));
         }
 
         // Authentication failed
         $this->addError('email', 'Invalid credentials. Please try again.');
-        
+
         // Clear password field
         $this->password = '';
     }
@@ -54,12 +54,12 @@ class Login extends Component
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
-        
+
         return redirect()->route('home');
     }
 
     public function render()
     {
-        return view('livewire.auth.login');
+        return view('livewire.auth.login')->layout('layouts.auth-app');
     }
 }

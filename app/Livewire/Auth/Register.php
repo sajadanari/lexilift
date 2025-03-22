@@ -52,16 +52,16 @@ class Register extends Component
 
         // Login the user
         Auth::login($user);
-        
+
         // Regenerate session
         session()->regenerate();
-        
+
         // Redirect to dashboard
         return redirect()->intended(route('home'));
     }
 
     public function render()
     {
-        return view('livewire.auth.register');
+        return view('livewire.auth.register')->layout('layouts.auth-app');
     }
 }
