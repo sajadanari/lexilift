@@ -13,16 +13,17 @@
                         <div>
                             <span style="font-size: 40px !important;" class="material-icons-round text-white rounded-full p-4 {{
                                 match($word->part_of_speech) {
-                                    \App\Enums\PartOfSpeech::NOUN => 'bg-blue-600',
-                                    \App\Enums\PartOfSpeech::PRONOUN => 'bg-blue-400',
-                                    \App\Enums\PartOfSpeech::VERB => 'bg-green-600',
-                                    \App\Enums\PartOfSpeech::ADJECTIVE => 'bg-purple-600',
-                                    \App\Enums\PartOfSpeech::ADVERB => 'bg-yellow-600',
-                                    \App\Enums\PartOfSpeech::PREPOSITION => 'bg-pink-600',
-                                    \App\Enums\PartOfSpeech::CONJUNCTION => 'bg-orange-600',
-                                    \App\Enums\PartOfSpeech::INTERJECTION => 'bg-red-600',
-                                    \App\Enums\PartOfSpeech::ARTICLE => 'bg-gray-600',
-                                    default => 'bg-gray-600'
+                                    \App\Enums\PartOfSpeech::NOUN => 'bg-indigo-500',
+                                    \App\Enums\PartOfSpeech::PRONOUN => 'bg-teal-500',
+                                    \App\Enums\PartOfSpeech::VERB => 'bg-emerald-500',
+                                    \App\Enums\PartOfSpeech::ADJECTIVE => 'bg-fuchsia-500',
+                                    \App\Enums\PartOfSpeech::ADVERB => 'bg-amber-500',
+                                    \App\Enums\PartOfSpeech::PREPOSITION => 'bg-cyan-500',
+                                    \App\Enums\PartOfSpeech::CONJUNCTION => 'bg-orange-500',
+                                    \App\Enums\PartOfSpeech::INTERJECTION => 'bg-rose-500',
+                                    \App\Enums\PartOfSpeech::ARTICLE => 'bg-gray-500',
+                                    'default' => 'bg-gray-400',
+
                                 }
                             }}">
                                 {{
