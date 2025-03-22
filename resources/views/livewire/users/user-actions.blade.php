@@ -6,7 +6,7 @@
             </span>
         </button>
     @endif
-    <button wire:click="deleteUser({{ $item->id }})" class="inline-flex text-red p-2 rounded-full hover:text-red-900 hover:bg-gray-200 cursor-pointer">
+    <button wire:click="$parent.deleteUser({{ $item->id }})" class="inline-flex text-red p-2 rounded-full hover:text-red-900 hover:bg-gray-200 cursor-pointer">
         <span class="material-symbols-outlined">
             delete
         </span>
