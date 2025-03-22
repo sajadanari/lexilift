@@ -4,19 +4,29 @@ namespace App\Livewire\Tables;
 
 use App\Models\Word;
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\Component;
 
+/**
+ * Words table implementation with relation handling
+ * Supports searching and sorting on both word fields and related user data
+ */
 class WordsTable extends BaseTable
 {
+    /**
+     * Configure relation field mapping
+     * Maps 'user.name' to users table with proper foreign key
+     */
+    protected array $relationMap = [
+        'user.name' => ['users', 'name', 'user_id']
+    ];
 
     protected function baseQuery(): Builder
     {
-        return Word::query();
+        return Word::query()->with(['user']);
     }
 
     protected function searchableFields(): array
     {
-        return ['word', 'email'];
+        return ['word', 'user.name'];
     }
 
     protected function columns(): array
@@ -33,6 +43,11 @@ class WordsTable extends BaseTable
                 'sortable' => true,
                 'formatter' => fn($item) => $item->difficulty_level?->label()
             ],
+            'user.name' => [
+                'label' => 'User',
+                'sortable' => true,
+                'formatter' => fn($item) => $item->user?->name
+            ],
             'actions' => [
                 'label' => 'Actions',
                 'view' => 'livewire.my-words.my-words-actions',
@@ -44,6 +59,4 @@ class WordsTable extends BaseTable
             'created_at' => ['label' => 'Created At', 'sortable' => true],
         ];
     }
-
-
 }
