@@ -41,6 +41,15 @@ abstract class BaseTable extends Component
         return $this->columns();
     }
 
+    protected function renderCustomColumn($item, $key, $column)
+    {
+        if (isset($column['view'])) {
+            $params = isset($column['params']) ? $column['params'] : [];
+            return view($column['view'], array_merge(['item' => $item, 'key' => $key], $params));
+        }
+        return $item->{$key};
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();

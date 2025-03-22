@@ -22,6 +22,13 @@ class UsersTable extends BaseTable
         return [
             'name' => ['label' => 'Name'],
             'email' => ['label' => 'Email'],
+            'actions' => [
+                'label' => 'Actions',
+                'view' => 'livewire.users.user-actions',
+                'params' => [
+                    'can_edit' => true
+                ]
+            ],
             'created_at' => ['label' => 'Created At'],
         ];
     }

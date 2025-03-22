@@ -25,7 +25,11 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                         @foreach($columns as $key => $column)
                             <td class="px-6 py-4 @if($loop->first) font-medium text-gray-900 whitespace-nowrap dark:text-white @endif">
-                                {{ $item->{$key} }}
+                                @if(isset($column['view']))
+                                    {!! $this->renderCustomColumn($item, $key, $column) !!}
+                                @else
+                                    {{ $item->{$key} }}
+                                @endif
                             </td>
                         @endforeach
                     </tr>
