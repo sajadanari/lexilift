@@ -14,8 +14,15 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     @foreach($columns as $key => $column)
-                        <th scope="col" class="px-6 py-3">
-                            {{ $column['label'] }}
+                        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" wire:click="sort('{{ $key }}')">
+                            <div class="flex items-center space-x-1">
+                                <span>{{ $column['label'] }}</span>
+                                @if($sortField === $key)
+                                    <span class="material-symbols-outlined text-sm">
+                                        {{ $sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+                                    </span>
+                                @endif
+                            </div>
                         </th>
                     @endforeach
                 </tr>

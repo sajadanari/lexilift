@@ -14,10 +14,14 @@ abstract class BaseTable extends Component
 
     public $search = '';
     public $perPage = 12;
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
 
     protected $queryString = [
         'search' => ['except' => ''],
         'perPage' => ['except' => 12],
+        'sortField' => ['except' => 'id'],
+        'sortDirection' => ['except' => 'desc'],
     ];
 
     abstract protected function baseQuery(): Builder;
@@ -33,7 +37,20 @@ abstract class BaseTable extends Component
                         $query->orWhere($field, 'like', "%{$this->search}%");
                     }
                 });
+            })
+            ->when($this->sortField, function($query) {
+                $query->orderBy($this->sortField, $this->sortDirection);
             });
+    }
+
+    public function sort($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
     }
 
     abstract protected function columns(): array;

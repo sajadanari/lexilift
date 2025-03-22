@@ -20,16 +20,17 @@ class UsersTable extends BaseTable
     protected function columns(): array
     {
         return [
-            'name' => ['label' => 'Name'],
-            'email' => ['label' => 'Email'],
+            'name' => ['label' => 'Name', 'sortable' => true],
+            'email' => ['label' => 'Email', 'sortable' => true],
             'actions' => [
                 'label' => 'Actions',
                 'view' => 'livewire.users.user-actions',
                 'params' => [
                     'can_edit' => true
-                ]
+                ],
+                'sortable' => false
             ],
-            'created_at' => ['label' => 'Created At'],
+            'created_at' => ['label' => 'Created At', 'sortable' => true],
         ];
     }
 }
