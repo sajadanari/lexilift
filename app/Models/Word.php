@@ -6,9 +6,12 @@ use App\Enums\PartOfSpeech;
 use App\Enums\DifficultyLevel;
 use App\Enums\FrequencyLevel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Word extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'word',
         'meaning',

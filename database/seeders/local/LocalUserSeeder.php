@@ -3,6 +3,7 @@
 namespace Database\Seeders\Local;
 
 use App\Models\User;
+use App\Models\Word;
 use Illuminate\Database\Seeder;
 
 class LocalUserSeeder extends Seeder
@@ -35,5 +36,8 @@ class LocalUserSeeder extends Seeder
         $users->each(function ($user) {
             $user->assignRole('user');
         });
+
+        // Create 200 Word
+        $words = Word::factory()->count(200)->create();
     }
 }
