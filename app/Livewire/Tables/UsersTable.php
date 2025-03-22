@@ -3,32 +3,26 @@
 namespace App\Livewire\Tables;
 
 use App\Models\User;
-use Livewire\Component;
-use Livewire\WithPagination;
+use Illuminate\Database\Eloquent\Builder;
 
-class UsersTable extends Component
+class UsersTable extends BaseTable
 {
-    use WithPagination;
-
-    public $search = '';
-    public $perPage = 12;
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'perPage' => ['except' => 12],
-    ];
-
-    public function updatingSearch()
+    protected function baseQuery(): Builder
     {
-        $this->resetPage();
+        return User::query();
     }
 
-    public function render()
+    protected function searchableFields(): array
     {
-        return view('livewire.tables.users-table.users-table', [
-            'users' => User::where('name', 'like', "%{$this->search}%")
-                          ->orWhere('email', 'like', "%{$this->search}%")
-                          ->paginate($this->perPage)
-        ]);
+        return ['name', 'email'];
+    }
+
+    protected function columns(): array
+    {
+        return [
+            'name' => ['label' => 'Name'],
+            'email' => ['label' => 'Email'],
+            'created_at' => ['label' => 'Created At'],
+        ];
     }
 }
