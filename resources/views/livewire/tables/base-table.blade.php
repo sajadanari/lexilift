@@ -46,6 +46,13 @@
         </table>
     </div>
 
+    {{-- If there is no resault --}}
+    @if($items->isEmpty())
+        <div class="flex justify-center items-center h-24">
+            <span class="text-gray-500 dark:text-gray-400">No results found</span>
+        </div>
+    @endif
+
     <div class="p-2">
         {{ $items->links() }}
     </div>
