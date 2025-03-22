@@ -40,7 +40,7 @@ class Users extends Component
         $this->page = 'edit';
     }
 
-    public function deleteUset($userID)
+    public function deleteUser($userID)
     {
         User::findOrFail($userID)->delete();
         session()->flash('message', 'User deleted successfully!');
