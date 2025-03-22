@@ -21,12 +21,12 @@ class WordsTable extends BaseTable
 
     protected function baseQuery(): Builder
     {
-        return Word::query()->with(['user']);
+        return Word::query()->with(['user'])->where('user_id', auth()->id());
     }
 
     protected function searchableFields(): array
     {
-        return ['word', 'user.name'];
+        return ['word','part_of_speech', 'difficulty_level', 'user.name'];
     }
 
     protected function columns(): array
@@ -42,11 +42,6 @@ class WordsTable extends BaseTable
                 'label' => 'Difficulty',
                 'sortable' => true,
                 'formatter' => fn($item) => $item->difficulty_level?->label()
-            ],
-            'user.name' => [
-                'label' => 'User',
-                'sortable' => true,
-                'formatter' => fn($item) => $item->user?->name
             ],
             'actions' => [
                 'label' => 'Actions',

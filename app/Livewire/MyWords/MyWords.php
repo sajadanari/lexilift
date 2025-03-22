@@ -79,7 +79,7 @@ class MyWords extends Component
     {
         $word = Word::findOrFail($wordId);
         $word->delete();
-        $this->dispatch('refreshDatatable');
+        $this->dispatch('table-refresh');
         session()->flash('message', 'Word deleted successfully!');
     }
 
