@@ -15,8 +15,12 @@ class WordFactory extends Factory
 
     public function definition(): array
     {
+        // Get a random user or create one if none exists
+        $userId = User::query()->inRandomOrder()->first()?->id
+            ?? User::factory()->create()->id;
+
         return [
-            'user_id' => User::factory(),
+            'user_id' => $userId,
             'word' => fake()->word(),
             'meaning' => fake()->paragraph(),
             'synonyms' => fake()->words(3, true),

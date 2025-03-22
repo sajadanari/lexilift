@@ -37,7 +37,7 @@ class LocalUserSeeder extends Seeder
             $user->assignRole('user');
         });
 
-        // Create 200 Word
-        $words = Word::factory()->count(200)->create();
+        // Create 1000 Word
+        $words = Word::factory()->count(1000)->create();
     }
 }
