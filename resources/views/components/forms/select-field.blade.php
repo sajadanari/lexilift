@@ -19,7 +19,7 @@
         <select name="{{ $name }}"
             class="focus:outline-none focus:ring-1 focus:border-transparent
                    {{ isset($icon) && $icon ? 'pl-14' : 'pl-6' }} pr-4 py-4 border border-gray-300 rounded-full w-full
-                   appearance-none bg-white"
+                   appearance-none bg-white {{ !isset($icon) ? 'pr-14' : '' }}"
             {{ $attributes }}>
             @if (isset($placeholder))
                 <option value="">{{ $placeholder }}</option>
