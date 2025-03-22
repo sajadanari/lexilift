@@ -40,9 +40,10 @@
                 @endforeach
             </tbody>
         </table>
-
-        <div class="p-2">
-            {{ $users->links() }}
-        </div>
     </div>
+
+    <div class="p-2">
+        {{ $users->links() }}
+    </div>
+
 </div>
