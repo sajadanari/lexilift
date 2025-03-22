@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
  * Words table implementation with relation handling
  * Supports searching and sorting on both word fields and related user data
  */
-class WordsTable extends BaseTable
+class AdminWordsTable extends BaseTable
 {
     /**
      * Configure relation field mapping
@@ -21,7 +21,7 @@ class WordsTable extends BaseTable
 
     protected function baseQuery(): Builder
     {
-        return Word::query()->with(['user'])->where('user_id', auth()->id());
+        return Word::query()->with(['user']);
     }
 
     protected function searchableFields(): array
@@ -42,6 +42,11 @@ class WordsTable extends BaseTable
                 'label' => 'Difficulty',
                 'sortable' => true,
                 'formatter' => fn($item) => $item->difficulty_level?->label()
+            ],
+            'user.name' => [
+                'label' => 'User',
+                'sortable' => true,
+                'formatter' => fn($item) => $item->user->name
             ],
             'actions' => [
                 'label' => 'Actions',

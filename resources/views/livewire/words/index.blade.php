@@ -1,6 +1,6 @@
 <div class="mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">My Words</h1>
+        <h1 class="text-2xl font-bold text-gray-800">Words</h1>
         <x-forms.primary-btn
             wire:click="showCreatePage"
             icon="add"
@@ -16,5 +16,5 @@
     @endif
 
     {{-- Words Table --}}
-    <livewire:tables.user-words-table />
+    <livewire:tables.admin-words-table />
 </div>

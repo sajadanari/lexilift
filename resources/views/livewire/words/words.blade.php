@@ -1,0 +1,11 @@
+<div>
+    @switch($page)
+        @case('index')
+            @include('livewire.words.index')
+            @break
+        @case('create')
+        @case('edit')
+            @include('livewire.words.create-edit')
+            @break
+    @endswitch
+</div>

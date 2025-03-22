@@ -51,8 +51,8 @@
             Users
         </x-sidebar.sidebar-item>
 
-        <x-sidebar.sidebar-item icon="title" route="{{ route('mywords') }}" :active="request()->routeIs('mywords')">
-            My Words
+        <x-sidebar.sidebar-item icon="title" route="{{ route('admin.words') }}" :active="request()->routeIs('admin.words')">
+            Words
         </x-sidebar.sidebar-item>
 
         <x-sidebar.sidebar-item icon="settings" dropdown="true" :submenuItems="[
