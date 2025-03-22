@@ -22,6 +22,13 @@ class UsersTable extends BaseTable
         return [
             'name' => ['label' => 'Name', 'sortable' => true],
             'email' => ['label' => 'Email', 'sortable' => true],
+            'roles' => [
+                'label' => 'Roles',
+                'sortable' => false,
+                'formatter' => function($item) {
+                    return $item->roles->pluck('local_name')->implode(', ') ?: '-';
+                }
+            ],
             'actions' => [
                 'label' => 'Actions',
                 'view' => 'livewire.users.user-actions',
