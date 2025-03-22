@@ -16,25 +16,6 @@
     @endif
 
 
-    <table class="table-auto w-full mb-6 border-collapse">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Email
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($allUsers as $user)
-                <tr>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <livewire:tables.users-table />
 
 </div>
