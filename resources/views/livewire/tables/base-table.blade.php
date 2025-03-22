@@ -14,7 +14,7 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     @foreach($columns as $key => $column)
-                        <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider {{ ($column['sortable'] ?? false) ? 'cursor-pointer' : '' }}"
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider {{ ($column['sortable'] ?? false) ? 'cursor-pointer' : '' }}"
                             @if($column['sortable'] ?? false) wire:click="sort('{{ $key }}')" @endif>
                             <div class="flex items-center space-x-1">
                                 <span>{{ $column['label'] }}</span>
