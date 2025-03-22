@@ -45,6 +45,12 @@ abstract class BaseTable extends Component
 
     public function sort($field)
     {
+        // Check if column exists and is sortable
+        $columns = $this->getColumns();
+        if (!isset($columns[$field]) || !($columns[$field]['sortable'] ?? false)) {
+            return;
+        }
+
         if ($this->sortField === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
