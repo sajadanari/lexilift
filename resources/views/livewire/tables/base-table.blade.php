@@ -84,7 +84,9 @@
                         @foreach($columns as $key => $column)
                             {{-- Table Cells - First column has special styling --}}
                             <td class="px-6 py-4 @if($loop->first) font-medium text-gray-900 whitespace-nowrap dark:text-white @endif">
-                                @if(isset($column['view']))
+                                @if(isset($column['formatter']))
+                                    {!! $this->renderCustomColumn($item, $key, $column) !!}
+                                @elseif(isset($column['view']))
                                     {!! $this->renderCustomColumn($item, $key, $column) !!}
                                 @else
                                     {{ $item->{$key} }}

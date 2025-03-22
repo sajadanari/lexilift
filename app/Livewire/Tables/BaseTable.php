@@ -9,6 +9,25 @@ use Illuminate\Database\Eloquent\Builder;
 /**
  * Abstract base class for creating reusable data tables with Livewire
  *
+ * Column Formatting Options:
+ * 1. Using formatter callback:
+ * ```php
+ * 'status' => [
+ *     'label' => 'Status',
+ *     'sortable' => true,
+ *     'formatter' => fn($item) => ucfirst($item->status)
+ * ]
+ * ```
+ *
+ * 2. Using view component:
+ * ```php
+ * 'status' => [
+ *     'label' => 'Status',
+ *     'view' => 'components.status-badge',
+ *     'params' => ['color' => 'green']
+ * ]
+ * ```
+ *
  * Example implementation:
  * ```php
  * class UsersTable extends BaseTable
@@ -162,6 +181,14 @@ abstract class BaseTable extends Component
     /**
      * Define the table columns and their properties
      *
+     * Each column can have the following properties:
+     * - label: The display name for the column header
+     * - sortable: Whether the column can be sorted (boolean)
+     * - formatter: A callback function to format the cell value
+     *   Example: 'formatter' => fn($item) => $item->status?->label()
+     * - view: Path to a blade view for custom rendering
+     * - params: Additional parameters to pass to the view
+     *
      * Example:
      * ```php
      * protected function columns(): array
@@ -171,14 +198,14 @@ abstract class BaseTable extends Component
      *             'label' => '#',
      *             'sortable' => true
      *         ],
-     *         'title' => [
-     *             'label' => 'Title',
-     *             'sortable' => true
+     *         'name' => [
+     *             'label' => 'Name',
+     *             'sortable' => true,
+     *             'formatter' => fn($item) => ucfirst($item->name)
      *         ],
      *         'status' => [
      *             'label' => 'Status',
-     *             'view' => 'components.status-badge',
-     *             'params' => ['color' => 'green']
+     *             'formatter' => fn($item) => $item->status?->label()
      *         ],
      *         'actions' => [
      *             'label' => 'Actions',
@@ -202,27 +229,24 @@ abstract class BaseTable extends Component
     }
 
     /**
-     * Render a custom column using a view
-     *
-     * Custom Column Example:
-     * In your view file (e.g., components.status-badge.blade.php):
-     * ```blade
-     * <span class="badge bg-{{ $color }}">
-     *     {{ $item->status }}
-     * </span>
-     * ```
+     * Render a custom column using a formatter or view
      *
      * @param mixed $item Current row item
      * @param string $key Column key
-     * @param array $column Column configuration
+     * @param array $column Column configuration with optional 'formatter' or 'view'
      * @return mixed Rendered column content
      */
     protected function renderCustomColumn($item, $key, $column)
     {
+        if (isset($column['formatter']) && is_callable($column['formatter'])) {
+            return call_user_func($column['formatter'], $item, $key);
+        }
+
         if (isset($column['view'])) {
             $params = isset($column['params']) ? $column['params'] : [];
             return view($column['view'], array_merge(['item' => $item, 'key' => $key], $params));
         }
+
         return $item->{$key};
     }
 
