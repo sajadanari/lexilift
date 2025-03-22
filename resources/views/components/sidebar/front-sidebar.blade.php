@@ -51,6 +51,10 @@
             My Words
         </x-sidebar.sidebar-item>
 
+        <x-sidebar.sidebar-item icon="visibility" route="review" :active="request()->routeIs('review')">
+            Review
+        </x-sidebar.sidebar-item>
+
         <x-sidebar.sidebar-item icon="settings" dropdown="true" :submenuItems="[
             ['icon' => 'person', 'route' => '/', 'name' => 'Profile'],
             ['icon' => 'account_box', 'route' => '/', 'name' => 'Account'],
