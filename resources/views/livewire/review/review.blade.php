@@ -55,8 +55,8 @@
 
 
                     <div class="mb-3">
-                        <h3 class="text-sm font-medium text-gray-500">Meaning:</h3>
-                        <p class="text-gray-700">{{ $word->meaning }}</p>
+                        <h3 class="text-sm font-medium text-gray-500 text-center">Meaning</h3>
+                        <p class="text-gray-700 persian">{{ $word->meaning }}</p>
                     </div>
 
                     <div class="mb-3">
