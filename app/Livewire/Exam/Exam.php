@@ -5,6 +5,7 @@ namespace App\Livewire\Exam;
 use Livewire\Component;
 use App\Models\Word;
 use Illuminate\Support\Facades\Auth;
+use App\Services\OpenAIService;
 
 class Exam extends Component
 {
@@ -14,6 +15,12 @@ class Exam extends Component
     public $currentQuestionIndex = 0;
     public $examFinished = false;
     public $score = 0;
+    public $userInput = ''; // اضافه کردن متغیر
+
+    public function __construct()
+    {
+
+    }
 
     // شروع آزمون
     public function startExam()
@@ -81,22 +88,17 @@ class Exam extends Component
             // در اینجا می‌توانید برای انواع دیگر سوال (2 تا 4) منطق دلخواهتان را پیاده‌سازی کنید.
             // به عنوان نمونه:
             elseif($questionType == 2) {
-                // آرایه‌ای از الگوهای جمله برای سوالات تکمیل جمله
-                $sentenceTemplates = [
-                    "The weather was so hot that the ice cream started to ______ quickly.",
-                    "Students must ______ hard to improve their vocabulary.",
-                    "I couldn't ______ what she was saying because of the noise.",
-                    "It's important to ______ your goals clearly.",
-                    "She likes to ______ in the garden during weekends."
-                ];
+                // دریافت جمله از OpenAI
+                $sentence = "";
 
-                // انتخاب یک جمله تصادفی
-                $randomTemplate = $sentenceTemplates[array_rand($sentenceTemplates)];
+                // اگر نتوانستیم جمله دریافت کنیم، یک جمله پیش‌فرض استفاده می‌کنیم
+                if (!$sentence) {
+                    $sentence = "Please use the word '{$word->word}' in the _____";
+                }
 
-                // ایجاد گزینه‌های اشتباه
+                // ایجاد گزینه‌های اشتباه - حذف where type
                 $otherWords = Word::where('user_id', $word->user_id)
                     ->where('id', '!=', $word->id)
-                    ->where('type', $word->type) // کلمات هم‌نوع
                     ->inRandomOrder()
                     ->limit(3)
                     ->get();
@@ -108,36 +110,51 @@ class Exam extends Component
                 $questionData = [
                     'type' => 2,
                     'word' => $word,
-                    'prompt' => $randomTemplate,
+                    'prompt' => $sentence,
                     'options' => $options,
                     'correct' => $word->word
                 ];
             }
             elseif($questionType == 3) {
-                // سوال تطبیقی (matching) – در این نمونه ساده، می‌توان یک نمونه از چندگزینه‌ای متفاوت ارائه داد
-                $correctAnswer = $word->meaning;
+                // سوال تطبیقی - نمایش چند کلمه و معنی آنها به صورت درهم
                 $otherWords = Word::where('user_id', $word->user_id)
-                                  ->where('id', '!=', $word->id)
-                                  ->inRandomOrder()
-                                  ->limit(3)
-                                  ->get();
-                $wrongOptions = $otherWords->pluck('meaning')->toArray();
-                $options = array_merge([$correctAnswer], $wrongOptions);
-                shuffle($options);
+                    ->where('id', '!=', $word->id)
+                    ->inRandomOrder()
+                    ->limit(3)
+                    ->get();
+
+                $wordPairs = collect([$word])->merge($otherWords)->map(function($w) {
+                    return [
+                        'word' => $w->word,
+                        'meaning' => $w->meaning
+                    ];
+                })->toArray();
+
+                $words = collect($wordPairs)->pluck('word')->toArray();
+                $meanings = collect($wordPairs)->pluck('meaning')->toArray();
+                shuffle($meanings);
 
                 $questionData = [
                     'type' => 3,
                     'word' => $word,
-                    'options' => $options,
-                    'correct' => $correctAnswer,
+                    'wordPairs' => $wordPairs,
+                    'words' => $words,
+                    'meanings' => $meanings,
+                    'correct' => $word->meaning
                 ];
             }
             elseif($questionType == 4) {
-                // فلش کارت ساده: نمایش معنی و درخواست وارد کردن کلمه صحیح
+                // فلش کارت با نمایش مثال و تلفظ
+                $examples = json_decode($word->examples ?? '[]', true);
+                $example = !empty($examples) ? $examples[array_rand($examples)] : null;
+
                 $questionData = [
                     'type' => 4,
                     'word' => $word,
-                    'prompt' => "Enter the correct word for the meaning: '{$word->meaning}'.",
+                    'prompt' => "What's the word for this meaning?",
+                    'meaning' => $word->meaning,
+                    'example' => $example,
+                    'pronunciation' => $word->pronunciation ?? null,
                     'correct' => $word->word,
                 ];
             }
@@ -147,8 +164,13 @@ class Exam extends Component
     }
 
     // ثبت پاسخ کاربر برای سوال فعلی
-    public function submitAnswer($answer)
+    public function submitAnswer($answer = null)
     {
+        if ($this->questions[$this->currentQuestionIndex]['type'] == 4) {
+            $answer = $this->userInput;
+            $this->userInput = ''; // پاک کردن input بعد از ثبت
+        }
+
         // ذخیره پاسخ کاربر در آرایه userAnswers
         $this->userAnswers[$this->currentQuestionIndex] = $answer;
 
