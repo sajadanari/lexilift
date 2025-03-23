@@ -51,4 +51,24 @@ class Review extends Component
     {
         $this->dispatch('speak-word', ['word' => $word]);
     }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedPartOfSpeech()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedDifficultyLevel()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedFrequency()
+    {
+        $this->resetPage();
+    }
 }
