@@ -18,8 +18,8 @@ class Review extends Component
         ])->layout('layouts.front-app');
     }
 
-    public function playAudio($audioPath)
+    public function speakWord($word)
     {
-        $this->dispatch('play-audio', ['path' => $audioPath]);
+        $this->dispatch('speak-word', ['word' => $word]);
     }
 }

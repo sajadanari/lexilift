@@ -182,3 +182,14 @@
         </div> <!-- End card container div -->
     </div> <!-- End content wrapper div -->
 </div> <!-- End main container div -->
+
+<script>
+    document.addEventListener('livewire:initialized', () => {
+        Livewire.on('speak-word', (params) => {
+            const word = params[0].word;
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'en-US';
+            speechSynthesis.speak(utterance);
+        });
+    });
+</script>
