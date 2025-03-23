@@ -6,12 +6,84 @@
     </div>
 
     <!-- Content wrapper -->
-    <div class="flex items-center justify-center w-full">
+    <div class="flex flex-col md:flex-row justify-center w-full">
+
+        {{-- Search and Filters --}}
+        <div class="p-2 md:mr-2">
+
+            <div class="flex flex-col border rounded-4xl bg-white border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300">
+
+                {{-- Filters Header --}}
+                <div>
+
+                    {{-- Toggle show filters button, hide and show Filters Section --}}
+                    <button  class="w-full flex flex-row justify-between pt-6 px-6 bg-blue-100 cursor-pointer rounded-t-4xl">
+
+                        <div class="flex flex-row">
+                            <span class="material-icons-outlined mr-2 text-[var(--accent-clr)]" style="font-size: 24px !important">
+                                filter_alt
+                            </span>
+                            <h3 class="text-lg font-bold text-gray-800">Filters</h3>
+                        </div>
+
+                        <div>
+                            <span class="material-symbols-outlined">
+                                keyboard_arrow_down
+                            </span>
+                        </div>
+
+                    </button>
+
+                </div>
+
+                {{-- Filters --}}
+                <div class="grid grid-cols-1 gap-4 mt-4 px-6 pb-6">
+
+                    {{-- Search --}}
+                    <x-forms.input-field
+                        placeholder="Search for a word"
+                        wire:model="search"
+                        icon="search"
+                        name="search"
+                        class="w-full"
+                    />
+
+                    {{-- Part of Speech --}}
+                    <x-forms.select-field name="wordData.part_of_speech" label="Part of Speech" icon="match_word"
+                        wire:model="wordData.part_of_speech" placeholder="Select the part of speech">
+                        @foreach (App\Enums\PartOfSpeech::cases() as $partOfSpeech)
+                            <option value="{{ $partOfSpeech->value }}">{{ $partOfSpeech->label() }}</option>
+                        @endforeach
+                    </x-forms.select-field>
+
+                    {{-- Difficulty Level --}}
+                    <x-forms.select-field name="wordData.difficulty_level" label="Difficulty Level"
+                        wire:model="wordData.difficulty_level" placeholder="Select CEFR level">
+                        @foreach (App\Enums\DifficultyLevel::cases() as $level)
+                            <option value="{{ $level->value }}">{{ $level->label() }}</option>
+                        @endforeach
+                    </x-forms.select-field>
+
+                    {{-- Frequency Level --}}
+                    <x-forms.select-field name="wordData.frequency" label="Frequency" wire:model="wordData.frequency"
+                        placeholder="How commonly is this word used?">
+                        @foreach (App\Enums\FrequencyLevel::cases() as $level)
+                            <option value="{{ $level->value }}">{{ $level->label() }}</option>
+                        @endforeach
+                    </x-forms.select-field>
+
+                </div>
+
+            </div>
+
+        </div>
+
         <!-- Card container with responsive width -->
         <div class="w-full md:w-1/2 lg:w-1/3">
             <!-- Words list container -->
             <div class="flex items-center justify-center w-full">
                 @foreach ($words as $word)
+
                     <!-- Individual word card -->
                     <div class="bg-white rounded-4xl border border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300 overflow-hidden w-full m-2 flex flex-row">
                         {{-- Previous Button --}}
@@ -192,10 +264,12 @@
                         </div>
 
                     </div> <!-- End individual word card div -->
+
                 @endforeach
             </div> <!-- End words list container div -->
 
         </div> <!-- End card container div -->
+
     </div> <!-- End content wrapper div -->
 </div> <!-- End main container div -->
 
