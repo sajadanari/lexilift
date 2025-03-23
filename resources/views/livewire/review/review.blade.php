@@ -76,17 +76,18 @@
                                     </div> <!-- End word title div -->
                                 </div> <!-- End word header div -->
 
-                                <!-- Word meaning section -->
-                                <div class="mb-3">
-                                    <h3 class="text-sm font-medium text-gray-500 text-center">Meaning</h3>
-                                    <p class="text-gray-700 persian">{{ $word->meaning }}</p>
-                                </div>
+                                <x-word-card.text-section
+                                    title="Meaning"
+                                    :content="$word->meaning"
+                                    :center-title="true"
+                                    :persian="true"
+                                />
 
-                                <!-- Example section -->
-                                <div class="mb-3">
-                                    <h3 class="text-sm font-medium text-gray-500">Example:</h3>
-                                    <p class="text-gray-700 italic">"{{ $word->example }}"</p>
-                                </div>
+                                <x-word-card.text-section
+                                    title="Example:"
+                                    :content="$word->example"
+                                    :italic="true"
+                                />
 
                                 <!-- Expandable details section -->
                                 <div x-data="{ open: false }">
@@ -115,26 +116,26 @@
                                     >
                                         <!-- Synonyms section -->
                                         @if($word->synonyms)
-                                            <div>
-                                                <h3 class="text-sm font-medium text-gray-500">Synonyms:</h3>
-                                                <p class="text-gray-700">{{ $word->synonyms }}</p>
-                                            </div>
+                                            <x-word-card.text-section
+                                                title="Synonyms:"
+                                                :content="$word->synonyms"
+                                            />
                                         @endif
 
                                         <!-- Antonyms section -->
                                         @if($word->antonyms)
-                                            <div>
-                                                <h3 class="text-sm font-medium text-gray-500">Antonyms:</h3>
-                                                <p class="text-gray-700">{{ $word->antonyms }}</p>
-                                            </div>
+                                            <x-word-card.text-section
+                                                title="Antonyms:"
+                                                :content="$word->antonyms"
+                                            />
                                         @endif
 
                                         <!-- Notes section -->
                                         @if($word->notes)
-                                            <div>
-                                                <h3 class="text-sm font-medium text-gray-500">Notes:</h3>
-                                                <p class="text-gray-700">{{ $word->notes }}</p>
-                                            </div>
+                                            <x-word-card.text-section
+                                                title="Notes:"
+                                                :content="$word->notes"
+                                            />
                                         @endif
                                     </div> <!-- End expandable content div -->
                                 </div> <!-- End expandable section div -->
