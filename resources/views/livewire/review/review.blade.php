@@ -6,10 +6,10 @@
     </div>
 
     <!-- Content wrapper -->
-    <div class="flex flex-col md:flex-row justify-center w-full">
+    <div class="flex flex-col md:flex-row justify-center">
 
         {{-- Search and Filters --}}
-        <div class="p-2 md:mr-2">
+        <div class="w-full md:w-1/4 p-2 md:mr-2">
 
             <div class="flex flex-col border rounded-4xl bg-white border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300" x-data="{ showFilters: true }">
 
