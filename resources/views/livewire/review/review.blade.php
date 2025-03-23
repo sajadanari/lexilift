@@ -31,9 +31,9 @@
                         <div class="py-3">
                             <div class="p-5">
                                 <!-- Word header with icon and title -->
-                                <div class="flex mb-3">
+                                <div class="flex flex-col md:flex-row mb-3">
                                     <!-- Part of speech icon -->
-                                    <div>
+                                    <div class="flex items-center justify-center">
                                         <span style="font-size: 40px !important;" class="material-icons-round text-white rounded-full p-4 {{
                                             match($word->part_of_speech) {
                                                 \App\Enums\PartOfSpeech::NOUN => 'bg-indigo-500',
@@ -66,7 +66,10 @@
                                     </div>
 
                                     <!-- Word title and part of speech -->
-                                    <div class="ml-3 flex flex-col justify-center">
+                                    <div class="
+                                        flex flex-col mt-3 text-center
+                                        md:ml-3 md:justify-start md:text-start md:mt-0
+                                    ">
                                         <div class="">
                                             <h2 class="text-2xl font-bold text-gray-800">{{ $word->word }}</h2>
                                         </div>
@@ -74,6 +77,19 @@
                                             <span class="text-sm font-medium">{{ $word->part_of_speech->label() }}</span>
                                         </div>
                                     </div> <!-- End word title div -->
+
+                                    <div class="flex items-center justify-center mt-3 md:ml-auto md:mt-0">
+                                        <button
+                                            type="button"
+                                            wire:click="speakWord('{{ $word->word }}')"
+                                            class="text-blue-600 hover:text-blue-800"
+                                        >
+                                            <span class="material-symbols-outlined text-lg">
+                                                volume_up
+                                            </span>
+                                        </button>
+                                    </div>
+
                                 </div> <!-- End word header div -->
 
                                 <x-word-card.level-badges :word="$word" />
