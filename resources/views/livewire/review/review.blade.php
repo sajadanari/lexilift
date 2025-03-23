@@ -17,18 +17,24 @@
                 <div>
 
                     {{-- Toggle show filters button, hide and show Filters Section --}}
-                    <button @click="showFilters = !showFilters" class="w-full flex flex-row justify-between pt-6 px-6 bg-blue-100 cursor-pointer rounded-t-4xl">
+                    <button
+                        @click="showFilters = !showFilters"
+                        class="w-full flex flex-row justify-between pt-6 px-6 cursor-pointer rounded-t-4xl items-center"
+                        :class="{ 'pb-6 rounded-b-4xl': !showFilters }"
+                    >
 
                         <div class="flex flex-row">
-                            <span class="material-icons-outlined mr-2 text-[var(--accent-clr)]" style="font-size: 24px !important">
-                                filter_alt
-                            </span>
-                            <h3 class="text-lg font-bold text-gray-800">Filters</h3>
+                            <div class="flex">
+                                <span class="material-symbols-outlined mr-2 text-[var(--accent-clr)]" style="font-size: 32px !important">
+                                    filter_alt
+                                </span>
+                            </div>
+                            <h3 class="flex text-lg font-bold text-gray-800 items-center">Filters</h3>
                         </div>
 
-                        <div>
+                        <div class="flex items-center">
                             <span class="material-symbols-outlined" :class="{ 'rotate-180': !showFilters }">
-                                keyboard_arrow_down
+                                keyboard_arrow_up
                             </span>
                         </div>
 
