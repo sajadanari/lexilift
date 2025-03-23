@@ -13,10 +13,11 @@
             <div class="flex items-center justify-center w-full">
                 @foreach ($words as $word)
                     <!-- Individual word card -->
-                    <div class="bg-white rounded-4xl border border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300 overflow-hidden w-full p-3 m-2 flex flex-row">
+                    <div class="bg-white rounded-4xl border border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300 overflow-hidden w-full m-2 flex flex-row">
                         {{-- Previous Button --}}
                         <div class="flex items-center justify-center">
                             <button
+                                class="cursor-pointer h-full px-3"
                                 wire:click="previousPage"
                                 @if($words->onFirstPage()) disabled @endif
                             >
@@ -27,7 +28,7 @@
                         </div>
 
                         <!-- Card content wrapper -->
-                        <div>
+                        <div class="py-3">
                             <div class="p-5">
                                 <!-- Word header with icon and title -->
                                 <div class="flex mb-3">
@@ -143,6 +144,7 @@
                         {{-- Next Button --}}
                         <div class="flex items-center justify-center">
                             <button
+                                class="cursor-pointer h-full px-3"
                                 wire:click="nextPage"
                                 @if(!$words->hasMorePages()) disabled @endif
                             >
