@@ -11,13 +11,13 @@
         {{-- Search and Filters --}}
         <div class="p-2 md:mr-2">
 
-            <div class="flex flex-col border rounded-4xl bg-white border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300">
+            <div class="flex flex-col border rounded-4xl bg-white border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300" x-data="{ showFilters: true }">
 
                 {{-- Filters Header --}}
                 <div>
 
                     {{-- Toggle show filters button, hide and show Filters Section --}}
-                    <button  class="w-full flex flex-row justify-between pt-6 px-6 bg-blue-100 cursor-pointer rounded-t-4xl">
+                    <button @click="showFilters = !showFilters" class="w-full flex flex-row justify-between pt-6 px-6 bg-blue-100 cursor-pointer rounded-t-4xl">
 
                         <div class="flex flex-row">
                             <span class="material-icons-outlined mr-2 text-[var(--accent-clr)]" style="font-size: 24px !important">
@@ -27,7 +27,7 @@
                         </div>
 
                         <div>
-                            <span class="material-symbols-outlined">
+                            <span class="material-symbols-outlined" :class="{ 'rotate-180': !showFilters }">
                                 keyboard_arrow_down
                             </span>
                         </div>
@@ -37,7 +37,7 @@
                 </div>
 
                 {{-- Filters --}}
-                <div class="grid grid-cols-1 gap-4 mt-4 px-6 pb-6">
+                <div x-show="showFilters" x-transition class="grid grid-cols-1 gap-4 mt-4 px-6 pb-6">
 
                     {{-- Search --}}
                     <x-forms.input-field
