@@ -68,7 +68,7 @@
                                     <!-- Word title and part of speech -->
                                     <div class="
                                         flex flex-col mt-3 text-center
-                                        md:ml-3 md:justify-start md:text-start md:mt-0
+                                        md:ml-3 md:justify-center md:text-left md:mt-0
                                     ">
                                         <div class="">
                                             <h2 class="text-2xl font-bold text-gray-800">{{ $word->word }}</h2>
