@@ -82,7 +82,7 @@
                                         <button
                                             type="button"
                                             wire:click="speakWord('{{ $word->word }}')"
-                                            class="text-blue-600 hover:text-blue-800"
+                                            class="text-[var(--accent-clr)] hover:text-white border cursor-pointer p-2 rounded-full hover:bg-[var(--accent-clr)] flex"
                                         >
                                             <span class="material-symbols-outlined text-lg">
                                                 volume_up
