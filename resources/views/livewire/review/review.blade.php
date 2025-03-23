@@ -55,23 +55,23 @@
                     />
 
                     {{-- Part of Speech --}}
-                    <x-forms.select-field name="wordData.part_of_speech" label="Part of Speech" icon="match_word"
-                        wire:model="wordData.part_of_speech" placeholder="Select the part of speech">
+                    <x-forms.select-field name="part_of_speech" label="Part of Speech" icon="match_word"
+                        wire:model="part_of_speech" placeholder="Select the part of speech">
                         @foreach (App\Enums\PartOfSpeech::cases() as $partOfSpeech)
                             <option value="{{ $partOfSpeech->value }}">{{ $partOfSpeech->label() }}</option>
                         @endforeach
                     </x-forms.select-field>
 
                     {{-- Difficulty Level --}}
-                    <x-forms.select-field name="wordData.difficulty_level" label="Difficulty Level"
-                        wire:model="wordData.difficulty_level" placeholder="Select CEFR level">
+                    <x-forms.select-field name="difficulty_level" label="Difficulty Level"
+                        wire:model="difficulty_level" placeholder="Select CEFR level">
                         @foreach (App\Enums\DifficultyLevel::cases() as $level)
                             <option value="{{ $level->value }}">{{ $level->label() }}</option>
                         @endforeach
                     </x-forms.select-field>
 
                     {{-- Frequency Level --}}
-                    <x-forms.select-field name="wordData.frequency" label="Frequency" wire:model="wordData.frequency"
+                    <x-forms.select-field name="frequency" label="Frequency" wire:model="frequency"
                         placeholder="How commonly is this word used?">
                         @foreach (App\Enums\FrequencyLevel::cases() as $level)
                             <option value="{{ $level->value }}">{{ $level->label() }}</option>
