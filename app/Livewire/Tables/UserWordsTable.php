@@ -43,6 +43,7 @@ class UserWordsTable extends BaseTable
                 'sortable' => true,
                 'formatter' => fn($item) => $item->difficulty_level?->label()
             ],
+            'score' => ['label' => 'Score', 'sortable' => true],
             'actions' => [
                 'label' => 'Actions',
                 'view' => 'livewire.my-words.my-words-actions',

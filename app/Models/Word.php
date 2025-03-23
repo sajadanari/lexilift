@@ -30,7 +30,9 @@ class Word extends Model
         'audio',
         'frequency',
         'difficulty_level',
-        'notes'
+        'notes',
+        'score',
+        'last_reviewed_at',
     ];
 
     protected $casts = [

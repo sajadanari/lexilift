@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('frequency')->nullable(); // Word frequency (e.g., high, medium, low, or numeric)
             $table->string('difficulty_level')->nullable(); // Word difficulty level (e.g., A1, A2, B1, B2, C1, C2)
             $table->text('notes')->nullable(); // Additional notes or remarks
+            $table->integer('score')->default(0); // User score for the word
+            $table->timestamp('last_reviewed_at')->nullable(); // Last reviewed timestamp
             $table->timestamps();
         });
     }

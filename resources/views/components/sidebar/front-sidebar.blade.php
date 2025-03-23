@@ -55,6 +55,10 @@
             Review
         </x-sidebar.sidebar-item>
 
+        <x-sidebar.sidebar-item icon="quiz" route="exam" :active="request()->routeIs('exam')">
+            Exam
+        </x-sidebar.sidebar-item>
+
         <x-sidebar.sidebar-item icon="settings" dropdown="true" :submenuItems="[
             ['icon' => 'person', 'route' => '/', 'name' => 'Profile'],
             ['icon' => 'account_box', 'route' => '/', 'name' => 'Account'],
