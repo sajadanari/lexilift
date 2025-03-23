@@ -76,6 +76,8 @@
                                     </div> <!-- End word title div -->
                                 </div> <!-- End word header div -->
 
+                                <x-word-card.level-badges :word="$word" />
+
                                 <x-word-card.text-section
                                     title="Meaning"
                                     :content="$word->meaning"
@@ -109,12 +111,16 @@
                                     </button>
 
                                     <!-- Expandable content -->
-                                    <div
-                                        x-show="open"
-                                        x-transition
-                                        class="mt-3 space-y-2"
-                                    >
-                                        <!-- Synonyms section -->
+                                    <div x-show="open" x-transition class="mt-3 space-y-2">
+                                        <x-word-card.pronunciation-section :word="$word" />
+
+                                        @if($word->usage)
+                                            <x-word-card.text-section
+                                                title="Usage:"
+                                                :content="$word->usage"
+                                            />
+                                        @endif
+
                                         @if($word->synonyms)
                                             <x-word-card.text-section
                                                 title="Synonyms:"
@@ -122,7 +128,6 @@
                                             />
                                         @endif
 
-                                        <!-- Antonyms section -->
                                         @if($word->antonyms)
                                             <x-word-card.text-section
                                                 title="Antonyms:"
@@ -130,7 +135,22 @@
                                             />
                                         @endif
 
-                                        <!-- Notes section -->
+                                        @if($word->collocations)
+                                            <x-word-card.text-section
+                                                title="Common Collocations:"
+                                                :content="$word->collocations"
+                                            />
+                                        @endif
+
+                                        @if($word->root || $word->etymology)
+                                            <x-word-card.text-section
+                                                title="Word Origin:"
+                                                :content="$word->root . ($word->etymology ? ' - ' . $word->etymology : '')"
+                                            />
+                                        @endif
+
+                                        <x-word-card.grammar-section :word="$word" />
+
                                         @if($word->notes)
                                             <x-word-card.text-section
                                                 title="Notes:"
