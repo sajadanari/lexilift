@@ -22,6 +22,11 @@ class Exam extends Component
 
     }
 
+    protected function getListeners()
+    {
+        return ['answer-submitted' => 'submitAnswer'];
+    }
+
     // شروع آزمون
     public function startExam()
     {
@@ -57,119 +62,18 @@ class Exam extends Component
 
         // ساخت سوالات به ازای هر کلمه
         $this->questions = $selectedWords->map(function($word) {
-            // انتخاب نوع سوال به صورت رندم (1 تا 4)
-            $questionType = rand(1, 4);
-
-            // ساخت سوال بر اساس نوع
-            // برای مثال، در نوع 1 سوال چندگزینه‌ای مانند پیاده‌سازی قبلی می‌شود:
-            if($questionType == 1) {
-                // در اینجا گزینه صحیح همان معنی کلمه است.
-                $correctAnswer = $word->meaning;
-
-                // انتخاب چند گزینه اشتباه از میان سایر کلمات کاربر
-                $otherWords = Word::where('user_id', $word->user_id)
-                                  ->where('id', '!=', $word->id)
-                                  ->inRandomOrder()
-                                  ->limit(3)
-                                  ->get();
-                $wrongOptions = $otherWords->pluck('meaning')->toArray();
-
-                // ترکیب گزینه‌ها و مخلوط کردن آنها
-                $options = array_merge([$correctAnswer], $wrongOptions);
-                shuffle($options);
-
-                $questionData = [
-                    'type' => 1,
-                    'word' => $word,
-                    'options' => $options,
-                    'correct' => $correctAnswer,
-                ];
-            }
-            // در اینجا می‌توانید برای انواع دیگر سوال (2 تا 4) منطق دلخواهتان را پیاده‌سازی کنید.
-            // به عنوان نمونه:
-            elseif($questionType == 2) {
-                // دریافت جمله از OpenAI
-                $sentence = "";
-
-                // اگر نتوانستیم جمله دریافت کنیم، یک جمله پیش‌فرض استفاده می‌کنیم
-                if (!$sentence) {
-                    $sentence = "Please use the word '{$word->word}' in the _____";
-                }
-
-                // ایجاد گزینه‌های اشتباه - حذف where type
-                $otherWords = Word::where('user_id', $word->user_id)
-                    ->where('id', '!=', $word->id)
-                    ->inRandomOrder()
-                    ->limit(3)
-                    ->get();
-
-                $wrongOptions = $otherWords->pluck('word')->toArray();
-                $options = array_merge([$word->word], $wrongOptions);
-                shuffle($options);
-
-                $questionData = [
-                    'type' => 2,
-                    'word' => $word,
-                    'prompt' => $sentence,
-                    'options' => $options,
-                    'correct' => $word->word
-                ];
-            }
-            elseif($questionType == 3) {
-                // سوال تطبیقی - نمایش چند کلمه و معنی آنها به صورت درهم
-                $otherWords = Word::where('user_id', $word->user_id)
-                    ->where('id', '!=', $word->id)
-                    ->inRandomOrder()
-                    ->limit(3)
-                    ->get();
-
-                $wordPairs = collect([$word])->merge($otherWords)->map(function($w) {
-                    return [
-                        'word' => $w->word,
-                        'meaning' => $w->meaning
-                    ];
-                })->toArray();
-
-                $words = collect($wordPairs)->pluck('word')->toArray();
-                $meanings = collect($wordPairs)->pluck('meaning')->toArray();
-                shuffle($meanings);
-
-                $questionData = [
-                    'type' => 3,
-                    'word' => $word,
-                    'wordPairs' => $wordPairs,
-                    'words' => $words,
-                    'meanings' => $meanings,
-                    'correct' => $word->meaning
-                ];
-            }
-            elseif($questionType == 4) {
-                // فلش کارت با نمایش مثال و تلفظ
-                $examples = json_decode($word->examples ?? '[]', true);
-                $example = !empty($examples) ? $examples[array_rand($examples)] : null;
-
-                $questionData = [
-                    'type' => 4,
-                    'word' => $word,
-                    'prompt' => "What's the word for this meaning?",
-                    'meaning' => $word->meaning,
-                    'example' => $example,
-                    'pronunciation' => $word->pronunciation ?? null,
-                    'correct' => $word->word,
-                ];
-            }
-
-            return $questionData;
+            return [
+                'type' => 1,
+                'word' => $word,
+                'correct' => $word->meaning,
+            ];
         })->toArray();
     }
 
     // ثبت پاسخ کاربر برای سوال فعلی
-    public function submitAnswer($answer = null)
+    public function submitAnswer($data)
     {
-        if ($this->questions[$this->currentQuestionIndex]['type'] == 4) {
-            $answer = $this->userInput;
-            $this->userInput = ''; // پاک کردن input بعد از ثبت
-        }
+        $answer = $data['answer'];
 
         // ذخیره پاسخ کاربر در آرایه userAnswers
         $this->userAnswers[$this->currentQuestionIndex] = $answer;
