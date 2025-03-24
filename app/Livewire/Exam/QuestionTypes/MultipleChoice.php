@@ -10,6 +10,8 @@ class MultipleChoice extends Component
     public $word;
     public $options;
     public $correct;
+    public $selectedOption;
+    public $isAnswered = false;
 
     public function mount($word)
     {
@@ -34,11 +36,26 @@ class MultipleChoice extends Component
         shuffle($this->options);
     }
 
-    public function submitAnswer($answer)
+    // ثبت پاسخ کاربر برای سوال فعلی
+    public function submitAnswer($selectedOption)
     {
-        $this->dispatch('answer-submitted', [
-            'answer' => $answer
-        ]);
+        if ($this->isAnswered) {
+            return;
+        }
+
+        $this->selectedOption = $selectedOption;
+        $this->isAnswered = true;
+
+        $isCorrect = $this->selectedOption === $this->correct;
+
+        if ($isCorrect) {
+            $this->word->score = $this->word->score + 5;
+        } else {
+            $this->word->score = max(0, $this->word->score - 3);
+        }
+
+        $this->word->save();
+        $this->dispatch('answer-submitted', isCorrect: $isCorrect);
     }
 
     public function render()

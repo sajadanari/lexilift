@@ -16,6 +16,7 @@ class Exam extends Component
     public $examFinished = false;
     public $score = 0;
     public $userInput = ''; // اضافه کردن متغیر
+    public $currentQuestionAnswered = false;
 
     public function __construct()
     {
@@ -24,7 +25,10 @@ class Exam extends Component
 
     protected function getListeners()
     {
-        return ['answer-submitted' => 'submitAnswer'];
+        return [
+            'answer-submitted' => 'answerSubmitted',
+            'next-question' => 'nextQuestion'
+        ];
     }
 
     // شروع آزمون
@@ -65,41 +69,26 @@ class Exam extends Component
             return [
                 'type' => 1,
                 'word' => $word,
-                'correct' => $word->meaning,
             ];
         })->toArray();
     }
 
-    // ثبت پاسخ کاربر برای سوال فعلی
-    public function submitAnswer($data)
+    public function nextQuestion()
     {
-        $answer = $data['answer'];
-
-        // ذخیره پاسخ کاربر در آرایه userAnswers
-        $this->userAnswers[$this->currentQuestionIndex] = $answer;
-
-        // بررسی پاسخ فعلی و به‌روزرسانی امتیاز کلمه مربوطه
-        $question = $this->questions[$this->currentQuestionIndex];
-        $word = $question['word'];
-
-        if(trim(strtolower($answer)) == trim(strtolower($question['correct']))) {
-            // پاسخ صحیح: افزایش امتیاز کلمه (مثلاً +5)
-            $word->score = $word->score + 5;
-            $this->score++;
-        } else {
-            // پاسخ غلط: کاهش امتیاز کلمه (مثلاً -3)
-            $word->score = max(0, $word->score - 3);
-        }
-        // ذخیره تغییرات در دیتابیس
-        $word->save();
-
-        // رفتن به سوال بعدی
+        $this->currentQuestionAnswered = false;
         if($this->currentQuestionIndex < count($this->questions) - 1) {
             $this->currentQuestionIndex++;
         } else {
-            // پایان آزمون
             $this->examFinished = true;
         }
+    }
+
+    public function answerSubmitted($isCorrect)
+    {
+        if($isCorrect) {
+            $this->score++;
+        }
+        $this->currentQuestionAnswered = true;
     }
 
     public function render()
