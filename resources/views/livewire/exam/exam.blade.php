@@ -16,14 +16,17 @@
                     <livewire:exam.question-types.multiple-choice :word="$question['word']" :key="$currentQuestionIndex" />
                 @endif
 
-                @if($currentQuestionAnswered)
-                    <div class="mt-4">
-                        <button wire:click="nextQuestion"
-                                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                            {{ $currentQuestionIndex === count($questions) - 1 ? 'Show Results' : 'Next Question' }}
-                        </button>
-                    </div>
-                @endif
+                <div class="mt-4">
+                    <button wire:click="nextQuestion"
+                            @class([
+                                'px-6 py-2 rounded-lg transition-colors w-full',
+                                'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer' => $currentQuestionAnswered,
+                                'bg-gray-300 text-gray-500 cursor-not-allowed' => !$currentQuestionAnswered
+                            ])
+                            {{ !$currentQuestionAnswered ? 'disabled' : '' }}>
+                        {{ $currentQuestionIndex === count($questions) - 1 ? 'Show Results' : 'Next Question' }}
+                    </button>
+                </div>
             </div>
         @else
             <div class="flex flex-col items-center justify-center space-y-4 bg-white p-8 rounded-lg shadow-sm">
