@@ -24,9 +24,9 @@
 
                     <x-forms.primary-btn
                         wire:click="startExam"
-                        class="w-full md:w-auto px-8 py-3 text-lg font-medium animate-pulse"
+                        class="w-full md:w-auto animate-pulse"
+                        icon="play_arrow"
                     >
-                        <span class="material-symbols-outlined mr-2">play_arrow</span>
                         Start Exam
                     </x-forms.primary-btn>
                 </div>
