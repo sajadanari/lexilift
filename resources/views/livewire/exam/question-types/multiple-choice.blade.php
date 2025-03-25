@@ -21,18 +21,16 @@
                          {{ $isAnswered && $option === $correct ? 'border-green-500 bg-green-50' : '' }}
                          {{ $isAnswered && $option === $selectedOption && $option !== $correct ? 'border-red-500 bg-red-50' : '' }}">
                         <div class="flex items-center">
-                            <div class="w-6 h-6 rounded-full border-2 flex items-center justify-center mr-4
-                                {{ !$isAnswered ? 'border-gray-300' : '' }}
-                                {{ $isAnswered && $option === $correct ? 'border-green-500 bg-green-500' : '' }}
-                                {{ $isAnswered && $option === $selectedOption && $option !== $correct ? 'border-red-500 bg-red-500' : '' }}">
-                                @if($isAnswered && $option === $correct)
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
+                            <div class="w-6 h-6 rounded-full flex items-center justify-center mr-4
+                                {{ !$isAnswered ? 'text-gray-300' : '' }}
+                                {{ $isAnswered && $option === $correct ? 'bg-green-500 text-white p-3' : '' }}
+                                {{ $isAnswered && $option === $selectedOption && $option !== $correct ? 'bg-red-500 text-white p-3' : '' }}">
+                                @if(!$isAnswered)
+                                    <span class="material-symbols-outlined text-xl">circle</span>
+                                @elseif($isAnswered && $option === $correct)
+                                    <span class="material-symbols-outlined text-xl">check</span>
                                 @elseif($isAnswered && $option === $selectedOption && $option !== $correct)
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
+                                    <span class="material-symbols-outlined text-xl">close</span>
                                 @endif
                             </div>
                             <span class="text-lg font-medium
