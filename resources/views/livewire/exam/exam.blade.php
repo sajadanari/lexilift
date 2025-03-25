@@ -1,10 +1,22 @@
 <div class="container mx-auto px-4 py-8">
     @if(!$isStarted)
-        <div class="flex flex-col items-center justify-center space-y-4">
-            <h2 class="text-2xl font-bold text-gray-800">Exam Section</h2>
-            <button wire:click="startExam" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+        <div class="flex flex-col items-center justify-center space-y-6">
+
+            <span class="material-symbols-outlined text-[var(--accent-clr)] text-6xl">
+                flag
+            </span>
+
+            <h2 class="text-2xl font-bold text-gray-800">
+                Are you ready?
+            </h2>
+
+            <x-forms.primary-btn
+                wire:click="startExam"
+                class="w-full md:w-auto"
+            >
                 Start Exam
-            </button>
+            </x-forms.primary-btn>
+
         </div>
     @else
         @if(!$examFinished)
