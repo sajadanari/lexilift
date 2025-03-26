@@ -22,7 +22,7 @@
                 </div>
 
                 <x-forms.textarea-field name="wordData.meaning" label="Meaning" wire:model="wordData.meaning"
-                    placeholder="Enter the word's definition and meaning..." class="persian" required />
+                    placeholder="Enter the word's definition and meaning..." class="" required />
 
                 <x-forms.textarea-field name="wordData.example" label="Example Usage" wire:model="wordData.example"
                     placeholder="Write example sentences using this word..." />
@@ -34,7 +34,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <x-forms.input-field name="wordData.pronunciation" label="Pronunciation"
-                        wire:model="wordData.pronunciation" placeholder="e.g., /həˈləʊ/" class="persian" />
+                        wire:model="wordData.pronunciation" placeholder="e.g., /həˈləʊ/" class="" />
 
                     <x-forms.select-field name="wordData.difficulty_level" label="Difficulty Level"
                         wire:model="wordData.difficulty_level" placeholder="Select CEFR level">

@@ -91,7 +91,7 @@
                 @foreach ($words as $word)
 
                     <!-- Individual word card -->
-                    <div class="bg-white rounded-4xl border border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300 overflow-hidden w-full m-2 flex flex-row">
+                    <div class="bg-white rounded-4xl border border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300 overflow-hidden w-full m-2 flex flex-row justify-between">
                         {{-- Previous Button --}}
                         <div class="flex items-center justify-center">
                             <button
@@ -106,7 +106,7 @@
                         </div>
 
                         <!-- Card content wrapper -->
-                        <div class="py-3">
+                        <div class="py-3 w-full">
                             <div class="p-5">
                                 <!-- Word header with icon and title -->
                                 <div class="flex flex-col md:flex-row mb-3">
@@ -173,10 +173,10 @@
                                 <x-word-card.level-badges :word="$word" />
 
                                 <x-word-card.text-section
-                                    title="Meaning"
+                                    title="Meaning:"
                                     :content="$word->meaning"
-                                    :center-title="true"
-                                    :persian="true"
+                                    :center-title="false"
+                                    :persian="false"
                                 />
 
                                 <x-word-card.text-section
