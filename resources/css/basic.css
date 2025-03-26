@@ -33,6 +33,7 @@ body {
 main {
     width: 100%;
     padding: min(30px, 7%);
+    background-color: #fafafa;
 }
 
 .container {
