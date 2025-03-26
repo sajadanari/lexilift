@@ -1,5 +1,5 @@
 <div class="min-h-screen bg-gray-50">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="mx-auto px-4 py-8 max-w-4xl">
         @if(!$isStarted)
             <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
                 <div class="flex flex-col items-center justify-center space-y-8">
