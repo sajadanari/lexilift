@@ -5,6 +5,7 @@ namespace App\Livewire\Review;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Url;
+use App\Enums\WordLevel;
 
 class Review extends Component
 {
@@ -21,6 +22,9 @@ class Review extends Component
 
     #[Url]
     public $frequency = '';
+
+    #[Url]
+    public $word_level = '';
 
     public function render()
     {
@@ -40,6 +44,12 @@ class Review extends Component
 
         if ($this->frequency) {
             $query->where('frequency', $this->frequency);
+        }
+
+        if ($this->word_level) {
+            $level = WordLevel::from($this->word_level);
+            $range = $level->getRange();
+            $query->whereBetween('score', [$range['min'], $range['max']]);
         }
 
         return view('livewire.review.review', [
@@ -68,6 +78,11 @@ class Review extends Component
     }
 
     public function updatedFrequency()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedWordLevel()
     {
         $this->resetPage();
     }

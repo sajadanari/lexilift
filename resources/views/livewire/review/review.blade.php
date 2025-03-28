@@ -78,6 +78,24 @@
                         @endforeach
                     </x-forms.select-field>
 
+                    {{-- Learning Status --}}
+                    <x-forms.select-field
+                        name="word_level"
+                        label="Learning Status"
+                        wire:model.live="word_level"
+                        placeholder="Select learning status"
+                    >
+                        @foreach (App\Enums\WordLevel::cases() as $level)
+                            <option value="{{ $level->value }}">
+                                {{ match($level) {
+                                    \App\Enums\WordLevel::WEAK => 'Needs Practice',
+                                    \App\Enums\WordLevel::MEDIUM => 'Learning',
+                                    \App\Enums\WordLevel::STRONG => 'Well Known',
+                                } }}
+                            </option>
+                        @endforeach
+                    </x-forms.select-field>
+
                 </div>
 
             </div>
@@ -171,6 +189,10 @@
                                 </div> <!-- End word header div -->
 
                                 <x-word-card.level-badges :word="$word" />
+
+                                <div class="mt-3">
+                                    <x-word-card.learning-status-badge :score="$word->score" />
+                                </div>
 
                                 <x-word-card.text-section
                                     title="Meaning:"
