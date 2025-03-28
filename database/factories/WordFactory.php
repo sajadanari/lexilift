@@ -38,6 +38,7 @@ class WordFactory extends Factory
             'frequency' => fake()->randomElement(FrequencyLevel::cases()),
             'difficulty_level' => fake()->randomElement(DifficultyLevel::cases()),
             'notes' => fake()->optional()->sentence(),
+            'score' => fake()->numberBetween(0, 100),
         ];
     }
 }
