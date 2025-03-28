@@ -40,28 +40,114 @@ class Exam extends Component
         $this->userAnswers = [];
         $this->currentQuestionIndex = 0;
 
-        // انتخاب کلمات بر اساس سطح امتیاز
-        $userId = Auth::id();
+        $baseQuery = Auth::user()->words();
+        $selectedWordIds = [];
 
-        $weakWords = Word::where('user_id', $userId)
+        // Get initial weak words
+        $weakWords = (clone $baseQuery)
             ->where('score', '<', 40)
+            ->whereNotIn('id', $selectedWordIds)
             ->inRandomOrder()
             ->limit(6)
             ->get();
 
-        $mediumWords = Word::where('user_id', $userId)
+        $selectedWordIds = array_merge($selectedWordIds, $weakWords->pluck('id')->toArray());
+
+        // If we need more weak words, try getting from medium words
+        if ($weakWords->count() < 6) {
+            $neededCount = 6 - $weakWords->count();
+            $additionalWords = (clone $baseQuery)
+                ->whereBetween('score', [40, 70])
+                ->whereNotIn('id', $selectedWordIds)
+                ->inRandomOrder()
+                ->limit($neededCount)
+                ->get();
+
+            $weakWords = $weakWords->merge($additionalWords);
+            $selectedWordIds = array_merge($selectedWordIds, $additionalWords->pluck('id')->toArray());
+
+            if ($weakWords->count() < 6) {
+                $neededCount = 6 - $weakWords->count();
+                $additionalWords = (clone $baseQuery)
+                    ->where('score', '>', 70)
+                    ->whereNotIn('id', $selectedWordIds)
+                    ->inRandomOrder()
+                    ->limit($neededCount)
+                    ->get();
+
+                $weakWords = $weakWords->merge($additionalWords);
+                $selectedWordIds = array_merge($selectedWordIds, $additionalWords->pluck('id')->toArray());
+            }
+        }
+
+        // Get medium words
+        $mediumWords = (clone $baseQuery)
             ->whereBetween('score', [40, 70])
+            ->whereNotIn('id', $selectedWordIds)
             ->inRandomOrder()
             ->limit(3)
             ->get();
 
-        $goodWords = Word::where('user_id', $userId)
+        $selectedWordIds = array_merge($selectedWordIds, $mediumWords->pluck('id')->toArray());
+
+        // If we need more medium words, try from good words first, then weak words
+        if ($mediumWords->count() < 3) {
+            $neededCount = 3 - $mediumWords->count();
+            $additionalWords = (clone $baseQuery)
+                ->where('score', '>', 70)
+                ->whereNotIn('id', $selectedWordIds)
+                ->inRandomOrder()
+                ->limit($neededCount)
+                ->get();
+
+            $mediumWords = $mediumWords->merge($additionalWords);
+            $selectedWordIds = array_merge($selectedWordIds, $additionalWords->pluck('id')->toArray());
+
+            if ($mediumWords->count() < 3) {
+                $neededCount = 3 - $mediumWords->count();
+                $additionalWords = (clone $baseQuery)
+                    ->where('score', '<', 40)
+                    ->whereNotIn('id', $selectedWordIds)
+                    ->inRandomOrder()
+                    ->limit($neededCount)
+                    ->get();
+
+                $mediumWords = $mediumWords->merge($additionalWords);
+                $selectedWordIds = array_merge($selectedWordIds, $additionalWords->pluck('id')->toArray());
+            }
+        }
+
+        // Get good words
+        $goodWords = (clone $baseQuery)
             ->where('score', '>', 70)
+            ->whereNotIn('id', $selectedWordIds)
             ->inRandomOrder()
             ->limit(1)
             ->get();
 
-        // ترکیب کلمات انتخاب شده
+        // If we need more good words, try from medium words first, then weak words
+        if ($goodWords->count() < 1) {
+            $additionalWords = (clone $baseQuery)
+                ->whereBetween('score', [40, 70])
+                ->whereNotIn('id', $selectedWordIds)
+                ->inRandomOrder()
+                ->limit(1)
+                ->get();
+
+            $goodWords = $goodWords->merge($additionalWords);
+
+            if ($goodWords->count() < 1) {
+                $additionalWords = (clone $baseQuery)
+                    ->where('score', '<', 40)
+                    ->whereNotIn('id', $selectedWordIds)
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
+
+                $goodWords = $goodWords->merge($additionalWords);
+            }
+        }
+
         $selectedWords = $weakWords->merge($mediumWords)->merge($goodWords);
 
         // ساخت سوالات به ازای هر کلمه
