@@ -52,8 +52,11 @@ class Review extends Component
             $query->whereBetween('score', [$range['min'], $range['max']]);
         }
 
+        $totalWords = $query->count();
+
         return view('livewire.review.review', [
-            'words' => $query->simplePaginate(1)
+            'words' => $query->simplePaginate(1),
+            'totalWords' => $totalWords
         ])->layout('layouts.front-app');
     }
 

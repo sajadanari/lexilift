@@ -3,6 +3,11 @@
     <!-- Header section -->
     <div class="flex justify-between items-start mb-6">
         <h1 class="text-2xl font-bold text-gray-800">Vocabulary Review</h1>
+        @if($totalWords > 0)
+            <div class="text-gray-600">
+                Word {{ $words->currentPage() }} of {{ $totalWords }}
+            </div>
+        @endif
     </div>
 
     <!-- Content wrapper -->
@@ -115,194 +120,213 @@
         <div class="w-full md:w-1/2 lg:w-1/3">
             <!-- Words list container -->
             <div class="flex items-center justify-center w-full">
-                @foreach ($words as $word)
+                @if($totalWords === 0)
+                    <div class="bg-white rounded-4xl border border-[var(--line-clr)] p-8 text-center w-full">
+                        <span class="material-symbols-outlined text-4xl text-gray-400 mb-3">search_off</span>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">No Words Found</h3>
+                        <p class="text-gray-600">Try adjusting your filters to find more words.</p>
+                        <button
+                            wire:click="resetFilters"
+                            class="mt-4 px-4 py-2 text-[var(--accent-clr)] hover:text-white border border-[var(--accent-clr)] rounded-lg hover:bg-[var(--accent-clr)] transition-colors duration-300"
+                        >
+                            <span class="material-symbols-outlined align-middle mr-1">refresh</span>
+                            Reset Filters
+                        </button>
+                    </div>
+                @else
+                    @foreach ($words as $word)
 
-                    <!-- Individual word card -->
-                    <div class="bg-white rounded-4xl border border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300 overflow-hidden w-full m-2 flex flex-row justify-between">
-                        {{-- Previous Button --}}
-                        <div class="flex items-center justify-center">
-                            <button
-                                class="cursor-pointer h-full px-3"
-                                wire:click="previousPage"
-                                @if($words->onFirstPage()) disabled @endif
-                            >
-                                <span class="material-symbols-outlined">
-                                    chevron_left
-                                </span>
-                            </button>
-                        </div>
-
-                        <!-- Card content wrapper -->
-                        <div class="py-3 w-full">
-                            <div class="p-5">
-                                <!-- Word header with icon and title -->
-                                <div class="flex flex-col md:flex-row mb-3">
-                                    <!-- Part of speech icon -->
-                                    <div class="flex items-center justify-center">
-                                        <span style="font-size: 40px !important;" class="material-icons-round text-white rounded-full p-4 {{
-                                            match($word->part_of_speech) {
-                                                \App\Enums\PartOfSpeech::NOUN => 'bg-indigo-500',
-                                                \App\Enums\PartOfSpeech::PRONOUN => 'bg-teal-500',
-                                                \App\Enums\PartOfSpeech::VERB => 'bg-emerald-500',
-                                                \App\Enums\PartOfSpeech::ADJECTIVE => 'bg-fuchsia-500',
-                                                \App\Enums\PartOfSpeech::ADVERB => 'bg-amber-500',
-                                                \App\Enums\PartOfSpeech::PREPOSITION => 'bg-cyan-500',
-                                                \App\Enums\PartOfSpeech::CONJUNCTION => 'bg-orange-500',
-                                                \App\Enums\PartOfSpeech::INTERJECTION => 'bg-rose-500',
-                                                \App\Enums\PartOfSpeech::ARTICLE => 'bg-gray-500',
-                                                'default' => 'bg-gray-400',
-                                            }
-                                        }}">
-                                            {{
-                                                match($word->part_of_speech) {
-                                                    \App\Enums\PartOfSpeech::NOUN => 'subject',
-                                                    \App\Enums\PartOfSpeech::PRONOUN => 'person_outline',
-                                                    \App\Enums\PartOfSpeech::VERB => 'directions_run',
-                                                    \App\Enums\PartOfSpeech::ADJECTIVE => 'palette',
-                                                    \App\Enums\PartOfSpeech::ADVERB => 'flash_on',
-                                                    \App\Enums\PartOfSpeech::PREPOSITION => 'compare_arrows',
-                                                    \App\Enums\PartOfSpeech::CONJUNCTION => 'call_merge',
-                                                    \App\Enums\PartOfSpeech::INTERJECTION => 'emoji_emotions',
-                                                    \App\Enums\PartOfSpeech::ARTICLE => 'article',
-                                                    default => 'question_mark'
-                                                }
-                                            }}
-                                        </span>
-                                    </div>
-
-                                    <!-- Word title and part of speech -->
-                                    <div class="
-                                        flex flex-col mt-3 text-center
-                                        md:ml-3 md:justify-center md:text-left md:mt-0
-                                    ">
-                                        <div class="">
-                                            <h2 class="text-2xl font-bold text-gray-800">{{ $word->word }}</h2>
-                                        </div>
-                                        <div class="">
-                                            <span class="text-sm font-medium">{{ $word->part_of_speech->label() }}</span>
-                                        </div>
-                                    </div> <!-- End word title div -->
-
-                                    <div class="flex items-center justify-center mt-3 md:ml-auto md:mt-0">
-                                        <button
-                                            type="button"
-                                            wire:click="speakWord('{{ $word->word }}')"
-                                            class="text-[var(--accent-clr)] hover:text-white border cursor-pointer p-2 rounded-full hover:bg-[var(--accent-clr)] flex"
-                                        >
-                                            <span class="material-symbols-outlined text-lg">
-                                                volume_up
-                                            </span>
-                                        </button>
-                                    </div>
-
-                                </div> <!-- End word header div -->
-
-                                <x-word-card.level-badges :word="$word" />
-
-                                <div class="mt-3">
-                                    <x-word-card.learning-status-badge :score="$word->score" />
-                                </div>
-
-                                <x-word-card.text-section
-                                    title="Meaning:"
-                                    :content="$word->meaning"
-                                    :center-title="false"
-                                    :persian="false"
-                                />
-
-                                <x-word-card.text-section
-                                    title="Example:"
-                                    :content="$word->example"
-                                    :italic="true"
-                                />
-
-                                <!-- Expandable details section -->
-                                <div x-data="{ open: false }">
-                                    <!-- Toggle button -->
+                        <!-- Individual word card -->
+                        <div class="bg-white rounded-4xl border border-[var(--line-clr)] hover:shadow-lg transition-shadow duration-300 overflow-hidden w-full m-2 flex flex-row justify-between">
+                            @if($totalWords > 1)
+                                {{-- Previous Button --}}
+                                <div class="flex items-center justify-center">
                                     <button
-                                        @click="open = !open"
-                                        class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1"
+                                        class="cursor-pointer h-full px-3"
+                                        wire:click="previousPage"
+                                        @if($words->onFirstPage()) disabled @endif
                                     >
-                                        <span x-text="open ? 'Show Less' : 'Show More'"></span>
-                                        <svg
-                                            class="w-4 h-4 transition-transform"
-                                            :class="{'rotate-180': open}"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
+                                        <span class="material-symbols-outlined">
+                                            chevron_left
+                                        </span>
                                     </button>
+                                </div>
+                            @endif
 
-                                    <!-- Expandable content -->
-                                    <div x-show="open" x-transition class="mt-3 space-y-2">
-                                        <x-word-card.pronunciation-section :word="$word" />
+                            <!-- Card content wrapper -->
+                            <div class="py-3 w-full">
+                                <div class="p-5">
+                                    <!-- Word header with icon and title -->
+                                    <div class="flex flex-col md:flex-row mb-3">
+                                        <!-- Part of speech icon -->
+                                        <div class="flex items-center justify-center">
+                                            <span style="font-size: 40px !important;" class="material-icons-round text-white rounded-full p-4 {{
+                                                match($word->part_of_speech) {
+                                                    \App\Enums\PartOfSpeech::NOUN => 'bg-indigo-500',
+                                                    \App\Enums\PartOfSpeech::PRONOUN => 'bg-teal-500',
+                                                    \App\Enums\PartOfSpeech::VERB => 'bg-emerald-500',
+                                                    \App\Enums\PartOfSpeech::ADJECTIVE => 'bg-fuchsia-500',
+                                                    \App\Enums\PartOfSpeech::ADVERB => 'bg-amber-500',
+                                                    \App\Enums\PartOfSpeech::PREPOSITION => 'bg-cyan-500',
+                                                    \App\Enums\PartOfSpeech::CONJUNCTION => 'bg-orange-500',
+                                                    \App\Enums\PartOfSpeech::INTERJECTION => 'bg-rose-500',
+                                                    \App\Enums\PartOfSpeech::ARTICLE => 'bg-gray-500',
+                                                    'default' => 'bg-gray-400',
+                                                }
+                                            }}">
+                                                {{
+                                                    match($word->part_of_speech) {
+                                                        \App\Enums\PartOfSpeech::NOUN => 'subject',
+                                                        \App\Enums\PartOfSpeech::PRONOUN => 'person_outline',
+                                                        \App\Enums\PartOfSpeech::VERB => 'directions_run',
+                                                        \App\Enums\PartOfSpeech::ADJECTIVE => 'palette',
+                                                        \App\Enums\PartOfSpeech::ADVERB => 'flash_on',
+                                                        \App\Enums\PartOfSpeech::PREPOSITION => 'compare_arrows',
+                                                        \App\Enums\PartOfSpeech::CONJUNCTION => 'call_merge',
+                                                        \App\Enums\PartOfSpeech::INTERJECTION => 'emoji_emotions',
+                                                        \App\Enums\PartOfSpeech::ARTICLE => 'article',
+                                                        default => 'question_mark'
+                                                    }
+                                                }}
+                                            </span>
+                                        </div>
 
-                                        @if($word->usage)
-                                            <x-word-card.text-section
-                                                title="Usage:"
-                                                :content="$word->usage"
-                                            />
-                                        @endif
+                                        <!-- Word title and part of speech -->
+                                        <div class="
+                                            flex flex-col mt-3 text-center
+                                            md:ml-3 md:justify-center md:text-left md:mt-0
+                                        ">
+                                            <div class="">
+                                                <h2 class="text-2xl font-bold text-gray-800">{{ $word->word }}</h2>
+                                            </div>
+                                            <div class="">
+                                                <span class="text-sm font-medium">{{ $word->part_of_speech->label() }}</span>
+                                            </div>
+                                        </div> <!-- End word title div -->
 
-                                        @if($word->synonyms)
-                                            <x-word-card.text-section
-                                                title="Synonyms:"
-                                                :content="$word->synonyms"
-                                            />
-                                        @endif
+                                        <div class="flex items-center justify-center mt-3 md:ml-auto md:mt-0">
+                                            <button
+                                                type="button"
+                                                wire:click="speakWord('{{ $word->word }}')"
+                                                class="text-[var(--accent-clr)] hover:text-white border cursor-pointer p-2 rounded-full hover:bg-[var(--accent-clr)] flex"
+                                            >
+                                                <span class="material-symbols-outlined text-lg">
+                                                    volume_up
+                                                </span>
+                                            </button>
+                                        </div>
 
-                                        @if($word->antonyms)
-                                            <x-word-card.text-section
-                                                title="Antonyms:"
-                                                :content="$word->antonyms"
-                                            />
-                                        @endif
+                                    </div> <!-- End word header div -->
 
-                                        @if($word->collocations)
-                                            <x-word-card.text-section
-                                                title="Common Collocations:"
-                                                :content="$word->collocations"
-                                            />
-                                        @endif
+                                    <x-word-card.level-badges :word="$word" />
 
-                                        @if($word->root || $word->etymology)
-                                            <x-word-card.text-section
-                                                title="Word Origin:"
-                                                :content="$word->root . ($word->etymology ? ' - ' . $word->etymology : '')"
-                                            />
-                                        @endif
+                                    <div class="mt-3">
+                                        <x-word-card.learning-status-badge :score="$word->score" />
+                                    </div>
 
-                                        <x-word-card.grammar-section :word="$word" />
+                                    <x-word-card.text-section
+                                        title="Meaning:"
+                                        :content="$word->meaning"
+                                        :center-title="false"
+                                        :persian="false"
+                                    />
 
-                                        @if($word->notes)
-                                            <x-word-card.text-section
-                                                title="Notes:"
-                                                :content="$word->notes"
-                                            />
-                                        @endif
-                                    </div> <!-- End expandable content div -->
-                                </div> <!-- End expandable section div -->
-                            </div>
-                        </div> <!-- End card content wrapper div -->
+                                    <x-word-card.text-section
+                                        title="Example:"
+                                        :content="$word->example"
+                                        :italic="true"
+                                    />
 
-                        {{-- Next Button --}}
-                        <div class="flex items-center justify-center">
-                            <button
-                                class="cursor-pointer h-full px-3"
-                                wire:click="nextPage"
-                                @if(!$words->hasMorePages()) disabled @endif
-                            >
-                                <span class="material-symbols-outlined">
-                                    chevron_right
-                                </span>
-                            </button>
-                        </div>
+                                    <!-- Expandable details section -->
+                                    <div x-data="{ open: false }">
+                                        <!-- Toggle button -->
+                                        <button
+                                            @click="open = !open"
+                                            class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1"
+                                        >
+                                            <span x-text="open ? 'Show Less' : 'Show More'"></span>
+                                            <svg
+                                                class="w-4 h-4 transition-transform"
+                                                :class="{'rotate-180': open}"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                            </svg>
+                                        </button>
 
-                    </div> <!-- End individual word card div -->
+                                        <!-- Expandable content -->
+                                        <div x-show="open" x-transition class="mt-3 space-y-2">
+                                            <x-word-card.pronunciation-section :word="$word" />
 
-                @endforeach
+                                            @if($word->usage)
+                                                <x-word-card.text-section
+                                                    title="Usage:"
+                                                    :content="$word->usage"
+                                                />
+                                            @endif
+
+                                            @if($word->synonyms)
+                                                <x-word-card.text-section
+                                                    title="Synonyms:"
+                                                    :content="$word->synonyms"
+                                                />
+                                            @endif
+
+                                            @if($word->antonyms)
+                                                <x-word-card.text-section
+                                                    title="Antonyms:"
+                                                    :content="$word->antonyms"
+                                                />
+                                            @endif
+
+                                            @if($word->collocations)
+                                                <x-word-card.text-section
+                                                    title="Common Collocations:"
+                                                    :content="$word->collocations"
+                                                />
+                                            @endif
+
+                                            @if($word->root || $word->etymology)
+                                                <x-word-card.text-section
+                                                    title="Word Origin:"
+                                                    :content="$word->root . ($word->etymology ? ' - ' . $word->etymology : '')"
+                                                />
+                                            @endif
+
+                                            <x-word-card.grammar-section :word="$word" />
+
+                                            @if($word->notes)
+                                                <x-word-card.text-section
+                                                    title="Notes:"
+                                                    :content="$word->notes"
+                                                />
+                                            @endif
+                                        </div> <!-- End expandable content div -->
+                                    </div> <!-- End expandable section div -->
+                                </div>
+                            </div> <!-- End card content wrapper div -->
+
+                            @if($totalWords > 1)
+                                {{-- Next Button --}}
+                                <div class="flex items-center justify-center">
+                                    <button
+                                        class="cursor-pointer h-full px-3"
+                                        wire:click="nextPage"
+                                        @if(!$words->hasMorePages()) disabled @endif
+                                    >
+                                        <span class="material-symbols-outlined">
+                                            chevron_right
+                                        </span>
+                                    </button>
+                                </div>
+                            @endif
+
+                        </div> <!-- End individual word card div -->
+
+                    @endforeach
+                @endif
             </div> <!-- End words list container div -->
 
         </div> <!-- End card container div -->
