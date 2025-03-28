@@ -49,9 +49,9 @@ class MultipleChoice extends Component
         $isCorrect = $this->selectedOption === $this->correct;
 
         if ($isCorrect) {
-            $this->word->score = $this->word->score + 5;
+            $this->word->score = min(100, $this->word->score + config('myapp.multiple_choice.score.correct'));
         } else {
-            $this->word->score = max(0, $this->word->score - 3);
+            $this->word->score = max(0, $this->word->score + config('myapp.multiple_choice.score.incorrect'));
         }
 
         $this->word->save();
