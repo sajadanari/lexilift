@@ -42,7 +42,7 @@
                                 Question {{ $currentQuestionIndex + 1 }} of {{ count($questions) }}
                             </h4>
                             <div class="flex items-center text-gray-600">
-                                <span class="material-symbols-outlined mr-2">timer</span>
+                                <span class="material-symbols-outlined mr-2">quiz</span>
                                 <span>{{ $currentQuestionIndex + 1 }}/{{ count($questions) }}</span>
                             </div>
                         </div>
