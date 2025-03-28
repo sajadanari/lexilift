@@ -59,7 +59,7 @@
             Exam
         </x-sidebar.sidebar-item>
 
-        <x-sidebar.sidebar-item icon="settings" dropdown="true" :submenuItems="[
+        {{-- <x-sidebar.sidebar-item icon="settings" dropdown="true" :submenuItems="[
             ['icon' => 'person', 'route' => '/', 'name' => 'Profile'],
             ['icon' => 'account_box', 'route' => '/', 'name' => 'Account'],
         ]">
@@ -68,7 +68,7 @@
 
         <x-sidebar.sidebar-item icon="help" dropdown="true" :submenuItems="[['icon' => 'person', 'route' => '/', 'name' => 'Profile']]">
             Help
-        </x-sidebar.sidebar-item>
+        </x-sidebar.sidebar-item> --}}
 
         @auth
             <x-sidebar.sidebar-item
