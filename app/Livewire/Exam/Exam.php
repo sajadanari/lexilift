@@ -70,8 +70,6 @@ class Exam extends Component
             $questions = $questions->merge($words);
         }
 
-        dd($questions->pluck('score')->toArray());
-
         $this->questions = $questions->map(function($word) {
             return [
                 'type' => 1,
