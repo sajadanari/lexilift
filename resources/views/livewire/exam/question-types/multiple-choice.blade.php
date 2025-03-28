@@ -1,4 +1,4 @@
-<div class="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto">
+<div class="bg-white p-8 rounded-2xl shadow-lg mx-auto">
     <div class="mb-6">
         <h3 class="text-sm uppercase tracking-wide text-gray-500 mb-2">Question</h3>
         <p class="text-2xl font-semibold text-gray-800">{{ $word->word }}</p>
@@ -8,7 +8,7 @@
         @foreach($options as $option)
             <label class="block transition-all duration-200 ease-in-out
                 {{ $isAnswered ? 'cursor-not-allowed' : 'hover:transform hover:scale-102 cursor-pointer' }}">
-                <div class="relative">
+                <div class="">
                     <input type="radio"
                            name="answer"
                            value="{{ $option }}"
@@ -37,6 +37,11 @@
                                 {{ $isAnswered && $option === $correct ? 'text-green-700' : '' }}
                                 {{ $isAnswered && $option === $selectedOption && $option !== $correct ? 'text-red-700' : 'text-gray-700' }}">
                                 {{ $option }}
+                                @php
+                                    if (env('APP_ENV') === 'local' && $option === $correct) {
+                                        echo '<br><small class="text-gray-500">Correct</small>';
+                                    }
+                                @endphp
                             </span>
                         </div>
                     </div>
