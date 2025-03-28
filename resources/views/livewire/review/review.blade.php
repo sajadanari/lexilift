@@ -96,6 +96,15 @@
                         @endforeach
                     </x-forms.select-field>
 
+                    {{-- Reset Filters Button --}}
+                    <button
+                        wire:click="resetFilters"
+                        class="w-full flex items-center justify-center gap-2 px-4 py-2 text-[var(--accent-clr)] hover:text-white border border-[var(--accent-clr)] rounded-lg hover:bg-[var(--accent-clr)] transition-colors duration-300"
+                    >
+                        <span class="material-symbols-outlined">refresh</span>
+                        Reset Filters
+                    </button>
+
                 </div>
 
             </div>

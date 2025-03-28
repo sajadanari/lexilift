@@ -86,4 +86,14 @@ class Review extends Component
     {
         $this->resetPage();
     }
+
+    public function resetFilters()
+    {
+        $this->search = '';
+        $this->part_of_speech = '';
+        $this->difficulty_level = '';
+        $this->frequency = '';
+        $this->word_level = '';
+        $this->resetPage();
+    }
 }
