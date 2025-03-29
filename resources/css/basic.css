@@ -1,10 +1,18 @@
 :root {
     --base-clr: #ffffff;
-    --line-clr: #bdbdbd;
-    --hover-clr: #e0e0e0;
-    --text-clr: #0d0a0b;
+    --line-clr: #e5e7eb;
+    --hover-clr: #f0fdf4;
+    --text-clr: #111827;
     --accent-clr: #239400;
-    --seccondary-text-clr: #454955;
+    --secondary-clr: #16a34a;
+    --secondary-text-clr: #4b5563;
+    --success-light: #dcfce7;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --radius-sm: 0.375rem;
+    --radius: 0.5rem;
+    --radius-lg: 0.75rem;
 }
 
 * {
@@ -39,9 +47,17 @@ main {
 .container {
     border: 1px solid var(--line-clr);
     width: 100%;
-    border-radius: 1em;
+    border-radius: var(--radius-lg);
     margin-bottom: 20px;
     padding: min(3em, 15%);
+    background: var(--base-clr);
+    box-shadow: var(--shadow);
+    transition: all 0.2s ease;
+}
+
+.container:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
 @media (max-width: 800px) {
@@ -54,5 +70,8 @@ main {
     .container {
         border: none;
         padding: 0;
+        background: none;
+        box-shadow: none;
+        transition: none;
     }
 }

@@ -13,10 +13,11 @@
 --}}
 
 <nav id="sidebar">
-    <ul>
+    <ul class="space-y-0 md:space-y-2">
 
         <li>
             <span class="logo">
+                <i class="material-icons-round">school</i>
                 LexiLift
             </span>
             <button id="toggle-btn" onClick="toggleSidebar()">
