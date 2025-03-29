@@ -239,3 +239,37 @@
         }
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    #sidebar {
+        background-color: var(--base-clr);
+        border-color: var(--line-clr);
+    }
+
+    #sidebar.close {
+        background-color: var(--base-clr);
+    }
+
+    #sidebar ul li.active a {
+        background-color: var(--success-light);
+    }
+
+    #sidebar a::before,
+    #sidebar .dropdown-btn::before {
+        background-color: var(--success-light);
+    }
+
+    @media (max-width: 800px) {
+        #sidebar {
+            background-color: rgba(26, 26, 26, 0.9);
+        }
+
+        #sidebar ul li.active a {
+            background: none;
+        }
+
+        #sidebar ul li .sub-menu.show {
+            background-color: rgba(26, 26, 26, 0.95);
+        }
+    }
+}

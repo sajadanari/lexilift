@@ -12,16 +12,16 @@
  */
 --}}
 
-<nav id="sidebar">
+<nav id="sidebar" class="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
     <ul class="space-y-0 md:space-y-2">
 
         <li>
-            <span class="logo">
+            <span class="logo text-emerald-600 dark:text-emerald-400">
                 <i class="material-icons-round">school</i>
                 LexiLift
             </span>
-            <button id="toggle-btn" onClick="toggleSidebar()">
-                <i class="material-icons-outlined">keyboard_double_arrow_left</i>
+            <button id="toggle-btn" onClick="toggleSidebar()" class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                <i class="material-icons-outlined text-gray-600 dark:text-gray-400">keyboard_double_arrow_left</i>
             </button>
         </li>
 
