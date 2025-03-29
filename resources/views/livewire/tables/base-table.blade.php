@@ -64,14 +64,14 @@
     </div>
 
     {{-- Table Container --}}
-    <div class="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
         <table class="w-full text-sm">
             <thead>
-                <tr class="bg-gray-50/60">
+                <tr class="bg-gray-50/60 dark:bg-gray-700/50">
                     @foreach($columns as $key => $column)
-                        <th class="group px-6 py-4 text-left font-medium {{ ($column['sortable'] ?? false) ? 'cursor-pointer transition-colors hover:bg-gray-50' : '' }}"
+                        <th class="group px-6 py-4 text-left font-medium {{ ($column['sortable'] ?? false) ? 'cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-700' : '' }}"
                             @if($column['sortable'] ?? false) wire:click="sort('{{ $key }}')" @endif>
-                            <div class="flex items-center gap-2 text-gray-600">
+                            <div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
                                 <span>{{ $column['label'] }}</span>
                                 @if(($column['sortable'] ?? false))
                                     <span class="material-symbols-outlined text-sm opacity-60 group-hover:opacity-100 transition-opacity {{ $sortField === $key ? 'opacity-100' : '' }}">
@@ -83,15 +83,17 @@
                     @endforeach
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100">
+            <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
                 @foreach ($items as $item)
-                    <tr class="transition-colors hover:bg-gray-50/50">
+                    <tr class="transition-colors hover:bg-gray-50/50 dark:hover:bg-gray-700/50">
                         @foreach($columns as $key => $column)
                             <td class="px-6 py-4 @if($loop->first) font-medium @endif">
                                 @if(isset($column['formatter']) || isset($column['view']))
-                                    {!! $this->renderCustomColumn($item, $key, $column) !!}
+                                    <div class="text-gray-600 dark:text-gray-300">
+                                        {!! $this->renderCustomColumn($item, $key, $column) !!}
+                                    </div>
                                 @else
-                                    <span class="text-gray-600">{{ $item->{$key} }}</span>
+                                    <span class="text-gray-600 dark:text-gray-300">{{ $item->{$key} }}</span>
                                 @endif
                             </td>
                         @endforeach
@@ -103,10 +105,10 @@
 
     {{-- No Results Message --}}
     @if($items->isEmpty())
-        <div class="flex justify-center items-center h-32 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50/50 mt-3">
+        <div class="flex justify-center items-center h-32 rounded-lg border-2 border-dashed border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 mt-3">
             <div class="text-center">
-                <span class="material-symbols-outlined text-3xl text-gray-400 mb-2">search_off</span>
-                <p class="text-gray-500">No results found</p>
+                <span class="material-symbols-outlined text-3xl text-gray-400 dark:text-gray-500 mb-2">search_off</span>
+                <p class="text-gray-500 dark:text-gray-400">No results found</p>
             </div>
         </div>
     @endif
