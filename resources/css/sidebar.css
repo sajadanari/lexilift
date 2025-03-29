@@ -6,11 +6,11 @@
     width: 280px;
     padding: 1.5rem 1rem;
     background-color: var(--base-clr);
-    border-right: 1px solid var(--line-clr);
+    /* border-right: 1px solid var(--line-clr); */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     text-wrap: nowrap;
-    box-shadow: var(--shadow);
+    /* box-shadow: var(--shadow); */
 }
 
 #sidebar.close {
