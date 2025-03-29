@@ -42,34 +42,40 @@
 
 <div>
     {{-- Search and Per Page Controls --}}
-    <div class="flex justify-between items-center mb-4">
-        {{-- Search Input Field --}}
-        <x-forms.input-field wire:model.live="search" type="text" placeholder="Search..." name="search" icon="search" />
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+        <x-forms.input-field
+            wire:model.live="search"
+            type="text"
+            placeholder="Search..."
+            name="search"
+            icon="search"
+            class="w-full sm:w-64 transition-all duration-300 focus:w-full sm:focus:w-72"
+        />
 
-        {{-- Items Per Page Selector --}}
-        <x-forms.select-field name="perPage" wire:model.live="perPage">
-            <option value="12">12</option>
-            <option value="24">24</option>
-            <option value="36">36</option>
+        <x-forms.select-field
+            name="perPage"
+            wire:model.live="perPage"
+            class="transition-all duration-200 w-full md:w-32"
+        >
+            <option value="12">12 items</option>
+            <option value="24">24 items</option>
+            <option value="36">36 items</option>
         </x-forms.select-field>
     </div>
 
     {{-- Table Container --}}
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            {{-- Table Header --}}
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
+    <div class="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="bg-gray-50/60">
                     @foreach($columns as $key => $column)
-                        {{-- Column Headers with Sort Functionality --}}
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider {{ ($column['sortable'] ?? false) ? 'cursor-pointer' : '' }}"
+                        <th class="group px-6 py-4 text-left font-medium {{ ($column['sortable'] ?? false) ? 'cursor-pointer transition-colors hover:bg-gray-50' : '' }}"
                             @if($column['sortable'] ?? false) wire:click="sort('{{ $key }}')" @endif>
-                            <div class="flex items-center space-x-1">
+                            <div class="flex items-center gap-2 text-gray-600">
                                 <span>{{ $column['label'] }}</span>
-                                {{-- Sort Direction Indicator --}}
-                                @if(($column['sortable'] ?? false) && $sortField === $key)
-                                    <span class="material-symbols-outlined text-sm">
-                                        {{ $sortDirection === 'asc' ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+                                @if(($column['sortable'] ?? false))
+                                    <span class="material-symbols-outlined text-sm opacity-60 group-hover:opacity-100 transition-opacity {{ $sortField === $key ? 'opacity-100' : '' }}">
+                                        {{ $sortField === $key && $sortDirection === 'asc' ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
                                     </span>
                                 @endif
                             </div>
@@ -77,19 +83,15 @@
                     @endforeach
                 </tr>
             </thead>
-            {{-- Table Body --}}
-            <tbody>
+            <tbody class="divide-y divide-gray-100">
                 @foreach ($items as $item)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr class="transition-colors hover:bg-gray-50/50">
                         @foreach($columns as $key => $column)
-                            {{-- Table Cells - First column has special styling --}}
-                            <td class="px-6 py-4 @if($loop->first) font-medium text-gray-900 whitespace-nowrap dark:text-white @endif">
-                                @if(isset($column['formatter']))
-                                    {!! $this->renderCustomColumn($item, $key, $column) !!}
-                                @elseif(isset($column['view']))
+                            <td class="px-6 py-4 @if($loop->first) font-medium @endif">
+                                @if(isset($column['formatter']) || isset($column['view']))
                                     {!! $this->renderCustomColumn($item, $key, $column) !!}
                                 @else
-                                    {{ $item->{$key} }}
+                                    <span class="text-gray-600">{{ $item->{$key} }}</span>
                                 @endif
                             </td>
                         @endforeach
@@ -101,13 +103,16 @@
 
     {{-- No Results Message --}}
     @if($items->isEmpty())
-        <div class="flex justify-center items-center h-24">
-            <span class="text-gray-500 dark:text-gray-400">No results found</span>
+        <div class="flex justify-center items-center h-32 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50/50 mt-3">
+            <div class="text-center">
+                <span class="material-symbols-outlined text-3xl text-gray-400 mb-2">search_off</span>
+                <p class="text-gray-500">No results found</p>
+            </div>
         </div>
     @endif
 
     {{-- Pagination Links --}}
-    <div class="p-2">
+    <div class="mt-4">
         {{ $items->links() }}
     </div>
 </div>

@@ -60,6 +60,51 @@ main {
     box-shadow: var(--shadow-lg);
 }
 
+/* Table Styles */
+.table-container {
+    transition: all 0.2s ease-in-out;
+}
+
+.table-container:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Animation Utilities */
+.transition-all {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Table Row Hover Effect */
+tr {
+    transition: background-color 0.15s ease-in-out;
+}
+
+/* Input Focus Effects */
+input:focus, select:focus {
+    box-shadow: 0 0 0 2px var(--accent-clr);
+    outline: none;
+}
+
 @media (max-width: 800px) {
     body {
         grid-template-columns: 1fr;

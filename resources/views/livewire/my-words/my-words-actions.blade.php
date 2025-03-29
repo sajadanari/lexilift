@@ -1,14 +1,18 @@
-<div class="flex space-x-2">
+<div class="flex items-center gap-2">
     @if($can_edit)
-        <button wire:click="$parent.editWord({{ $item->id }})" class="inline-flex text-white p-2 rounded-full hover:text-gray-900 hover:bg-gray-200 cursor-pointer">
-            <span class="material-symbols-outlined">
-                edit
-            </span>
+        <button
+            wire:click="$parent.editWord({{ $item->id }})"
+            class="p-2 text-gray-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-200 flex"
+            title="Edit"
+        >
+            <span class="material-symbols-outlined text-[20px]">edit</span>
         </button>
     @endif
-    <button wire:click="$parent.deleteWord({{ $item->id }})" class="inline-flex text-red p-2 rounded-full hover:text-red-900 hover:bg-gray-200 cursor-pointer">
-        <span class="material-symbols-outlined">
-            delete
-        </span>
+    <button
+        wire:click="$parent.deleteWord({{ $item->id }})"
+        class="p-2 text-gray-600 hover:text-red-600 rounded-lg hover:bg-red-50 transition-all duration-200 flex"
+        title="Delete"
+    >
+        <span class="material-symbols-outlined text-[20px]">delete</span>
     </button>
 </div>
