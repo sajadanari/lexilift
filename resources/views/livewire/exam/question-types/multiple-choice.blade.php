@@ -1,7 +1,7 @@
-<div class="bg-white p-8 rounded-2xl shadow-lg mx-auto">
+<div class="container mx-auto">
     <div class="mb-6">
-        <h3 class="text-sm uppercase tracking-wide text-gray-500 mb-2">Question</h3>
-        <p class="text-2xl font-semibold text-gray-800">{{ $word->word }}</p>
+        <h3 class="text-sm uppercase tracking-wide text-[var(--secondary-text-clr)] mb-2">Question</h3>
+        <p class="text-2xl font-semibold text-[var(--text-clr)]">{{ $word->word }}</p>
     </div>
 
     <div class="space-y-4">
@@ -16,13 +16,14 @@
                            class="absolute opacity-0"
                            {{ $isAnswered ? 'disabled' : '' }}>
                     <div wire:click="{{ $isAnswered ? '' : 'submitAnswer(\'' . $option . '\')' }}"
-                         class="p-4 rounded-xl border-2 transition-all duration-200
-                         {{ !$isAnswered ? 'border-gray-200 hover:border-blue-400 hover:bg-blue-50' : '' }}
-                         {{ $isAnswered && $option === $correct ? 'border-green-500 bg-green-50' : '' }}
-                         {{ $isAnswered && $option === $selectedOption && $option !== $correct ? 'border-red-500 bg-red-50' : '' }}">
+                        class="p-4 rounded-xl border-2 transition-all duration-200
+                        {{ !$isAnswered ? 'border-[var(--line-clr)] hover:border-[var(secondary-clr)] hover:bg-[var(--hover-clr)]' : '' }}
+                        {{ $isAnswered && $option === $correct ? 'border-green-500 bg-green-50' : '' }}
+                        {{ $isAnswered && $option === $selectedOption && $option !== $correct ? 'border-red-500 bg-red-50' : '' }}
+                        {{ $isAnswered && $option !== $selectedOption ? 'border-[var(--line-clr)] text-[var(--secondary-text-clr)]' : '' }}">
                         <div class="flex items-center">
                             <div class="w-6 h-6 rounded-full flex items-center justify-center mr-4
-                                {{ !$isAnswered ? 'text-gray-300' : '' }}
+                                {{ !$isAnswered ? 'text-[var(--text-clr)]' : '' }}
                                 {{ $isAnswered && $option === $correct ? 'bg-green-500 text-white p-3' : '' }}
                                 {{ $isAnswered && $option === $selectedOption && $option !== $correct ? 'bg-red-500 text-white p-3' : '' }}">
                                 @if(!$isAnswered)
@@ -35,7 +36,7 @@
                             </div>
                             <span class="text-lg font-medium
                                 {{ $isAnswered && $option === $correct ? 'text-green-700' : '' }}
-                                {{ $isAnswered && $option === $selectedOption && $option !== $correct ? 'text-red-700' : 'text-gray-700' }}">
+                                {{ $isAnswered && $option === $selectedOption && $option !== $correct ? 'text-red-700' : 'text-[var(--text-clr)]' }}">
                                 {{ $option }}
                                 @php
                                     if (env('APP_ENV') === 'local' && $option === $correct) {

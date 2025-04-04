@@ -1,7 +1,7 @@
 <div class="min-h-screen">
     <div class="mx-auto p-0 md:px-4 md:py-8 max-w-4xl">
         @if(!$isStarted)
-            <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+            <div class="container">
                 <div class="flex flex-col items-center justify-center space-y-8">
                     <div class="relative">
                         <span class="material-symbols-outlined text-[var(--accent-clr)] text-7xl animate-bounce">
@@ -16,8 +16,8 @@
                         <h2 class="text-3xl font-bold text-gray-800">
                             Ready to Test Your Knowledge?
                         </h2>
-                        <p class="text-gray-600 max-w-md mx-auto">
-                            You'll be presented with {{ count($questions) }} questions to test your vocabulary skills.
+                        <p class="text-[var(--secondary-text-clr)] max-w-md mx-auto">
+                            You'll be presented with 10 questions to test your vocabulary skills.
                             Take your time and choose your answers carefully.
                         </p>
                     </div>
@@ -36,12 +36,12 @@
                 @php $question = $questions[$currentQuestionIndex]; @endphp
                 <div class="space-y-6">
                     <!-- Progress Bar -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm mb-6">
+                    <div class="container">
                         <div class="flex items-center justify-between mb-2">
-                            <h4 class="text-lg font-semibold text-gray-700">
+                            <h4 class="text-lg font-semibold text-[var(--text-clr)]">
                                 Question {{ $currentQuestionIndex + 1 }} of {{ count($questions) }}
                             </h4>
-                            <div class="flex items-center text-gray-600">
+                            <div class="flex items-center text-[var(--secondary-text-clr)]">
                                 <span class="material-symbols-outlined mr-2">quiz</span>
                                 <span>{{ $currentQuestionIndex + 1 }}/{{ count($questions) }}</span>
                             </div>
@@ -58,7 +58,7 @@
                     @endif
 
                     <div class="mt-8">
-                        <button wire:click="nextQuestion"
+                        {{-- <button wire:click="nextQuestion"
                                 @class([
                                     'px-6 py-3 rounded-xl transition-all duration-300 w-full md:w-auto float-right flex items-center justify-center space-x-2',
                                     'bg-[var(--accent-clr)] hover:bg-gray-900 text-white cursor-pointer transform hover:scale-105' => $currentQuestionAnswered,
@@ -67,11 +67,20 @@
                                 {{ !$currentQuestionAnswered ? 'disabled' : '' }}>
                             <span>{{ $currentQuestionIndex === count($questions) - 1 ? 'Show Results' : 'Next Question' }}</span>
                             <span class="material-symbols-outlined">arrow_forward</span>
-                        </button>
+                        </button> --}}
+
+                        <x-forms.primary-btn
+                            wire:click="nextQuestion"
+                            icon='arrow_forward'
+                            :isDisable='!$currentQuestionAnswered'
+                            class="float-right"
+                        >
+                        {{ $currentQuestionIndex === count($questions) - 1 ? 'Show Results' : 'Next Question' }}
+                        </x-forms.primary-btn>
                     </div>
                 </div>
             @else
-                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                <div class="container text-center">
                     <div class="flex flex-col items-center justify-center space-y-6">
                         <div class="relative">
                             @if($score / count($questions) >= 0.7)
@@ -86,10 +95,10 @@
                         </div>
 
                         <div class="space-y-4">
-                            <h3 class="text-3xl font-bold text-gray-800">Exam Completed!</h3>
+                            <h3 class="">Exam Completed!</h3>
                             <div class="text-4xl font-bold text-[var(--accent-clr)]">
                                 {{ $score }} / {{ count($questions) }}
-                                <p class="text-sm text-gray-600 mt-1">
+                                <p class="text-sm text-[var(--secondary-text-clr)] mt-1">
                                     {{ round(($score / count($questions)) * 100) }}% Accuracy
                                 </p>
                             </div>
