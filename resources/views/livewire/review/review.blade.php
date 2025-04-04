@@ -80,13 +80,15 @@
                             @endforeach
                         </x-forms.select-field>
 
-                        <button
+                        <x-forms.primary-btn
+                            :isOutline="true"
+                            icon="refresh"
+                            class="w-full"
                             wire:click="resetFilters"
-                            class="w-full flex items-center justify-center gap-2 px-4 py-2 text-[var(--accent-clr)] hover:text-white border border-[var(--accent-clr)] rounded-lg hover:bg-[var(--accent-clr)] transition-colors duration-300"
-                        >
-                            <span class="material-symbols-outlined">refresh</span>
-                            Reset Filters
-                        </button>
+                            wire:loading.attr="disabled"
+                            >
+                        Reset Filters
+                        </x-forms.primary-btn>
                     </div>
                 </div>
             </div>
