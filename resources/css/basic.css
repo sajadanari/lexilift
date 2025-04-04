@@ -17,17 +17,17 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --base-clr: #1a1a1a;
+        --base-clr: #1C1B1B;
         --line-clr: #333333;
-        --hover-clr: #2a2a2a;
+        --hover-clr: #1f1f1f; /* Darker hover color */
         --text-clr: #e5e7eb;
-        --accent-clr: #4ade80;
+        --accent-clr: #42C83C;
         --secondary-clr: #22c55e;
         --secondary-text-clr: #9ca3af;
         --success-light: rgba(34, 197, 94, 0.2);
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-        --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4);
-        --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+        --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5);
+        --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.6);
     }
 }
 

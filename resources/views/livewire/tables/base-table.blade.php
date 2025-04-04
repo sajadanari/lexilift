@@ -64,10 +64,10 @@
     </div>
 
     {{-- Table Container --}}
-    <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+    <div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 shadow-sm">
         <table class="w-full text-sm">
             <thead>
-                <tr class="bg-gray-50/60 dark:bg-gray-700/50">
+                <tr class="bg-gray-50/60 dark:bg-gray-800/80">
                     @foreach($columns as $key => $column)
                         <th class="group px-6 py-4 text-left font-medium {{ ($column['sortable'] ?? false) ? 'cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-700' : '' }}"
                             @if($column['sortable'] ?? false) wire:click="sort('{{ $key }}')" @endif>
@@ -85,7 +85,7 @@
             </thead>
             <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
                 @foreach ($items as $item)
-                    <tr class="transition-colors hover:bg-gray-50/50 dark:hover:bg-gray-700/50">
+                    <tr class="transition-colors hover:bg-gray-50/50 dark:hover:bg-gray-800/70">
                         @foreach($columns as $key => $column)
                             <td class="px-6 py-4 @if($loop->first) font-medium @endif">
                                 @if(isset($column['formatter']) || isset($column['view']))
