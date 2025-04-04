@@ -5,29 +5,40 @@
     'falseLabel' => 'No',
 ])
 
-<div class="mb-4" x-data="{ checked: @entangle($attributes->wire('model')) }">
+<div class="mb-6" x-data="{ checked: @entangle($attributes->wire('model')) }">
     @if (isset($label) && $label)
-        <label for="{{ $attributes->get('id') ?? $name }}" class="block text-sm font-medium text-gray-700 mb-6">
-            {{ $label }}
-        </label>
+        <div class="mb-2.5">
+            <label for="{{ $attributes->get('id') ?? $name }}"
+                class="block text-sm font-semibold mb-1 px-2"
+                style="color: var(--text-clr)">
+                {{ $label }}
+            </label>
+        </div>
     @endif
 
     <div class="flex items-center gap-3">
         <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" class="sr-only peer" x-model="checked"
+            <input type="checkbox"
+                class="sr-only peer"
+                x-model="checked"
                 {{ $attributes->whereDoesntStartWith(['trueLabel', 'falseLabel']) }}>
-            <div
-                class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer
-                        peer-checked:after:translate-x-full peer-checked:after:border-white
-                        after:content-[''] after:absolute after:top-[2px] after:left-[2px]
-                        after:bg-white after:border-gray-300 after:border after:rounded-full
-                        after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+            <div class="w-11 h-6 rounded-full transition-all duration-200 peer-focus:ring-2 peer-focus:ring-[var(--accent-clr)]"
+                :class="checked ? 'bg-[var(--accent-clr)]' : 'bg-[var(--line-clr)]'"
+                style="box-shadow: var(--shadow-sm)">
+                <div class="absolute inset-y-1 start-1 w-4 h-4 rounded-full transition-all duration-200 transform"
+                    :class="checked ? 'translate-x-5 bg-[var(--base-clr)]' : 'translate-x-0 bg-[var(--text-clr)]'">
+                </div>
             </div>
         </label>
-        <span class="text-sm text-gray-600" x-text="checked ? '{{ $trueLabel }}' : '{{ $falseLabel }}'"></span>
+        <span class="text-sm transition-colors duration-200"
+            style="color: var(--secondary-text-clr)"
+            x-text="checked ? '{{ $trueLabel }}' : '{{ $falseLabel }}'">
+        </span>
     </div>
 
     @error($name)
-        <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+        <div class="mt-2 px-2">
+            <span class="text-red-500 text-sm font-medium">{{ $message }}</span>
+        </div>
     @enderror
 </div>

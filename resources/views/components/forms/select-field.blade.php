@@ -1,40 +1,58 @@
-<div class="mb-4">
+<div class="mb-6">
     @if (isset($label) && $label)
-        <div class="mb-2 text-center">
-            <label for="{{ $attributes->get('id') ?? $name }}" class="block text-sm font-medium text-gray-700">
+        <div class="mb-2.5">
+            <label for="{{ $attributes->get('id') ?? $name }}"
+                class="block text-sm font-semibold mb-1 px-2"
+                style="color: var(--text-clr)">
                 {{ $label }}
             </label>
         </div>
     @endif
 
-    <div class="relative w-full max-w-md">
+    <div class="relative w-full max-w-md mx-auto">
         @if (isset($icon) && $icon)
-            <span class="absolute inset-y-0 left-0 flex items-center pl-6 text-gray-400">
-                <span class="material-symbols-outlined text-xl">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-4"
+                style="color: var(--secondary-text-clr)">
+                <span class="material-symbols-outlined text-xl transition-colors duration-200">
                     {{ $icon }}
                 </span>
             </span>
         @endif
 
-        <select name="{{ $name }}"
-            class="focus:outline-none focus:ring-1 focus:border-transparent
-                   {{ isset($icon) && $icon ? 'pl-14' : 'pl-6' }} pr-4 py-4 border border-gray-300 rounded-full w-full
-                   appearance-none bg-white {{ !isset($icon) ? 'pr-14' : '' }}"
-            {{ $attributes }}>
+        <select
+            name="{{ $name }}"
+            {{ $attributes->merge([
+                'class' => 'w-full px-6 py-3.5 rounded-full transition-all duration-200 appearance-none',
+                'style' => '
+                    background-color: var(--base-clr);
+                    border: 1px solid var(--line-clr);
+                    color: var(--text-clr);
+                    padding-right: 3rem;
+                    ' . (isset($icon) && $icon ? 'padding-left: 3rem;' : '')
+            ]) }}
+            x-data
+            x-on:focus="$el.style.boxShadow = '0 0 0 2px var(--accent-clr)'"
+            x-on:blur="$el.style.boxShadow = 'var(--shadow-sm)'"
+        >
             @if (isset($placeholder))
-                <option value="">{{ $placeholder }}</option>
+                <option value="" style="color: var(--secondary-text-clr)">{{ $placeholder }}</option>
             @endif
             {{ $slot }}
         </select>
 
-        <span class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-            <span class="material-symbols-outlined text-gray-400">
+        <span class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none"
+            style="color: var(--secondary-text-clr)">
+            <span class="material-symbols-outlined text-xl transition-colors duration-200">
                 expand_more
             </span>
         </span>
     </div>
 
     @if ($errors->has($name))
-        <span class="text-red-500 text-sm">{{ $errors->first($name) }}</span>
+        <div class="mt-2 px-2">
+            <span class="text-red-500 text-sm font-medium">
+                {{ $errors->first($name) }}
+            </span>
+        </div>
     @endif
 </div>

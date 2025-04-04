@@ -17,35 +17,54 @@
         - type: (optional) The input type, defaults to "text".
         - Any additional attributes will be applied to the input element.
 --}}
-<div class="mb-4">
+<div class="mb-6">
     {{-- Optional label section --}}
     @if (isset($label) && $label)
-        <div class="mb-2 text-center">
-            <label for="{{ $attributes->get('id') ?? $name }}" class="block text-sm font-medium text-gray-700">
+        <div class="mb-2.5">
+            <label for="{{ $attributes->get('id') ?? $name }}"
+                class="block text-sm font-semibold mb-1 px-2"
+                style="color: var(--text-clr)">
                 {{ $label }}
             </label>
         </div>
     @endif
 
-    <div class="relative w-full max-w-md">
+    <div class="relative w-full max-w-md mx-auto">
         {{-- Optional icon section --}}
         @if (isset($icon) && $icon)
-            <span class="absolute inset-y-0 left-0 flex items-center pl-6 text-gray-400">
-                <span class="material-symbols-outlined text-xl">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-4"
+                style="color: var(--secondary-text-clr)">
+                <span class="material-symbols-outlined text-xl transition-colors duration-200">
                     {{ $icon }}
                 </span>
             </span>
         @endif
 
         {{-- Input field --}}
-        <input type="{{ $type ?? 'text' }}" {{-- نوع ورودی (به صورت پیش‌فرض: text) --}} name="{{ $name }}" {{-- نام ورودی (برای مدیریت خطاها) --}}
-            placeholder="{{ $placeholder ?? '' }}" {{-- متن پیش‌نمایش اختیاری --}}
-            {{ $attributes->merge(['class' => 'focus:outline-none focus:ring-1 focus:border-transparent ' . (isset($icon) && $icon ? 'pl-14' : 'pl-6') . ' pr-4 py-4 border border-gray-300 rounded-full w-full']) }}>
-
+        <input
+            type="{{ $type ?? 'text' }}"
+            name="{{ $name }}"
+            placeholder="{{ $placeholder ?? '' }}"
+            {{ $attributes->merge([
+                'class' => 'w-full px-6 py-3.5 rounded-full transition-all duration-200',
+                'style' => '
+                    background-color: var(--base-clr);
+                    border: 1px solid var(--line-clr);
+                    color: var(--text-clr);
+                    ' . (isset($icon) && $icon ? 'padding-left: 3rem;' : '')
+            ]) }}
+            x-data
+            x-on:focus="$el.style.boxShadow = '0 0 0 2px var(--accent-clr)'"
+            x-on:blur="$el.style.boxShadow = 'var(--shadow-sm)'"
+        >
     </div>
 
-    {{-- Display error message for the given input name if it exists --}}
+    {{-- Error message --}}
     @if ($errors->has($name))
-        <span class="text-red-500 text-sm">{{ $errors->first($name) }}</span>
+        <div class="mt-2 px-2">
+            <span class="text-red-500 text-sm font-medium">
+                {{ $errors->first($name) }}
+            </span>
+        </div>
     @endif
 </div>

@@ -1,7 +1,7 @@
 {{--
     Component: SecondaryButton
     Description: A customizable secondary button component with a subtle design
-    
+
     Usage Example:
         <x-secondary-button
             icon="close"
@@ -10,21 +10,23 @@
         >
             Cancel
         </x-secondary-button>
-    
+
     Attributes:
         - icon: (optional) Icon name to display inside the button using Material Symbols
         - type: (optional) The button's type attribute (defaults to "button")
         - Any additional attributes will be merged with the button element
 --}}
 
-<button 
+<button
     type="{{ $type ?? 'button' }}"
     {{ $attributes->merge([
-        'class' => 'bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-300 cursor-pointer'
+        'class' => 'bg-[var(--line-clr)] text-[var(--text-clr)] hover:brightness-110
+            font-medium py-3.5 px-7 rounded-full transition-all duration-200 cursor-pointer
+            focus:outline-none focus:ring-2 focus:ring-[var(--line-clr)] focus:ring-opacity-50'
     ]) }}
 >
     @if(isset($icon) && $icon)
-        <span class="material-symbols-outlined mr-2 align-middle">
+        <span class="material-symbols-outlined mr-2 align-middle transition-colors">
             {{ $icon }}
         </span>
     @endif
