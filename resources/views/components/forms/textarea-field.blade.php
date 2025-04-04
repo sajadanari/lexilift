@@ -33,7 +33,7 @@
             name="{{ $name }}"
             rows="{{ $rows ?? 3 }}"
             {{ $attributes->merge([
-                'class' => 'w-full px-6 py-4 rounded-2xl transition-all duration-200 resize-y',
+                'class' => 'w-full px-6 py-3.5 rounded-2xl transition-all duration-200 resize-y hover:border-[var(--accent-clr)]',
                 'style' => '
                     background-color: var(--base-clr);
                     border: 1px solid var(--line-clr);
