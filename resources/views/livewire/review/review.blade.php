@@ -1,10 +1,10 @@
 <div class="w-full min-h-screen">
     <!-- Header section with improved spacing -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="flex justify-between items-center mb-8">
+        <div class="container flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Vocabulary Review</h1>
             @if($totalWords > 0)
-                <div class="text-gray-600 bg-white px-4 py-2 rounded-full shadow-sm">
+                <div class="px-4 py-2 rounded-full shadow-sm border border-[var(--line-clr)] bg-[var(--base-clr)] text-[var(--secondary-text-clr)]">
                     <span class="font-medium">{{ $words->currentPage() }}</span>
                     <span class="mx-2">/</span>
                     <span>{{ $totalWords }}</span>
@@ -16,14 +16,14 @@
         <div class="flex flex-col lg:flex-row gap-6">
             {{-- Filters Panel - Now floating on mobile --}}
             <div class="lg:w-1/4 sticky top-4 h-fit" x-data="{ isOpen: true }">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="container p-0 overflow-hidden" style="padding: 0;">
                     <button @click="isOpen = !isOpen"
-                            class="w-full flex items-center justify-between p-4 hover:bg-gray-50">
+                            class="w-full flex items-center justify-between p-4 hover:bg-[var(--hover-clr)]">
                         <div class="flex items-center space-x-3">
                             <span class="flex p-2 rounded-xl bg-[var(--accent-clr)]">
                                 <span class="material-symbols-outlined text-white">filter_list</span>
                             </span>
-                            <span class="font-semibold text-gray-900">Filters</span>
+                            <span class="font-semibold text-[var(--text-clr)]">Filters</span>
                         </div>
                         <span class="material-symbols-outlined transition-transform duration-300"
                               :class="{'rotate-180': !isOpen}">expand_less</span>
@@ -83,7 +83,7 @@
                         <x-forms.primary-btn
                             :isOutline="true"
                             icon="refresh"
-                            class="w-full"
+                            class="w-full mb-2"
                             wire:click="resetFilters"
                             wire:loading.attr="disabled"
                             >
@@ -112,12 +112,12 @@
                     <!-- Word cards with improved navigation -->
                     <div class="relative">
                         @foreach ($words as $word)
-                            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-md">
+                            <div class="container overflow-hidden transition-all duration-300" style="padding: 0;">
                                 <div class="flex items-stretch">
                                     @if($totalWords > 1)
                                         <button wire:click="previousPage"
                                                 @if($words->onFirstPage()) disabled @endif
-                                                class="px-4 flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                                                class="px-4 flex items-center justify-center hover:bg-[var(--hover-clr)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                                             <span class="material-symbols-outlined">chevron_left</span>
                                         </button>
                                     @endif
@@ -160,7 +160,7 @@
                                             <div class="flex-1">
                                                 <h2 class="text-2xl font-bold text-gray-900 mb-1">{{ $word->word }}</h2>
                                                 <div class="flex items-center space-x-4">
-                                                    <span class="text-sm font-medium text-gray-600">
+                                                    <span class="text-sm font-medium text-[var(--text-clr)]">
                                                         {{ $word->part_of_speech->label() }}
                                                     </span>
                                                     <button wire:click="speakWord('{{ $word->word }}')"
@@ -191,10 +191,10 @@
                                                 :italic="true"
                                             />
 
-                                            <div x-data="{ open: false }">
+                                            <div x-data="{ open: false }" class="w-full">
                                                 <button
                                                     @click="open = !open"
-                                                    class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center gap-1"
+                                                    class="text-[var(--accent-clr)] text-sm font-medium flex items-center gap-1 w-full cursor-pointer hover:bg-[var(--hover-clr)] p-2 rounded-lg transition-colors"
                                                 >
                                                     <span x-text="open ? 'Show Less' : 'Show More'"></span>
                                                     <svg
@@ -262,7 +262,7 @@
                                     @if($totalWords > 1)
                                         <button wire:click="nextPage"
                                                 @if(!$words->hasMorePages()) disabled @endif
-                                                class="px-4 flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                                                class="px-4 flex items-center justify-center hover:bg-[var(--hover-clr)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                                             <span class="material-symbols-outlined">chevron_right</span>
                                         </button>
                                     @endif
