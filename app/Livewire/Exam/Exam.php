@@ -3,27 +3,47 @@
 namespace App\Livewire\Exam;
 
 use Livewire\Component;
-use App\Models\Word;
 use Illuminate\Support\Facades\Auth;
-use App\Services\OpenAIService;
 use App\Enums\WordLevel;
 
+/**
+ * Exam Component
+ *
+ * Handles the vocabulary examination process including:
+ * - Exam initialization and question generation
+ * - Question progression management
+ * - Score tracking
+ * - User response handling
+ */
 class Exam extends Component
 {
+    /** @var bool Indicates if the exam has started */
     public $isStarted = false;
+
+    /** @var array Collection of questions for the exam */
     public $questions = [];
+
+    /** @var array Stores user's answers for each question */
     public $userAnswers = [];
+
+    /** @var int Current question position */
     public $currentQuestionIndex = 0;
+
+    /** @var bool Indicates if the exam is completed */
     public $examFinished = false;
+
+    /** @var int User's current score */
     public $score = 0;
-    public $userInput = ''; // اضافه کردن متغیر
+
+    /** @var string For storing temporary user input */
+    public $userInput = '';
+
+    /** @var bool Tracks if current question has been answered */
     public $currentQuestionAnswered = false;
 
-    public function __construct()
-    {
-
-    }
-
+    /**
+     * Define Livewire event listeners
+     */
     protected function getListeners()
     {
         return [
@@ -32,9 +52,16 @@ class Exam extends Component
         ];
     }
 
-    // شروع آزمون
+    /**
+     * Initializes and starts a new exam
+     * Generates questions based on word difficulty levels:
+     * - Weak words (low score)
+     * - Medium words (medium score)
+     * - Strong words (high score)
+     */
     public function startExam()
     {
+        // Reset exam state
         $this->isStarted = true;
         $this->examFinished = false;
         $this->score = 0;
@@ -45,20 +72,24 @@ class Exam extends Component
         $selectedWordIds = [];
         $questions = collect();
 
+        // Generate questions for each difficulty level
         foreach ([WordLevel::WEAK, WordLevel::MEDIUM, WordLevel::STRONG] as $level) {
             $range = $level->getRange();
             $targetCount = $level->getQuestionCount();
 
-            $words = (clone $baseQuery)->whereBetween('score', [$range['min'], $range['max']])
+            // Get words for current difficulty level
+            $words = (clone $baseQuery)
+                ->whereBetween('score', [$range['min'], $range['max']])
                 ->whereNotIn('id', $selectedWordIds)
                 ->inRandomOrder()
                 ->limit($targetCount)
                 ->get();
 
+            // Fill up with words from other levels if needed
             if ($words->count() < $targetCount) {
-                // Try to get remaining words from other levels
                 $remaining = $targetCount - $words->count();
-                $otherWords = (clone $baseQuery)->whereNotIn('id', array_merge($selectedWordIds, $words->pluck('id')->toArray()))
+                $otherWords = (clone $baseQuery)
+                    ->whereNotIn('id', array_merge($selectedWordIds, $words->pluck('id')->toArray()))
                     ->inRandomOrder()
                     ->limit($remaining)
                     ->get();
@@ -70,27 +101,35 @@ class Exam extends Component
             $questions = $questions->merge($words);
         }
 
+        // Format questions for the exam
         $this->questions = $questions->map(function($word) {
             return [
-                'type' => 1,
+                'type' => 1, // Multiple choice type
                 'word' => $word,
             ];
         })->toArray();
     }
 
+    /**
+     * Advances to the next question or finishes the exam
+     */
     public function nextQuestion()
     {
         $this->currentQuestionAnswered = false;
-        if($this->currentQuestionIndex < count($this->questions) - 1) {
+        if ($this->currentQuestionIndex < count($this->questions) - 1) {
             $this->currentQuestionIndex++;
         } else {
             $this->examFinished = true;
         }
     }
 
+    /**
+     * Handles the submission of an answer
+     * @param bool $isCorrect Whether the submitted answer was correct
+     */
     public function answerSubmitted($isCorrect)
     {
-        if($isCorrect) {
+        if ($isCorrect) {
             $this->score++;
         }
         $this->currentQuestionAnswered = true;

@@ -1,6 +1,16 @@
+{{-- 
+    Exam Component View
+    Handles the display of:
+    - Exam start screen
+    - Question progression
+    - Progress tracking
+    - Results display
+--}}
+
 <div class="min-h-screen">
     <div class="mx-auto p-0 md:px-4 md:py-8 max-w-4xl">
         @if (!$isStarted)
+            {{-- Start Screen --}}
             <div class="container">
                 <div class="flex flex-col items-center justify-center space-y-8">
                     <div class="relative">
@@ -30,9 +40,10 @@
             </div>
         @else
             @if (!$examFinished)
+                {{-- Active Exam Interface --}}
                 @php $question = $questions[$currentQuestionIndex]; @endphp
                 <div class="space-y-6">
-                    <!-- Progress Bar -->
+                    {{-- Progress Tracking --}}
                     <div class="container">
                         <div class="flex items-center justify-between mb-2">
                             <h4 class="text-lg font-semibold text-[var(--text-clr)]">
@@ -50,23 +61,14 @@
                         </div>
                     </div>
 
+                    {{-- Question Display --}}
                     @if ($question['type'] == 1)
                         <livewire:exam.question-types.multiple-choice-meaning-by-word :word="$question['word']"
                             :key="$currentQuestionIndex" />
                     @endif
 
+                    {{-- Navigation Controls --}}
                     <div class="mt-8">
-                        {{-- <button wire:click="nextQuestion"
-                                @class([
-                                    'px-6 py-3 rounded-xl transition-all duration-300 w-full md:w-auto float-right flex items-center justify-center space-x-2',
-                                    'bg-[var(--accent-clr)] hover:bg-gray-900 text-white cursor-pointer transform hover:scale-105' => $currentQuestionAnswered,
-                                    'bg-gray-200 text-gray-400 cursor-not-allowed' => !$currentQuestionAnswered
-                                ])
-                                {{ !$currentQuestionAnswered ? 'disabled' : '' }}>
-                            <span>{{ $currentQuestionIndex === count($questions) - 1 ? 'Show Results' : 'Next Question' }}</span>
-                            <span class="material-symbols-outlined">arrow_forward</span>
-                        </button> --}}
-
                         <x-forms.primary-btn wire:click="nextQuestion" icon='arrow_forward' :isDisable='!$currentQuestionAnswered'
                             class="float-right">
                             {{ $currentQuestionIndex === count($questions) - 1 ? 'Show Results' : 'Next Question' }}
@@ -74,6 +76,7 @@
                     </div>
                 </div>
             @else
+                {{-- Results Screen --}}
                 <div class="container text-center">
                     <div class="flex flex-col items-center justify-center space-y-6">
                         <div class="relative">
