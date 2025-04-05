@@ -6,7 +6,7 @@
 
         <form wire:submit.prevent="save" class="space-y-6">
             {{-- Basic Information --}}
-            <div class="p-6 bg-white rounded-lg shadow-sm space-y-4">
+            <div class="container space-y-4">
                 <h2 class="text-lg font-semibold text-gray-700 mb-4">Basic Information</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -29,7 +29,7 @@
             </div>
 
             {{-- Additional Details --}}
-            <div class="bg-white p-6 rounded-lg shadow-sm space-y-4">
+            <div class="container space-y-4">
                 <h2 class="text-lg font-semibold text-gray-700 mb-4">Additional Details</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
