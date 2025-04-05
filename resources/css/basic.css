@@ -1,5 +1,6 @@
 :root {
     --base-clr: #fafafa;
+    --secondary-base-clr: #f3f4f6;
     --line-clr: #e5e7eb;
     --hover-clr: #f0fdf4;
     --text-clr: #111827;
@@ -17,11 +18,12 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --base-clr: #1C1B1B;
+        --base-clr: #1c1b1b;
+        --secondary-base-clr: #181818;
         --line-clr: #333333;
         --hover-clr: #1f1f1f; /* Darker hover color */
         --text-clr: #e5e7eb;
-        --accent-clr: #42C83C;
+        --accent-clr: #42c83c;
         --secondary-clr: #22c55e;
         --secondary-text-clr: #9ca3af;
         --success-light: rgba(34, 197, 94, 0.2);
@@ -47,8 +49,13 @@ html {
 }
 
 /* Global Heading Styles */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Poppins", sans-serif;
     font-weight: 700;
     line-height: 1.2;
     color: var(--text-clr, #333);
@@ -85,8 +92,12 @@ h6 {
 }
 
 /* Persian Headings */
-.persian h1, .persian h2, .persian h3,
-.persian h4, .persian h5, .persian h6 {
+.persian h1,
+.persian h2,
+.persian h3,
+.persian h4,
+.persian h5,
+.persian h6 {
     font-family: "Dana", sans-serif;
 }
 
@@ -160,7 +171,8 @@ tr {
 }
 
 /* Input Focus Effects */
-input:focus, select:focus {
+input:focus,
+select:focus {
     box-shadow: 0 0 0 2px var(--accent-clr);
     outline: none;
 }
