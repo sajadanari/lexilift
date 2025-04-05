@@ -1,6 +1,6 @@
 <div class="min-h-screen">
     <div class="mx-auto p-0 md:px-4 md:py-8 max-w-4xl">
-        @if(!$isStarted)
+        @if (!$isStarted)
             <div class="container">
                 <div class="flex flex-col items-center justify-center space-y-8">
                     <div class="relative">
@@ -22,17 +22,14 @@
                         </p>
                     </div>
 
-                    <x-forms.primary-btn
-                        wire:click="startExam"
-                        class="w-full md:w-auto animate-pulse"
-                        icon="play_arrow"
-                    >
+                    <x-forms.primary-btn wire:click="startExam" class="w-full md:w-auto animate-pulse"
+                        icon="play_arrow">
                         Start Exam
                     </x-forms.primary-btn>
                 </div>
             </div>
         @else
-            @if(!$examFinished)
+            @if (!$examFinished)
                 @php $question = $questions[$currentQuestionIndex]; @endphp
                 <div class="space-y-6">
                     <!-- Progress Bar -->
@@ -48,13 +45,14 @@
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2.5">
                             <div class="bg-[var(--accent-clr)] h-2.5 rounded-full transition-all duration-500"
-                                 style="width: {{ ($currentQuestionIndex + 1) / count($questions) * 100 }}%">
+                                style="width: {{ (($currentQuestionIndex + 1) / count($questions)) * 100 }}%">
                             </div>
                         </div>
                     </div>
 
-                    @if($question['type'] == 1)
-                        <livewire:exam.question-types.multiple-choice :word="$question['word']" :key="$currentQuestionIndex" />
+                    @if ($question['type'] == 1)
+                        <livewire:exam.question-types.multiple-choice-meaning-by-word :word="$question['word']"
+                            :key="$currentQuestionIndex" />
                     @endif
 
                     <div class="mt-8">
@@ -69,13 +67,9 @@
                             <span class="material-symbols-outlined">arrow_forward</span>
                         </button> --}}
 
-                        <x-forms.primary-btn
-                            wire:click="nextQuestion"
-                            icon='arrow_forward'
-                            :isDisable='!$currentQuestionAnswered'
-                            class="float-right"
-                        >
-                        {{ $currentQuestionIndex === count($questions) - 1 ? 'Show Results' : 'Next Question' }}
+                        <x-forms.primary-btn wire:click="nextQuestion" icon='arrow_forward' :isDisable='!$currentQuestionAnswered'
+                            class="float-right">
+                            {{ $currentQuestionIndex === count($questions) - 1 ? 'Show Results' : 'Next Question' }}
                         </x-forms.primary-btn>
                     </div>
                 </div>
@@ -83,7 +77,7 @@
                 <div class="container text-center">
                     <div class="flex flex-col items-center justify-center space-y-6">
                         <div class="relative">
-                            @if($score / count($questions) >= 0.7)
+                            @if ($score / count($questions) >= 0.7)
                                 <span class="material-symbols-outlined text-yellow-500 text-8xl animate-bounce">
                                     emoji_events
                                 </span>
@@ -111,7 +105,7 @@
                                 <span>Try Again</span>
                             </button>
                             <a href="{{ route('dashboard') }}"
-                               class="px-6 py-3 bg-[var(--accent-clr)] text-white rounded-xl hover:bg-[var(--accent-clr-dark)] transition-all duration-300 flex items-center space-x-2">
+                                class="px-6 py-3 bg-[var(--accent-clr)] text-white rounded-xl hover:bg-[var(--accent-clr-dark)] transition-all duration-300 flex items-center space-x-2">
                                 <span class="material-symbols-outlined">home</span>
                                 <span>Back to Dashboard</span>
                             </a>

@@ -5,7 +5,7 @@ namespace App\Livewire\Exam\QuestionTypes;
 use Livewire\Component;
 use App\Models\Word;
 
-class MultipleChoice extends Component
+class MultipleChoiceMeaningByWord extends Component
 {
     public $word;
     public $options;
@@ -49,9 +49,9 @@ class MultipleChoice extends Component
         $isCorrect = $this->selectedOption === $this->correct;
 
         if ($isCorrect) {
-            $this->word->score = min(100, $this->word->score + config('myapp.multiple_choice.score.correct'));
+            $this->word->score = min(100, $this->word->score + config('myapp.multiple_choice_meaning_by_word.score.correct'));
         } else {
-            $this->word->score = max(0, $this->word->score + config('myapp.multiple_choice.score.incorrect'));
+            $this->word->score = max(0, $this->word->score + config('myapp.multiple_choice_meaning_by_word.score.incorrect'));
         }
 
         $this->word->save();
@@ -60,6 +60,6 @@ class MultipleChoice extends Component
 
     public function render()
     {
-        return view('livewire.exam.question-types.multiple-choice');
+        return view('livewire.exam.question-types.multiple-choice-meaning-by-word');
     }
 }
