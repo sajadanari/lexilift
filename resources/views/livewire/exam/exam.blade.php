@@ -1,4 +1,4 @@
-{{-- 
+{{--
     Exam Component View
     Handles the display of:
     - Exam start screen
@@ -62,10 +62,22 @@
                     </div>
 
                     {{-- Question Display --}}
-                    @if ($question['type'] == 1)
-                        <livewire:exam.question-types.multiple-choice-meaning-by-word :word="$question['word']"
-                            :key="$currentQuestionIndex" />
+                    @php
+                        $components = [
+                            1 => 'exam.question-types.multiple-choice-meaning-by-word',
+                            2 => 'exam.question-types.multiple-choice-word-by-meaning',
+                            // 3 => 'exam.question-types.another-type',
+                        ];
+
+                        $component = $components[$question['type']] ?? null;
+                    @endphp
+
+                    @if ($component)
+                        @livewire($component, ['word' => $question['word']], key($currentQuestionIndex))
+                    @else
+                        <p>Question type not found</p>
                     @endif
+
 
                     {{-- Navigation Controls --}}
                     <div class="mt-8">

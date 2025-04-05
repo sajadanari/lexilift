@@ -104,7 +104,7 @@ class Exam extends Component
         // Format questions for the exam
         $this->questions = $questions->map(function($word) {
             return [
-                'type' => 1, // Multiple choice type
+                'type' => rand(1, 2),
                 'word' => $word,
             ];
         })->toArray();
