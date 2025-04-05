@@ -186,6 +186,7 @@ select:focus {
     .container {
         background: var(--base-clr);
         border-color: var(--line-clr);
+        box-shadow: none;
     }
 
     ::-webkit-scrollbar-track {

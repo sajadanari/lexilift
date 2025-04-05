@@ -42,9 +42,9 @@
 
 <div>
     {{-- Search and Per Page Controls --}}
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+    <div class="flex flex-col w-full sm:flex-row justify-between items-center gap-4 mb-6">
         <x-forms.input-field wire:model.live="search" type="text" placeholder="Search..." name="search" icon="search"
-            class="w-full sm:w-64 transition-all duration-300 focus:w-full sm:focus:w-72" />
+            class="w-full transition-all duration-300 focus:w-full sm:focus:w-72" />
 
         <x-forms.select-field name="perPage" wire:model.live="perPage" class="transition-all duration-200 w-full md:w-32">
             <option value="12">12 items</option>
@@ -54,7 +54,7 @@
     </div>
 
     {{-- Table Container --}}
-    <div class="relative overflow-hidden">
+    <div class="overflow-auto">
         <table class="w-full text-sm">
             <thead>
                 <tr class="bg-[var(--secondary-base-clr)] rounded-xl">
@@ -107,6 +107,6 @@
 
     {{-- Pagination Links --}}
     <div class="mt-4">
-        {{ $items->links() }}
+        {{ $items->links('components.pagination') }}
     </div>
 </div>
