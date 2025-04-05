@@ -1,12 +1,12 @@
-{{-- 
+{{--
     Vocabulary Review View Component
-    
+
     Features:
     - Responsive layout with collapsible sidebar filters
     - Word cards with comprehensive information display
     - Interactive elements (TTS, pagination, filters)
     - Empty state handling
-    
+
     Layout Structure:
     1. Main container (full width, min height screen)
     2. Header with title and pagination info
@@ -31,7 +31,7 @@
 
         {{-- Main Content Grid Layout --}}
         <div class="flex flex-col lg:flex-row gap-6">
-            {{-- 
+            {{--
                 Filters Sidebar
                 Features:
                 - Collapsible on mobile
@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            {{-- 
+            {{--
                 Main Content Area
                 Displays either:
                 - Empty state message with reset action
@@ -110,20 +110,19 @@
             <div class="lg:w-3/4">
                 @if ($totalWords === 0)
                     {{-- Empty State Display --}}
-                    <div class="bg-white rounded-2xl shadow-sm p-8 text-center">
-                        <div class="inline-flex p-4 rounded-full bg-gray-100 mb-4">
-                            <span class="material-symbols-outlined text-3xl text-gray-400">search_off</span>
+                    <div class="container text-center">
+                        <div class="inline-flex p-4 rounded-full bg-[var(--secondary-base-clr)] mb-4">
+                            <span class="material-symbols-outlined text-3xl text-[var(--text-clr)]">search_off</span>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">No Words Found</h3>
-                        <p class="text-gray-600 mb-6">Try adjusting your filters to find more words.</p>
-                        <button wire:click="resetFilters"
-                            class="inline-flex items-center px-4 py-2 bg-[var(--accent-clr)] text-white rounded-xl hover:bg-opacity-90 transition-colors">
-                            <span class="material-symbols-outlined mr-2">refresh</span>
+                        <h3 class="mb-2">No Words Found</h3>
+                        <p class="text-[var(--secondary-text-clr)] mb-6">Try adjusting your filters to find more words.
+                        </p>
+                        <x-forms.primary-btn wire:click="resetFilters" icon="refresh">
                             Reset Filters
-                        </button>
+                        </x-forms.primary-btn>
                     </div>
                 @else
-                    {{-- 
+                    {{--
                         Word Cards Section
                         Features:
                         - Previous/Next navigation
