@@ -7,25 +7,49 @@ use Livewire\WithPagination;
 use Livewire\Attributes\Url;
 use App\Enums\WordLevel;
 
+/**
+ * Vocabulary Review Component
+ *
+ * Provides an interactive interface for reviewing vocabulary words with:
+ * - Advanced filtering capabilities
+ * - Pagination with single word view
+ * - Text-to-speech functionality
+ * - Real-time search and filter updates
+ */
 class Review extends Component
 {
     use WithPagination;
 
+    /** @var string Search query parameter preserved in URL */
     #[Url]
     public $search = '';
 
+    /** @var string Part of speech filter parameter preserved in URL */
     #[Url]
     public $part_of_speech = '';
 
+    /** @var string CEFR level filter parameter preserved in URL */
     #[Url]
     public $difficulty_level = '';
 
+    /** @var string Word frequency filter parameter preserved in URL */
     #[Url]
     public $frequency = '';
 
+    /** @var string Learning status filter parameter preserved in URL */
     #[Url]
     public $word_level = '';
 
+    /**
+     * Renders the review component with filtered words
+     *
+     * Applies multiple filter criteria:
+     * - Text search on word
+     * - Part of speech filtering
+     * - CEFR level filtering
+     * - Frequency level filtering
+     * - Learning status (score range) filtering
+     */
     public function render()
     {
         $query = auth()->user()->words();
@@ -60,11 +84,20 @@ class Review extends Component
         ])->layout('layouts.front-app');
     }
 
+    /**
+     * Triggers the text-to-speech functionality for a word
+     *
+     * @param string $word The word to be spoken
+     */
     public function speakWord($word)
     {
         $this->dispatch('speak-word', ['word' => $word]);
     }
 
+    /**
+     * Reset pagination when filters are updated
+     * These methods ensure the user starts from page 1 after any filter change
+     */
     public function updatedSearch()
     {
         $this->resetPage();
@@ -90,6 +123,10 @@ class Review extends Component
         $this->resetPage();
     }
 
+    /**
+     * Resets all filters to their default values
+     * Clears all search and filter criteria and resets pagination
+     */
     public function resetFilters()
     {
         $this->search = '';
