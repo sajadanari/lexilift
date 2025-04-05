@@ -5,6 +5,7 @@
 /* Import Frontend Styles */
 @import "./front.css";
 @import "./sidebar.css";
+@import "./home.css";
 
 @import "@material-design-icons/font/index.css";
 

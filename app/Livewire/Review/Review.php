@@ -40,6 +40,15 @@ class Review extends Component
     #[Url]
     public $word_level = '';
 
+    public function mount()
+    {
+        // Get word_level from URL and validate it
+        $wordLevel = request()->get('word_level');
+        if ($wordLevel && in_array($wordLevel, ['WEAK', 'MEDIUM', 'STRONG'])) {
+            $this->word_level = $wordLevel;
+        }
+    }
+
     /**
      * Renders the review component with filtered words
      *
