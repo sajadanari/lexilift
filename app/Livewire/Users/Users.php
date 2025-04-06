@@ -64,7 +64,8 @@ class Users extends Component
         if ($this->page === 'edit') {
             $this->user->update($this->userData);
         } else {
-            User::create($this->userData);
+            $user = User::create($this->userData);
+            $user->assignRole('user');
         }
 
         $this->reset('userData');
