@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
             $this->call([
                 LocalSeeder::class,
             ]);
+        } elseif (config('app.env') === 'production') {
+            $this->call([
+                ProdSeeder::class,
+            ]);
         }
     }
 }
