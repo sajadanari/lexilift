@@ -52,7 +52,7 @@
             My Words
         </x-sidebar.sidebar-item>
 
-        <x-sidebar.sidebar-item icon="visibility" route="review" :active="request()->routeIs('review')">
+        <x-sidebar.sidebar-item icon="auto_stories" route="review" :active="request()->routeIs('review')">
             Review
         </x-sidebar.sidebar-item>
 
