@@ -96,7 +96,7 @@
 
     {{-- Statistics Dashboard: User progress visualization --}}
     @auth
-        @if ($statistics)
+        @if ($statistics && $statistics['total_words'] > 0)
             <div class="stats-section">
                 {{-- Statistics header --}}
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -126,11 +126,11 @@
                                         <circle class="progress-ring__circle text-emerald-500" stroke-width="8"
                                             stroke-linecap="round" stroke="currentColor" fill="transparent" r="40"
                                             cx="50" cy="50" stroke-dasharray="251.2"
-                                            stroke-dashoffset="calc(251.2 - (251.2 * {{ ($statistics['mastered_words'] / $statistics['total_words']) * 100 }}) / 100)" />
+                                            stroke-dashoffset="calc(251.2 - (251.2 * {{ $statistics['total_words'] > 0 ? ($statistics['mastered_words'] / $statistics['total_words']) * 100 : 0 }}) / 100)" />
                                     </svg>
                                     <div class="absolute inset-0 flex items-center justify-center">
                                         <span
-                                            class="progress-text text-2xl font-bold text-[var(--text-clr)]">{{ round(($statistics['mastered_words'] / $statistics['total_words']) * 100) }}%</span>
+                                            class="progress-text text-2xl font-bold text-[var(--text-clr)]">{{ $statistics['total_words'] > 0 ? round(($statistics['mastered_words'] / $statistics['total_words']) * 100) : 0 }}%</span>
                                     </div>
                                 </div>
 
