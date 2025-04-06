@@ -41,6 +41,9 @@ class Exam extends Component
     /** @var bool Tracks if current question has been answered */
     public $currentQuestionAnswered = false;
 
+    /** @var int Minimum words required to start the exam */
+    public $minimumWordsRequired;
+
     /**
      * Define Livewire event listeners
      */
@@ -53,6 +56,25 @@ class Exam extends Component
     }
 
     /**
+     * Initializes component state
+     */
+    public function mount()
+    {
+        $this->minimumWordsRequired = WordLevel::WEAK->getQuestionCount() + 
+            WordLevel::MEDIUM->getQuestionCount() + 
+            WordLevel::STRONG->getQuestionCount();
+    }
+
+    /**
+     * Checks if the user has enough words to start the exam
+     * @return bool
+     */
+    private function hasEnoughWords(): bool
+    {
+        return Auth::user()->words()->count() >= $this->minimumWordsRequired;
+    }
+
+    /**
      * Initializes and starts a new exam
      * Generates questions based on word difficulty levels:
      * - Weak words (low score)
@@ -61,6 +83,10 @@ class Exam extends Component
      */
     public function startExam()
     {
+        if (!$this->hasEnoughWords()) {
+            return;
+        }
+
         // Reset exam state
         $this->isStarted = true;
         $this->examFinished = false;

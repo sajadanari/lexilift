@@ -26,14 +26,39 @@
                         <h2 class="text-3xl font-bold text-gray-800">
                             Ready to Test Your Knowledge?
                         </h2>
-                        <p class="text-[var(--secondary-text-clr)] max-w-md mx-auto">
-                            You'll be presented with 10 questions to test your vocabulary skills.
-                            Take your time and choose your answers carefully.
-                        </p>
+                        @if (!$this->hasEnoughWords())
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                                <div class="flex items-center">
+                                    <span class="material-symbols-outlined text-yellow-400 mr-2">warning</span>
+                                    <p class="text-yellow-700">
+                                        You need at least {{ $minimumWordsRequired }} words in your collection to start the exam. 
+                                        Keep learning and come back when you're ready!
+                                    </p>
+                                </div>
+                            </div>
+                            {{-- Going to my words link --}}
+                            <div>
+                                
+                                    <x-links.main-link
+                                    href="/mywords"
+                                    class="ml-4"
+                                >
+                                    Add more words to your collection
+                                </x-links.main-link>
+                                
+                            </div>
+                        @else
+                            <p class="text-[var(--secondary-text-clr)] max-w-md mx-auto">
+                                You'll be presented with 10 questions to test your vocabulary skills.
+                                Take your time and choose your answers carefully.
+                            </p>
+                        @endif
                     </div>
 
-                    <x-forms.primary-btn wire:click="startExam" class="w-full md:w-auto animate-pulse"
-                        icon="play_arrow">
+                    <x-forms.primary-btn wire:click="startExam" 
+                        class="w-full md:w-auto animate-pulse" 
+                        icon="play_arrow"
+                        :isDisable="!$this->hasEnoughWords()">
                         Start Exam
                     </x-forms.primary-btn>
                 </div>
